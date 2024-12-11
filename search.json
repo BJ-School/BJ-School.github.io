@@ -20,32 +20,38 @@
     ]
   },
   {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Brett Jameson",
+    "objectID": "ml.html",
+    "href": "ml.html",
+    "title": "about me",
     "section": "",
-    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
   },
   {
-    "objectID": "resume.html#currently",
-    "href": "resume.html#currently",
-    "title": "Brett Jameson",
+    "objectID": "ml.html#title-2-header",
+    "href": "ml.html#title-2-header",
+    "title": "about me",
     "section": "",
-    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
   },
   {
-    "objectID": "resume.html#education",
-    "href": "resume.html#education",
-    "title": "Brett Jameson",
+    "objectID": "competition.html",
+    "href": "competition.html",
+    "title": "about me",
     "section": "",
-    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
+    "text": "MarkDown Basics"
   },
   {
-    "objectID": "resume.html#occupation",
-    "href": "resume.html#occupation",
-    "title": "Brett Jameson",
+    "objectID": "competition.html#title-2-header",
+    "href": "competition.html#title-2-header",
+    "title": "about me",
     "section": "",
-    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "Machine_Learning/DS250-canYouPredictThat.html",
@@ -114,6 +120,48 @@
     ]
   },
   {
+    "objectID": "exploration.html",
+    "href": "exploration.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "exploration.html#title-2-header",
+    "href": "exploration.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "resume.html#currently",
+    "href": "resume.html#currently",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
+  },
+  {
+    "objectID": "resume.html#occupation",
+    "href": "resume.html#occupation",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
     "objectID": "full_stack.html",
     "href": "full_stack.html",
     "title": "about me",
@@ -134,46 +182,81 @@
     ]
   },
   {
-    "objectID": "exploration.html",
-    "href": "exploration.html",
-    "title": "about me",
+    "objectID": "Story_Telling/DS250-whatsInAName.html",
+    "href": "Story_Telling/DS250-whatsInAName.html",
+    "title": "Client Report - What’s in a name?",
     "section": "",
-    "text": "MarkDown Basics"
+    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
-    "objectID": "exploration.html#title-2-header",
-    "href": "exploration.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
+    "href": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
+    "title": "Client Report - What’s in a name?",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nIt is fascinating to look at how modern media effects the names that parents give their children, as you can see by looking at the chart above. Sometimes however the relationship isn’t as obvious and requires a deeper dive in order to understand what the data is telling us. Many times it is not a single event that has an effect on a names popularity but a combination of events. The effect that each new event has upon the data alters the graph and it is a data scientists job to be able to identify the underlying data. It is also important to label the data to help ensure that your audience will be able to easily see the story that your data is telling them.\nHighlight the Questions and Tasks",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
-    "objectID": "cleansing.html",
-    "href": "cleansing.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nHow does your name at your birth year compare to its use historically?\nWhile the name Brett was around prior to the 1950s, it wasn’t until the mid 1950s where the popularity of the name began to take off. In 1977, the year that I was born, my name was nearing the height of it’s popularity, with about 3000 people being given the name Brett in that year.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brett\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brett\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1955, y=3500, xend=1977, yend=2979, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1955, y=3500, label=\"Year Born (1977)\", hjust=\"left\", \n    color=\"red\")\n    + scale_y_continuous(limits=(0, 4100))\n    + scale_x_continuous(limits=(1950, 2015))\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
-    "objectID": "cleansing.html#title-2-header",
-    "href": "cleansing.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nIf you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?\nThe most likely year that a person named Brittany was born would be in 1990 which would place her at 34 years old. This is where the name was most popular with over 32000 children being named Brittany. According to the data the name Brittany was not around prior to 1968 so I would not guess ages greater than 56.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brittany\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brittany\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1965, y=30000, xend=1990, yend=32562, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1965, y=30000, label=\"Most Likely Year is 1990 - 34yrs Old\", hjust=\"left\", \n    color=\"red\")\n    + scale_x_continuous(limits=(1965, 2015))\n    + scale_y_continuous(limits=(0, 34000))\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
-    "objectID": "competition.html",
-    "href": "competition.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nMary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?\nRight off there are three trends here that I am noticing. First, as these are biblical names the popularity of each one of them save Martha see an uptick in popularity around the time of WW2. With the uncertainty that war and pre-war times bring I am not surprised that more biblical rooted names would begin to emerge as people turned to religion for comfort.\nThere are two exceptions to this observation.\n\nFirst the name Martha actually sees a decline in popularity at this same point in time. My thoughts as to the reason for this is primarily rooted in the fact that she is a more minor character in the bible and as such of lesser known than the other names.\nSecond, the name Mary had a second rise to popularity that spiked at around the year 1921. In doing a little research it seems that Mary was a symbol of protection durring WW1 and so my hypothesis is that this may be the reason why we are seeign that second spike before the curve aligns with the other biblical figure names.\n\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Mary\") | (theNames['name'] == \"Martha\") | (theNames['name'] == \"Peter\") | (theNames['name'] == \"Paul\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(aes(colour=\"name\"))\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + scale_x_continuous(limits=(1920, 2000))\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
-    "objectID": "competition.html#title-2-header",
-    "href": "competition.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nThink of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?\nFor a famous movie, I selected Casablanca. The main character in that movie is Victor and I thought there would be a marked increase in that name’s usage considering the popularity of the movie. What I found was that, while there was an uptick, it was not the movie, but some other event that transpired in the late 1930s that gave rise to the name’s popularity. This would suggest that the name of the main character from that movie was selected due to the event in the late 1930s. Following Casablanca’s release the name continued to rise higher, so I suspect that while not the original source of the increae in popularity, it probably served to spur the name’s use on to greater heights.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Victor\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Victor\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1925, y=3500, xend=1942, yend=2392, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1910, y=3500, label=\"Casablanca (1942)\", hjust=\"left\", \n    color=\"red\")\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
+  },
+  {
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questionstretch",
+    "href": "Story_Telling/DS250-whatsInAName.html#questionstretch",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|Stretch",
+    "text": "QUESTION|Stretch\nReproduce the chart Elliot using the data from the names_year.csv file.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
   },
   {
     "objectID": "Full_Stack/DS250-theWarWithStarWars.html",
@@ -256,100 +339,17 @@
     "text": "MarkDown Basics"
   },
   {
-    "objectID": "ml.html",
-    "href": "ml.html",
+    "objectID": "cleansing.html",
+    "href": "cleansing.html",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
+    "text": "MarkDown Basics"
   },
   {
-    "objectID": "ml.html#title-2-header",
-    "href": "ml.html#title-2-header",
+    "objectID": "cleansing.html#title-2-header",
+    "href": "cleansing.html#title-2-header",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html",
-    "href": "Story_Telling/DS250-whatsInAName.html",
-    "title": "Client Report - What’s in a name?",
-    "section": "",
-    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
-    "href": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
-    "title": "Client Report - What’s in a name?",
-    "section": "Elevator pitch",
-    "text": "Elevator pitch\nIt is fascinating to look at how modern media effects the names that parents give their children, as you can see by looking at the chart above. Sometimes however the relationship isn’t as obvious and requires a deeper dive in order to understand what the data is telling us. Many times it is not a single event that has an effect on a names popularity but a combination of events. The effect that each new event has upon the data alters the graph and it is a data scientists job to be able to identify the underlying data. It is also important to label the data to help ensure that your audience will be able to easily see the story that your data is telling them.\nHighlight the Questions and Tasks",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
-    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
-    "title": "Client Report - What’s in a name?",
-    "section": "QUESTION|TASK 1",
-    "text": "QUESTION|TASK 1\nHow does your name at your birth year compare to its use historically?\nWhile the name Brett was around prior to the 1950s, it wasn’t until the mid 1950s where the popularity of the name began to take off. In 1977, the year that I was born, my name was nearing the height of it’s popularity, with about 3000 people being given the name Brett in that year.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brett\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brett\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1955, y=3500, xend=1977, yend=2979, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1955, y=3500, label=\"Year Born (1977)\", hjust=\"left\", \n    color=\"red\")\n    + scale_y_continuous(limits=(0, 4100))\n    + scale_x_continuous(limits=(1950, 2015))\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
-    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
-    "title": "Client Report - What’s in a name?",
-    "section": "QUESTION|TASK 2",
-    "text": "QUESTION|TASK 2\nIf you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?\nThe most likely year that a person named Brittany was born would be in 1990 which would place her at 34 years old. This is where the name was most popular with over 32000 children being named Brittany. According to the data the name Brittany was not around prior to 1968 so I would not guess ages greater than 56.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brittany\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brittany\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1965, y=30000, xend=1990, yend=32562, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1965, y=30000, label=\"Most Likely Year is 1990 - 34yrs Old\", hjust=\"left\", \n    color=\"red\")\n    + scale_x_continuous(limits=(1965, 2015))\n    + scale_y_continuous(limits=(0, 34000))\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
-    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
-    "title": "Client Report - What’s in a name?",
-    "section": "QUESTION|TASK 3",
-    "text": "QUESTION|TASK 3\nMary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?\nRight off there are three trends here that I am noticing. First, as these are biblical names the popularity of each one of them save Martha see an uptick in popularity around the time of WW2. With the uncertainty that war and pre-war times bring I am not surprised that more biblical rooted names would begin to emerge as people turned to religion for comfort.\nThere are two exceptions to this observation.\n\nFirst the name Martha actually sees a decline in popularity at this same point in time. My thoughts as to the reason for this is primarily rooted in the fact that she is a more minor character in the bible and as such of lesser known than the other names.\nSecond, the name Mary had a second rise to popularity that spiked at around the year 1921. In doing a little research it seems that Mary was a symbol of protection durring WW1 and so my hypothesis is that this may be the reason why we are seeign that second spike before the curve aligns with the other biblical figure names.\n\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Mary\") | (theNames['name'] == \"Martha\") | (theNames['name'] == \"Peter\") | (theNames['name'] == \"Paul\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(aes(colour=\"name\"))\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + scale_x_continuous(limits=(1920, 2000))\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
-    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
-    "title": "Client Report - What’s in a name?",
-    "section": "QUESTION|TASK 4",
-    "text": "QUESTION|TASK 4\nThink of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?\nFor a famous movie, I selected Casablanca. The main character in that movie is Victor and I thought there would be a marked increase in that name’s usage considering the popularity of the movie. What I found was that, while there was an uptick, it was not the movie, but some other event that transpired in the late 1930s that gave rise to the name’s popularity. This would suggest that the name of the main character from that movie was selected due to the event in the late 1930s. Following Casablanca’s release the name continued to rise higher, so I suspect that while not the original source of the increae in popularity, it probably served to spur the name’s use on to greater heights.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Victor\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Victor\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1925, y=3500, xend=1942, yend=2392, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1910, y=3500, label=\"Casablanca (1942)\", hjust=\"left\", \n    color=\"red\")\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/DS250-whatsInAName.html#questionstretch",
-    "href": "Story_Telling/DS250-whatsInAName.html#questionstretch",
-    "title": "Client Report - What’s in a name?",
-    "section": "QUESTION|Stretch",
-    "text": "QUESTION|Stretch\nReproduce the chart Elliot using the data from the names_year.csv file.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
-    "crumbs": [
-      "Story Telling",
-      "What's in a Name"
-    ]
+    "text": "MarkDown Basics"
   }
 ]
