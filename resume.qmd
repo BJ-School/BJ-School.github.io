@@ -1,6 +1,5 @@
 ---
 layout: cv
-title: Brett Jameson's CV
 ---
 # Brett Jameson
 Software Engineer
@@ -30,7 +29,7 @@ Origami, AI
 `1996-1998`
 __University of Idaho__
 
-`2021 - now`
+`2021-now`
 __BYU-I__
 
 

@@ -1,0 +1,327 @@
+---
+title: "Client Report - [Insert Project Title]"
+subtitle: "Course DS 250"
+author: "[STUDENT NAME]"
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    title-block-banner: true
+    toc: true
+    toc-depth: 3
+    toc-location: body
+    number-sections: false
+    html-math-method: katex
+    code-fold: true
+    code-summary: "Show the code"
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+        source: false
+        toggle: true
+        caption: See code
+execute: 
+  warning: false
+    
+---
+
+```{python}
+#| label: elevator
+#| include: true
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
+import xgboost as xgb
+import lightgbm as lgb
+from sklearn.model_selection import train_test_split
+from sklearn import tree
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier
+from sklearn import metrics
+
+
+# Loading in data
+url = "https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv"
+dwellings_ml = pd.read_csv(url)
+
+h_subset = dwellings_ml.filter(
+  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']
+)
+
+# Older homes are more likely to not have anything left unfinished
+h_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']
+
+# Older homes will ahve a lower value per square foot
+h_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']
+
+# Older homes would be more likely to have sustained more wear and tear
+h_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4
+
+X = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]
+y = h_subset['before1980']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)
+
+xgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)
+xgb_model.fit(X_train, y_train)
+# Get feature importances from the trained XGBoost model
+feature_importances = xgb_model.feature_importances_
+# Create a DataFrame for feature importances
+feature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})
+# Sort the DataFrame by importance in descending order
+feature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)
+# Display the feature importance table
+print(feature_importance_df)
+# Create a heatmap of feature importances
+plt.figure(figsize=(10, 6))
+sns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=".2f")
+plt.title('Feature Importances (XGBoost)')
+plt.xlabel('Importance')
+plt.ylabel('Features')
+plt.show()
+```
+
+
+## Elevator pitch
+
+_The most important feature to use when determining if a house was built before 1980 is the number of stories. This feature had the greatest effect on the model's accuracy by far. Another important feature had to be engineered. That feature was the condition of the house as the older a house is the less likly it will be in excellend or very good condition. In the end it was a combination of selecting the best features as well as engineering a couple of additional features to train off of that allowed me to achieve over 90% accuracy._
+
+```{python}
+#| label: project-data
+#| include: false
+#| code-summary: Read and format project data
+
+# Learn morea about Code Cells: https://quarto.org/docs/reference/cells/cells-jupyter.html
+
+# Include and execute your code here
+import pandas as pd
+dataSource = "data/dwellings_ml.csv"
+dwellings_ml = pd.read_csv(dataSource)
+
+h_subset = dwellings_ml.filter(
+  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice']
+).sample(500)
+```
+
+## QUESTION|TASK 1
+
+__Create 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.__
+
+_This chart demonstrates the relationship between the number of cars and the number of bedrooms. The data would seem to indicate that no car and single car garages are a good indicator that the house was built before 1980. Also with regards to 2 car garages, only very small houses (1-2 bedrooms) would be expected to have a 2 car garage if and only if they were build after 1980. Any isntances where the house has a 2 car garage and has 3 or more bedrooms is likely to be built before 1980._
+
+```{python}
+#| label: Q1
+#| code-summary: Read and format data
+# Loading in packages
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from sklearn.model_selection import train_test_split
+from sklearn import tree
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn import metrics
+
+# Loading in data
+url = "https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv"
+dwellings_ml = pd.read_csv(url)
+
+h_subset = dwellings_ml.filter(
+  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt']
+).sample(500)
+
+chart = px.scatter_matrix(h_subset,
+  dimensions=['nocars', 'numbdrm'],
+  color='before1980'
+)
+chart.update_traces(diagonal_visible=False)
+chart.show()
+```
+
+_This chart gives me some ideas as to what fields are more indicitave of a house being built pre-1980. Specifically it looks like the fields finbsmnt, basement, nocars, numbdrm are some of the better fields to use in training my model._
+
+```{python}
+#| label: Q1-chart2
+#| code-summary: Read and format data
+# Loading in packages
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from sklearn.model_selection import train_test_split
+from sklearn import tree
+from sklearn.naive_bayes import GaussianNB
+
+# Loading in data
+url = "https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv"
+dwellings_ml = pd.read_csv(url)
+
+h_subset = dwellings_ml.filter(
+  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']
+)
+
+corr = h_subset.corr()
+px.imshow(corr, text_auto=True)
+```
+
+## QUESTION|TASK 2
+
+__Build a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy.__
+
+_I spent a large amount of time tuning the model's parameters but was only able to achieve an accuracy of about 88%. When I was in one of the tutoring labs this last week, the tutor said something. He said that one of the thing he does it to take a moment and think about what he knows about the data. So I asked myself the question: "What do I know about pre 1980 houses vs more recently built ones?" A few things came to mind._
+
+_First, older homes are less likly to have any portion of their basement unfinished. Over the years it is likely that any unfinished areas would have been completed._
+
+_Second, older homes generally have a lower value per square foot._
+
+_Third, an older home will have sustained more wear and tear over the years. Newer homes would be more likly to be in excellend condition, whereas older ones would be more likly to only be average or worse._
+
+_With these three things in mind I created some new variables that the model could make use of._
+
+```{python}
+#| label: Q2 - Prep Data
+#| code-summary: Read and format data
+# Include and execute your code here
+
+# Tuning the data
+# Older homes are more likely to not have anything left unfinished
+h_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']
+
+# Older homes will ahve a lower value per square foot
+h_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']
+
+# Older homes would be more likely to have sustained more wear and tear
+h_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4
+```
+
+
+_Once I made thise adjustments, all three models that I had previously attempted to use were able to achieve accuracy levels over 90%_
+
+```{python}
+#| label: Q2 - Accuracy Report
+#Train the data
+import xgboost as xgb
+import lightgbm as lgb
+from sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier
+from sklearn import metrics
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, r2_score, root_mean_squared_error
+
+X = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]
+y = h_subset['before1980']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)
+
+hgbm = HistGradientBoostingClassifier(max_iter=500, learning_rate=.07, max_depth=7, random_state=1).fit(X_train, y_train)
+y_pred = hgbm.predict(X_test)
+hgbm_score = hgbm.score(X_test, y_test)
+print(f"Hist GBM Accuracy: {hgbm_score}")
+hgbm_f1_score = f1_score(y_test, y_pred)
+print(f"Hist GBM F1 Score: {hgbm_f1_score}")
+hgbm_precision_score = f1_score(y_test, y_pred)
+print(f"Hist GBM Precision Score: {hgbm_precision_score}")
+hgbm_recall_score = f1_score(y_test, y_pred)
+print(f"Hist GBM Recall Score: {hgbm_recall_score}")
+hgbm_r2_score = f1_score(y_test, y_pred)
+print(f"Hist GBM R2 Score: {hgbm_r2_score}")
+hgbm_root_mean2_error = f1_score(y_test, y_pred)
+print(f"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}")
+
+
+xgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)
+
+# Fit the model
+xgb_model.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = xgb_model.predict(X_test)
+xgb_accuracy = accuracy_score(y_test, y_pred)
+print(f"\nXGBoost Accuracy: {xgb_accuracy}")
+xgb_f1_score = f1_score(y_test, y_pred)
+print(f"XGBoost F1 Score: {xgb_f1_score}")
+xgb_precision_score = f1_score(y_test, y_pred)
+print(f"XGBoost Precision Score: {xgb_precision_score}")
+xgb_recall_score = f1_score(y_test, y_pred)
+print(f"XGBoost Recall Score: {xgb_recall_score}")
+xgb_r2_score = f1_score(y_test, y_pred)
+print(f"XGBoost R2 Score: {xgb_r2_score}")
+xgb_root_mean2_error = f1_score(y_test, y_pred)
+print(f"XGBoost Root Mean2 Error: {xgb_root_mean2_error}")
+
+lgb_model = lgb.LGBMClassifier(n_estimators=250, max_depth=7, learning_rate=0.1, min_data_in_leaf=20, min_gain_to_split=0.18, verbose=-1)
+
+# Fit the model
+lgb_model.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = lgb_model.predict(X_test)
+lgb_accuracy = accuracy_score(y_test, y_pred)
+print(f"\nLightGBM Accuracy: {lgb_accuracy}")
+lgb_f1_score = f1_score(y_test, y_pred)
+print(f"LightGBM F1 Score: {lgb_f1_score}")
+lgb_precision_score = f1_score(y_test, y_pred)
+print(f"LightGBM Precision Score: {lgb_precision_score}")
+lgb_recall_score = f1_score(y_test, y_pred)
+print(f"LightGBM Recall Score: {lgb_recall_score}")
+lgb_r2_score = f1_score(y_test, y_pred)
+print(f"LightGBM R2 Score: {lgb_r2_score}")
+lgb_root_mean2_error = f1_score(y_test, y_pred)
+print(f"LightGBM Root Mean2 Error: {lgb_root_mean2_error}")
+```
+
+
+## QUESTION|TASK 3
+
+__Justify your classification model by discussing the most important features selected by your model.__
+
+_As shown by the following chart, the most important feature by far is the number of stories. It is several times more effective than any of the other features. My initial suspition that the condition of the house might be a good indicator of age proved to be correct as that data engineered feature ended up being 2nd most important. The number of baths that a home has also ended up beign an important feature to use to train the model._
+
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Get feature importances from the trained XGBoost model
+feature_importances = xgb_model.feature_importances_
+# Create a DataFrame for feature importances
+feature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})
+# Sort the DataFrame by importance in descending order
+feature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)
+# Display the feature importance table
+print(feature_importance_df)
+# Create a heatmap of feature importances
+plt.figure(figsize=(10, 6))
+sns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=".2f")
+plt.title('Feature Importances (XGBoost)')
+plt.xlabel('Importance')
+plt.ylabel('Features')
+plt.show()
+```
+
+
+## QUESTION|TASK 4
+
+__Describe the quality of your classification model using 2-3 different evaluation metrics.__
+
+_Between the three classification models that I used I beleive that Hist GBM ended up being the best choice. All three models returned very similar numbers but the accuracy of 0.9014 made this model the best choice. All other scores remained closely related between the three models. The F1 score was also slightly higher than the other models but other than that the other metrics (Precision, Recall, R2, and Root Mean Squared Error) were almost identical between the three._
+
+```{python}
+#| label: Q4
+#| code-summary: Read and format data
+print(f"Hist GBM Accuracy: {hgbm_score}")
+print(f"Hist GBM F1 Score: {hgbm_f1_score}")
+print(f"Hist GBM Precision Score: {hgbm_precision_score}")
+print(f"Hist GBM Recall Score: {hgbm_recall_score}")
+print(f"Hist GBM R2 Score: {hgbm_r2_score}")
+print(f"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}")
+
+print(f"\nXGBoost Accuracy: {xgb_accuracy}")
+print(f"XGBoost F1 Score: {xgb_f1_score}")
+print(f"XGBoost Precision Score: {xgb_precision_score}")
+print(f"XGBoost Recall Score: {xgb_recall_score}")
+print(f"XGBoost R2 Score: {xgb_r2_score}")
+print(f"XGBoost Root Mean2 Error: {xgb_root_mean2_error}")
+
+print(f"\nLightGBM Accuracy: {lgb_accuracy}")
+print(f"LightGBM F1 Score: {lgb_f1_score}")
+print(f"LightGBM Precision Score: {lgb_precision_score}")
+print(f"LightGBM Recall Score: {lgb_recall_score}")
+print(f"LightGBM R2 Score: {lgb_r2_score}")
+print(f"LightGBM Root Mean2 Error: {lgb_root_mean2_error}")
+```

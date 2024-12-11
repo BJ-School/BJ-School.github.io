@@ -1,0 +1,468 @@
+---
+title: "Client Report - The War with Star Wars"
+subtitle: "Course DS 250"
+author: "Brett Jameson"
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    title-block-banner: true
+    toc: true
+    toc-depth: 3
+    toc-location: body
+    number-sections: false
+    html-math-method: katex
+    code-fold: true
+    code-summary: "Show the code"
+    code-overflow: wrap
+    code-copy: hover
+    code-tools:
+        source: false
+        toggle: true
+        caption: See code
+execute: 
+  warning: false
+    
+---
+
+```{python}
+#| label: libraries
+#| code-summary: Imports and initial setup.
+#| include: true
+import pandas as pd
+import altair as alt
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+
+# Loading in data
+data = "data/StarWars.csv"
+df = pd.read_csv(data, header=[0, 1])
+
+# Combine the first two rows into a single header
+df.columns = ['_'.join(col).strip() for col in df.columns.values]
+
+# Function to remove special characters
+def remove_special_chars(value):
+    if isinstance(value, str):
+        return ''.join(e for e in value if e.isalnum())
+    return value
+
+# Applying the function to all values in the DataFrame
+df = df.map(remove_special_chars)
+
+#Strip out special characters
+df.columns = df.columns.str.replace('[^A-Za-z0-9_]+', '', regex=True)
+
+# Setting NaN values to 0 in the entire DataFrame
+df = df.fillna(0)
+```
+
+
+## Elevator pitch
+
+_Who would have guessed that with machine learning one is able to get a good idea of a person's income level based upon their knowledge of Star Wars. By taking factors such as their favorite character, physical location, and which episodes they have watched into account once can begin to zero in on their income level. While this was unlikly to be the original purpose for gathering the data, it shows that even more innocolus data can be used to help understand your audience._
+
+
+__Highlight the Questions and Tasks__
+
+## QUESTION|TASK 1
+
+__Shorten the column names and clean them up for easier use with pandas.__
+_Provide a table or list that exemplifies how you fixed the names._
+
+_Renaming the table column names was easy once I was able to get ahold of the data. I have to check for and remove special characters, but once I had done that it came together pretty quickly._
+
+```{python}
+#| label: Q1
+#| code-summary: Example of table with the names fixed
+
+# Set the option to display all columns
+pd.set_option('display.max_columns', None)
+df.rename(columns={
+  'RespondentID_Unnamed0_level_1': "Id",
+  'Haveyouseenanyofthe6filmsintheStarWarsfranchise_Response': 'SeenAny',
+  'DoyouconsideryourselftobeafanoftheStarWarsfilmfranchise_Response': 'IsFan',
+  'WhichofthefollowingStarWarsfilmshaveyouseenPleaseselectallthatapply_StarWarsEpisodeIThePhantomMenace': 'SeenEpisode1',
+  'Unnamed4_level_0_StarWarsEpisodeIIAttackoftheClones':'SeenEpisode2',
+  'Unnamed5_level_0_StarWarsEpisodeIIIRevengeoftheSith':'SeenEpisode3',
+  'Unnamed6_level_0_StarWarsEpisodeIVANewHope':'SeenEpisode4',
+  'Unnamed7_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'SeenEpisode5',
+  'Unnamed8_level_0_StarWarsEpisodeVIReturnoftheJedi':'SeenEpisode6',
+  'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': '1stFavorite',
+  'PleaseranktheStarWarsfilmsinorderofpreferencewith1beingyourfavoritefilminthefranchiseand6beingyourleastfavoritefilm_StarWarsEpisodeIThePhantomMenace':'Episode1Rank',
+  'Unnamed10_level_0_StarWarsEpisodeIIAttackoftheClones':'Episode2Rank',
+  'Unnamed11_level_0_StarWarsEpisodeIIIRevengeoftheSith':'Episode3Rank',
+  'Unnamed12_level_0_StarWarsEpisodeIVANewHope':'Episode4Rank',
+  'Unnamed13_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'Episode5Rank',
+  'Unnamed14_level_0_StarWarsEpisodeVIReturnoftheJedi':'Episode6Rank',
+  'Pleasestatewhetheryouviewthefollowingcharactersfavorablyunfavorablyorareunfamiliarwithhimher_HanSolo': 'LikeHanSolo',
+  'Unnamed16_level_0_LukeSkywalker': 'LikeLuke',
+  'Unnamed17_level_0_PrincessLeiaOrgana': 'LikeLeia',
+  'Unnamed18_level_0_AnakinSkywalker': 'LikeAnakin',
+  'Unnamed19_level_0_ObiWanKenobi': 'LikeObiWan',
+  'Unnamed20_level_0_EmperorPalpatine': 'LikeEmperorPalpatine',
+  'Unnamed21_level_0_DarthVader': 'LikeDarthVader',
+  'Unnamed22_level_0_LandoCalrissian': 'LikeLando',
+  'Unnamed23_level_0_BobaFett': 'LikeBobaFett',
+  'Unnamed24_level_0_C3P0': 'LikeC3P0',
+  'Unnamed25_level_0_R2D2': 'LikeR2D2',
+  'Unnamed26_level_0_JarJarBinks': 'LikeJarJar',
+  'Unnamed27_level_0_PadmeAmidala': 'LikePadme',
+  'Unnamed28_level_0_Yoda': 'LikeYoda',
+  'Whichcharactershotfirst_Response': 'WhoShotFirst',
+  'AreyoufamiliarwiththeExpandedUniverse_Response': 'ExpandedUniverse',
+  'DoyouconsideryourselftobeafanoftheExpandedUniverse_Response': 'FanOfExpandedUniverse',
+  'DoyouconsideryourselftobeafanoftheStarTrekfranchise_Response': 'FanOfFranchise',
+  'Gender_Response': 'Gender',
+  'Age_Response': 'AgeRange',
+  'HouseholdIncome_Response': 'HouseholdIncomeRange',
+  'Education_Response': 'Education',
+  'LocationCensusRegion_Response': 'Location'
+}, inplace=True)
+
+df.head(0)
+```
+
+
+## QUESTION|TASK 2
+
+__Clean and format the data so that it can be used in a machine learning model.__
+_As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made._
+  *Filter the dataset to respondents that have seen at least one film
+  *Create a new column that converts the age ranges to a single number. Drop the age range categorical column
+  *Create a new column that converts the education groupings to a single number. Drop the school categorical column
+  *Create a new column that converts the income ranges to a single number. Drop the income range categorical column
+  *Create your target (also known as “y” or “label”) column based on the new income range column
+  *One-hot encode all remaining categorical columns_
+
+_In order to filter the dataset to respondents that have seen at least one film I dropped all columns where the respondent answered no to the question 'Have you seen any of the 6 films in the Star Wars franchise?' Next, I removed any records from the data set where the respondent answered "no" to each of the individual "Which of the following Star Wars films have you seen?"_
+
+_As age was recorded as an age range and not simply an age, I created a new column named age and set it to the median value of that range. I selected the median value as I wanted to retain some sort of relationship between the distances between possible ages to help the machine learning segment of this exercize later on._
+
+_Next I created a new column to represent education. I set that value to a numeric representation of the number of grades that a person would ahve completed (on average) to have achieved that level of education. Doing it this way will help the model later as the numeric value is indicitive of the time put in to achieve that level of education._
+
+_I converted the incom ranges to a single numeric value using a process similar to what I did with the age range data. I set the new value tot he median value of the range so that the ml model will be better able to gage relationships between the various salary levels._
+
+_I created a target column named "MakesMoreThan50k" and set it equal to either a 0 or a 1 based upon wether the value of the Income column that I had previously created was over 50,000 or not._
+
+_I then used sklearn's One Hot Encoding to convert the remaining three categorical data sets (Location, Gender, WhoShotFirst). Prior to doing this I set any NaN values to "Unspecified" so that that data could be represented in the dataset._
+
+
+```{python}
+#| label: Q2
+#| code-summary: Example of the tidied data table
+
+# Removing any where the respondent said they have not seen any of the episodes
+df = df[df['SeenAny'] != 'No']
+
+# Replacing specific values in the 'Episode1' column
+df['SeenEpisode1'] = df['SeenEpisode1'].replace('StarWarsEpisodeIThePhantomMenace', 1)
+df['SeenEpisode2'] = df['SeenEpisode2'].replace('StarWarsEpisodeIIAttackoftheClones', 1)
+df['SeenEpisode3'] = df['SeenEpisode3'].replace('StarWarsEpisodeIIIRevengeoftheSith', 1)
+df['SeenEpisode4'] = df['SeenEpisode4'].replace('StarWarsEpisodeIVANewHope', 1)
+df['SeenEpisode5'] = df['SeenEpisode5'].replace('StarWarsEpisodeVTheEmpireStrikesBack', 1)
+df['SeenEpisode6'] = df['SeenEpisode6'].replace('StarWarsEpisodeVIReturnoftheJedi', 1)
+
+# Checking if the really have seen at least one episode and removing them if they haven't
+df['sum'] = df[['SeenEpisode1', 'SeenEpisode2', 'SeenEpisode3', 'SeenEpisode4', 'SeenEpisode5', 'SeenEpisode6']].sum(axis=1)
+df = df[df['sum'] != 0]
+df.drop(columns=['sum'], inplace=True)
+
+# Convert age range to a single number
+df['Age'] = df['AgeRange'].map({
+  0: 0,
+  '1829': 24,
+  '4560': 53,
+  '3044': 37,
+  '60': 60
+})
+
+# Assign numerical to education level based on related average years in school
+df['YearsInSchool'] = df['Education'].map({
+  0: 0,
+  'Lessthanhighschooldegree': 10,
+  'Highschooldegree': 12,
+  'SomecollegeorAssociatedegree': 14,
+  'Bachelordegree': 16,
+  'Graduatedegree': 20
+})
+
+# Income range to the middle number
+df['Income'] = df['HouseholdIncomeRange'].map({
+  0: 0,
+  '024999': 12500,
+  '2500049999': 37500,
+  '5000099999': 75000,
+  '100000149999': 125000,
+  '150000': 175000,
+})
+
+# Create my target column
+df['MakesMoreThan50k'] = df['Income'].apply(lambda x: 1 if x > 50000 else 0)
+
+# Cleaning up data prior to applying one hot encoding
+df['WhoShotFirst'] = df['WhoShotFirst'].replace(0, 'Unspecified')
+df['Gender'] = df['Gender'].replace(0, 'Unspecified')
+df['Location'] = df['Location'].replace(0, 'Unspecified')
+
+#distinct_values = df['Location'].unique()
+#distinct_values
+
+#fit
+ohe = OneHotEncoder(handle_unknown = 'ignore', sparse_output=False)
+ohe.fit(df[['Location', 'Gender', 'WhoShotFirst']])
+#transform
+df_encoded = pd.DataFrame(ohe.transform(df[['Location', 'Gender', 'WhoShotFirst']]), columns=ohe.get_feature_names_out(['Location', 'Gender', 'WhoShotFirst']))
+df_combined = pd.concat([df.reset_index(drop=True), df_encoded.reset_index(drop=True)], axis=1)
+
+# Remove columns that are no longer needed
+df_combined.drop(columns=['AgeRange', 'Education', 'HouseholdIncomeRange', 'Location', 'Gender', 'WhoShotFirst'], inplace=True)
+
+# Replace non numeric strings with numeric equivalents
+df_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']] = df_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']].replace({'Yes': 1, 'No': 0}).astype(float).astype(int)
+df_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine',	'LikeDarthVader',	'LikeLando', 'LikeBobaFett', 'LikeC3P0',	'LikeR2D2',	'LikeJarJar',	'LikePadme',	'LikeYoda']] = df_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine',	'LikeDarthVader',	'LikeLando', 'LikeBobaFett', 'LikeC3P0',	'LikeR2D2',	'LikeJarJar',	'LikePadme',	'LikeYoda']].replace({
+  'Veryfavorably': 10,
+  'Somewhatfavorably': 5,
+  'Somewhatunfavorably': -5,
+  'Neitherfavorablynorunfavorablyneutral': 0,
+  'Veryunfavorably': -10,
+  'UnfamiliarNA': 0
+}).astype(float).astype(int)
+
+df_combined.head(4)
+```
+
+
+
+## QUESTION|TASK 3
+
+__Validate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.__
+
+_I was able to successfully recreate 2 of the tables provided in the GitHub article._
+
+```{python}
+#| label: Q3-Visual-1
+#| code-summary: Recreated visual #1
+
+data = pd.DataFrame({
+    'category': [
+      'The Phantom Menace',
+      'Attack of the Clones',
+      'Revenge of the Sith',
+      'A New Hope',
+      'The Empire Strikes Back',
+      'Return of the Jedi'
+    ],
+    'seenTheEpisode': [
+      df_combined['SeenEpisode1'].sum(),
+      df_combined['SeenEpisode2'].sum(),
+      df_combined['SeenEpisode3'].sum(),
+      df_combined['SeenEpisode4'].sum(),
+      df_combined['SeenEpisode5'].sum(),
+      df_combined['SeenEpisode6'].sum(),
+    ]
+})
+
+data['value'] = (data['seenTheEpisode'] / len(df_combined)) * 100
+data['value'] = data['value'].round(0).astype(int)
+data['value_label'] = data['value'].astype(str) + '%'
+
+chart = alt.Chart(data).mark_bar().encode(
+    x=alt.X('value:Q', title='Value', axis=None),
+    y=alt.Y('category:N', sort=None, title='Category', axis=None)
+)
+
+# Add value percentages to the right of the bars
+text = chart.mark_text(
+    align='left',
+    baseline='middle',
+    dx=3  # Adjust this value to position the text further to the right
+).encode(
+    text='value_label:N'
+)
+
+# Add category labels to the left of the bars
+category_text = chart.mark_text(
+    align='right',
+    baseline='middle',
+    dx=-3  # Adjust this value to position the text further to the left
+).encode(
+    x=alt.value(-5),
+    text='category:N'
+)
+
+final_chart = (chart + text + category_text).properties(
+    view=alt.ViewConfig(stroke='white'), 
+    title={
+        "text": "Which 'Star Wars' Movies Have You Seen?",
+        "subtitle": f"Of {len(df_combined)} respondents who have seen any film",
+        "anchor": "start",
+        "fontSize": 20
+    }
+)
+final_chart.show()
+```
+
+```{python}
+#| label: Q3-Visual-2
+#| code-summary: Recreated visual #2
+
+df_seenAll = df_combined[
+    (df_combined['SeenEpisode1'] + df_combined['SeenEpisode2'] + 
+     df_combined['SeenEpisode3'] + df_combined['SeenEpisode4'] + 
+     df_combined['SeenEpisode5'] + df_combined['SeenEpisode6']) == 6
+]
+df_seenAll
+
+data = pd.DataFrame({
+    'category': [
+      'The Phantom Menace',
+      'Attack of the Clones',
+      'Revenge of the Sith',
+      'A New Hope',
+      'The Empire Strikes Back',
+      'Return of the Jedi'
+    ],
+    'bestEpisode': [
+      len(df_seenAll[df_seenAll['Episode1Rank'] == 1]),
+      len(df_seenAll[df_seenAll['Episode2Rank'] == 1]),
+      len(df_seenAll[df_seenAll['Episode3Rank'] == 1]),
+      len(df_seenAll[df_seenAll['Episode4Rank'] == 1]),
+      len(df_seenAll[df_seenAll['Episode5Rank'] == 1]),
+      len(df_seenAll[df_seenAll['Episode6Rank'] == 1])
+    ]
+})
+
+data['value'] = (data['bestEpisode'] / len(df_seenAll)) * 100
+data['value'] = data['value'].round(0).astype(int)
+data['value_label'] = data['value'].astype(str) + '%'
+
+chart = alt.Chart(data).mark_bar().encode(
+    x=alt.X('value:Q', title='Value', axis=None),
+    y=alt.Y('category:N', sort=None, title='Category', axis=None)
+)
+
+# Add value percentages to the right of the bars
+text = chart.mark_text(
+    align='left',
+    baseline='middle',
+    dx=3  # Adjust this value to position the text further to the right
+).encode(
+    text='value_label:N'
+)
+
+# Add category labels to the left of the bars
+category_text = chart.mark_text(
+    align='right',
+    baseline='middle',
+    dx=-3  # Adjust this value to position the text further to the left
+).encode(
+    x=alt.value(-5),
+    text='category:N'
+)
+
+final_chart = (chart + text + category_text).properties(
+    view=alt.ViewConfig(stroke='white'), 
+    title={
+        "text": "What's the Best 'Star Wars' Movie?",
+        "subtitle": f"Of {len(df_seenAll)} respondents who have seen all films",
+        "anchor": "start",
+        "fontSize": 20
+    }
+)
+final_chart.show()
+```
+
+
+
+## QUESTION|TASK 4
+
+__Build a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.__
+
+_I used XGBoost and originally had an accuracy of about 53%. After doing a little tweaking to the model I was able to get the accuracy slightly higher to 59%. Several of the other ways to gage accuracy (F1, Precision, Recall, R2, and Root Mean2) all score at around 63% so while not the 65% called out in the stretch I was able to get close to it._
+
+```{python}
+#| label: Q4-Train-Model
+#| code-summary: Code to train the model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from functions.model_evaluation import evaluateModel
+
+X = df_combined[[
+#        "SeenAny", 
+        "IsFan", 
+        "SeenEpisode1", 
+        "SeenEpisode2", 
+        "SeenEpisode3", 
+        "SeenEpisode4", 
+        "SeenEpisode5", 
+#        "SeenEpisode6", 
+#        "Episode1Rank", 
+#        "Episode2Rank", 
+#        "Episode3Rank", 
+#        "Episode4Rank", 
+#        "Episode5Rank", 
+#        "Episode6Rank", 
+        "LikeHanSolo", 
+        "LikeLuke", 
+        "LikeLeia", 
+        "LikeAnakin", 
+        "LikeObiWan", 
+        "LikeEmperorPalpatine", 
+        "LikeDarthVader", 
+        "LikeLando", 
+        "LikeBobaFett", 
+        "LikeC3P0", 
+        "LikeR2D2", 
+        "LikeJarJar", 
+        "LikePadme", 
+        "LikeYoda", 
+        "ExpandedUniverse", 
+        "FanOfExpandedUniverse", 
+        "FanOfFranchise", 
+        "Age", 
+        "YearsInSchool", 
+        "Location_EastNorthCentral", 
+        "Location_EastSouthCentral",
+        "Location_MiddleAtlantic", 
+        "Location_Mountain", 
+        "Location_NewEngland", 
+        "Location_Pacific", 
+        "Location_SouthAtlantic", 
+#        "Location_Unspecified",
+        "Location_WestNorthCentral", 
+        "Location_WestSouthCentral",
+        "Gender_Female", 
+        "Gender_Male", 
+#        "Gender_Unspecified",
+        "WhoShotFirst_Greedo", 
+        "WhoShotFirst_Han",
+        "WhoShotFirst_Idontunderstandthisquestion",
+#        "WhoShotFirst_Unspecified"
+    ]]
+y = df_combined['MakesMoreThan50k']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.29, random_state=43)
+model = evaluateModel(X_train, y_train, X_test, y_test, "XGBoost")
+```
+
+```{python}
+#| label: feature_importance
+#| code-summary: Displays the feature importance
+#| include: false
+# Get feature importances from the trained XGBoost model
+feature_importances = model.feature_importances_
+# Create a DataFrame for feature importances
+feature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})
+# Sort the DataFrame by importance in descending order
+feature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)
+# Display the feature importance table
+print(feature_importance_df)
+# Create a heatmap of feature importances
+plt.figure(figsize=(10, 6))
+sns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=".2f")
+plt.title('Feature Importances')
+plt.xlabel('Importance')
+plt.ylabel('Features')
+plt.show()
+```
