@@ -4752,7 +4752,7 @@ vertical-align: -.125em;
 <style type="text/css"></style>
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -4794,7 +4794,7 @@ vertical-align: -.125em;
 <span class="menu-text">Machine Learning</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../full_stack.html"> 
+    <a class="nav-link active" href="../full_stack.html" aria-current="page"> 
 <span class="menu-text">Full Stack</span></a>
   </li>  
   <li class="nav-item">
@@ -4808,18 +4808,28 @@ vertical-align: -.125em;
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Full_Stack/DS250-theWarWithStarWars.html">The War with Star Wars</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-right">
       <div class="quarto-title-block"><div><h1 class="title">Client Report - The War with Star Wars</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> See code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
             <p class="subtitle lead">Course DS 250</p>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-right">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -4835,11 +4845,32 @@ vertical-align: -.125em;
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../full_stack.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Full Stack</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Full_Stack/DS250-theWarWithStarWars.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The War with Star Wars</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-right" id="quarto-document-content">
 
 
 
@@ -5454,22 +5485,22 @@ vertical-align: -.125em;
 <div id="q3-visual-1" class="cell-output cell-output-display">
 
 <style>
-#altair-viz-b0ad610a34ac4e9d9915c69867ca785e.vega-embed {
+#altair-viz-f6fb2f0a0415491694cce17fc1ee23db.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-b0ad610a34ac4e9d9915c69867ca785e.vega-embed details,
-#altair-viz-b0ad610a34ac4e9d9915c69867ca785e.vega-embed details summary {
+#altair-viz-f6fb2f0a0415491694cce17fc1ee23db.vega-embed details,
+#altair-viz-f6fb2f0a0415491694cce17fc1ee23db.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-b0ad610a34ac4e9d9915c69867ca785e"></div>
+<div id="altair-viz-f6fb2f0a0415491694cce17fc1ee23db"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b0ad610a34ac4e9d9915c69867ca785e") {
-      outputDiv = document.getElementById("altair-viz-b0ad610a34ac4e9d9915c69867ca785e");
+    if (outputDiv.id !== "altair-viz-f6fb2f0a0415491694cce17fc1ee23db") {
+      outputDiv = document.getElementById("altair-viz-f6fb2f0a0415491694cce17fc1ee23db");
     }
 
     const paths = {
@@ -5592,22 +5623,22 @@ position: relative;
 <div id="q3-visual-2" class="cell-output cell-output-display">
 
 <style>
-#altair-viz-316f0da9db4147db8c89760a8c852bd8.vega-embed {
+#altair-viz-39e5eb1e3b024a3c9640a915d9c742ae.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-316f0da9db4147db8c89760a8c852bd8.vega-embed details,
-#altair-viz-316f0da9db4147db8c89760a8c852bd8.vega-embed details summary {
+#altair-viz-39e5eb1e3b024a3c9640a915d9c742ae.vega-embed details,
+#altair-viz-39e5eb1e3b024a3c9640a915d9c742ae.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-316f0da9db4147db8c89760a8c852bd8"></div>
+<div id="altair-viz-39e5eb1e3b024a3c9640a915d9c742ae"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-316f0da9db4147db8c89760a8c852bd8") {
-      outputDiv = document.getElementById("altair-viz-316f0da9db4147db8c89760a8c852bd8");
+    if (outputDiv.id !== "altair-viz-39e5eb1e3b024a3c9640a915d9c742ae") {
+      outputDiv = document.getElementById("altair-viz-39e5eb1e3b024a3c9640a915d9c742ae");
     }
 
     const paths = {
