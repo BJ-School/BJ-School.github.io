@@ -20,100 +20,97 @@
     ]
   },
   {
-    "objectID": "Story_Telling/project4.html",
-    "href": "Story_Telling/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Story Telling",
-      "Project 4"
-    ]
-  },
-  {
-    "objectID": "Story_Telling/project2.html",
-    "href": "Story_Telling/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Story Telling",
-      "Project 2"
-    ]
-  },
-  {
     "objectID": "resume.html",
     "href": "resume.html",
-    "title": "Isaac Newtons’s CV",
+    "title": "Brett Jameson",
     "section": "",
-    "text": "Physicist, Mathematician, Cambridge professor.\n\nisaac@applesdofall.org | My wikipedia page\n\n\n\nStanding on the shoulders of giants\n\n\nLaws of motion, gravitation, minting coins, disliking Robert Hooke\n\n\n\nCooling, power series, optics, alchemy, planetary motions, apples.\n\n\n\n\n1654-1660 The King’s School, Grantham.\nJune 1661 - now Trinity College, Cambridge\n\nSizar\n\n1667 - death Trinity College, Cambridge\n\nFellow\n\n\n\n\n2012 President, Royal Society, London, UK\nAssociate, French Academy of Science, Paris, France\n\n\n\n\n\n\n1669 Newton Sir I, De analysi per æquationes numero terminorum infinitas.\n1669 Lectiones opticæ.\netc. etc. etc.\n\n\n\n2012 Infinitesimal calculus for solutions to physics problems, SMBC patent 001\n\n\n\n\n1600 Royal Mint, London\n\nWarden\nMinted coins\n\n1600 Lucasian professor of Mathematics, Cambridge University"
+    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
   },
   {
     "objectID": "resume.html#currently",
     "href": "resume.html#currently",
-    "title": "Isaac Newtons’s CV",
+    "title": "Brett Jameson",
     "section": "",
-    "text": "Standing on the shoulders of giants\n\n\nLaws of motion, gravitation, minting coins, disliking Robert Hooke\n\n\n\nCooling, power series, optics, alchemy, planetary motions, apples."
+    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
   },
   {
     "objectID": "resume.html#education",
     "href": "resume.html#education",
-    "title": "Isaac Newtons’s CV",
+    "title": "Brett Jameson",
     "section": "",
-    "text": "1654-1660 The King’s School, Grantham.\nJune 1661 - now Trinity College, Cambridge\n\nSizar\n\n1667 - death Trinity College, Cambridge\n\nFellow"
-  },
-  {
-    "objectID": "resume.html#awards",
-    "href": "resume.html#awards",
-    "title": "Isaac Newtons’s CV",
-    "section": "",
-    "text": "2012 President, Royal Society, London, UK\nAssociate, French Academy of Science, Paris, France"
-  },
-  {
-    "objectID": "resume.html#publications",
-    "href": "resume.html#publications",
-    "title": "Isaac Newtons’s CV",
-    "section": "",
-    "text": "1669 Newton Sir I, De analysi per æquationes numero terminorum infinitas.\n1669 Lectiones opticæ.\netc. etc. etc.\n\n\n\n2012 Infinitesimal calculus for solutions to physics problems, SMBC patent 001"
+    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
   },
   {
     "objectID": "resume.html#occupation",
     "href": "resume.html#occupation",
-    "title": "Isaac Newtons’s CV",
+    "title": "Brett Jameson",
     "section": "",
-    "text": "1600 Royal Mint, London\n\nWarden\nMinted coins\n\n1600 Lucasian professor of Mathematics, Cambridge University"
+    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
   },
   {
-    "objectID": "Machine_Learning/project5.html",
-    "href": "Machine_Learning/project5.html",
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html",
     "title": "Client Report - [Insert Project Title]",
     "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\nxgb_model.fit(X_train, y_train)\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.472117\n9           condition    0.189045\n5            numbaths    0.107404\n2            basement    0.044841\n4             numbdrm    0.040532\n3              nocars    0.040397\n8        pricepersqft    0.034854\n7  unfinishedbasement    0.028200\n0            livearea    0.022289\n1            finbsmnt    0.020322",
     "crumbs": [
       "Machine Learning",
-      "Project 5"
+      "Can you Predict That"
     ]
   },
   {
-    "objectID": "Machine_Learning/project3.html",
-    "href": "Machine_Learning/project3.html",
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
     "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nThe most important feature to use when determining if a house was built before 1980 is the number of stories. This feature had the greatest effect on the model’s accuracy by far. Another important feature had to be engineered. That feature was the condition of the house as the older a house is the less likly it will be in excellend or very good condition. In the end it was a combination of selecting the best features as well as engineering a couple of additional features to train off of that allowed me to achieve over 90% accuracy.",
     "crumbs": [
       "Machine Learning",
-      "Project 3"
+      "Can you Predict That"
     ]
   },
   {
-    "objectID": "Machine_Learning/project1.html",
-    "href": "Machine_Learning/project1.html",
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
     "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nCreate 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.\nThis chart demonstrates the relationship between the number of cars and the number of bedrooms. The data would seem to indicate that no car and single car garages are a good indicator that the house was built before 1980. Also with regards to 2 car garages, only very small houses (1-2 bedrooms) would be expected to have a 2 car garage if and only if they were build after 1980. Any isntances where the house has a 2 car garage and has 3 or more bedrooms is likely to be built before 1980.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt']\n).sample(500)\n\nchart = px.scatter_matrix(h_subset,\n  dimensions=['nocars', 'numbdrm'],\n  color='before1980'\n)\nchart.update_traces(diagonal_visible=False)\nchart.show()\n\n\n                                                \n\n\nThis chart gives me some ideas as to what fields are more indicitave of a house being built pre-1980. Specifically it looks like the fields finbsmnt, basement, nocars, numbdrm are some of the better fields to use in training my model.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\ncorr = h_subset.corr()\npx.imshow(corr, text_auto=True)",
     "crumbs": [
       "Machine Learning",
-      "Project 1"
+      "Can you Predict That"
+    ]
+  },
+  {
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nBuild a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy.\nI spent a large amount of time tuning the model’s parameters but was only able to achieve an accuracy of about 88%. When I was in one of the tutoring labs this last week, the tutor said something. He said that one of the thing he does it to take a moment and think about what he knows about the data. So I asked myself the question: “What do I know about pre 1980 houses vs more recently built ones?” A few things came to mind.\nFirst, older homes are less likly to have any portion of their basement unfinished. Over the years it is likely that any unfinished areas would have been completed.\nSecond, older homes generally have a lower value per square foot.\nThird, an older home will have sustained more wear and tear over the years. Newer homes would be more likly to be in excellend condition, whereas older ones would be more likly to only be average or worse.\nWith these three things in mind I created some new variables that the model could make use of.\n\n\nRead and format data\n# Include and execute your code here\n\n# Tuning the data\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\n\nOnce I made thise adjustments, all three models that I had previously attempted to use were able to achieve accuracy levels over 90%\n\n\nShow the code\n#Train the data\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\nfrom sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, r2_score, root_mean_squared_error\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nhgbm = HistGradientBoostingClassifier(max_iter=500, learning_rate=.07, max_depth=7, random_state=1).fit(X_train, y_train)\ny_pred = hgbm.predict(X_test)\nhgbm_score = hgbm.score(X_test, y_test)\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nhgbm_f1_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nhgbm_precision_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nhgbm_recall_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nhgbm_r2_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nhgbm_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\n\n# Fit the model\nxgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = xgb_model.predict(X_test)\nxgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nxgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nxgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nxgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nxgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nxgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nlgb_model = lgb.LGBMClassifier(n_estimators=250, max_depth=7, learning_rate=0.1, min_data_in_leaf=20, min_gain_to_split=0.18, verbose=-1)\n\n# Fit the model\nlgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = lgb_model.predict(X_test)\nlgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nlgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nlgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nlgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nlgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nlgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9008591299604527\nXGBoost F1 Score: 0.9214818014904418\nXGBoost Precision Score: 0.9214818014904418\nXGBoost Recall Score: 0.9214818014904418\nXGBoost R2 Score: 0.9214818014904418\nXGBoost Root Mean2 Error: 0.9214818014904418\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
+  },
+  {
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nJustify your classification model by discussing the most important features selected by your model.\nAs shown by the following chart, the most important feature by far is the number of stories. It is several times more effective than any of the other features. My initial suspition that the condition of the house might be a good indicator of age proved to be correct as that data engineered feature ended up being 2nd most important. The number of baths that a home has also ended up beign an important feature to use to train the model.\n\n\nShow the code\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.472117\n9           condition    0.189045\n5            numbaths    0.107404\n2            basement    0.044841\n4             numbdrm    0.040532\n3              nocars    0.040397\n8        pricepersqft    0.034854\n7  unfinishedbasement    0.028200\n0            livearea    0.022289\n1            finbsmnt    0.020322",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
+  },
+  {
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nDescribe the quality of your classification model using 2-3 different evaluation metrics.\nBetween the three classification models that I used I beleive that Hist GBM ended up being the best choice. All three models returned very similar numbers but the accuracy of 0.9014 made this model the best choice. All other scores remained closely related between the three models. The F1 score was also slightly higher than the other models but other than that the other metrics (Precision, Recall, R2, and Root Mean Squared Error) were almost identical between the three.\n\n\nRead and format data\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9008591299604527\nXGBoost F1 Score: 0.9214818014904418\nXGBoost Precision Score: 0.9214818014904418\nXGBoost Recall Score: 0.9214818014904418\nXGBoost R2 Score: 0.9214818014904418\nXGBoost Root Mean2 Error: 0.9214818014904418\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
     ]
   },
   {
@@ -137,263 +134,111 @@
     ]
   },
   {
-    "objectID": "Full_Stack/project4.html",
-    "href": "Full_Stack/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Full Stack",
-      "Project 4"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/project2.html",
-    "href": "Full_Stack/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Full Stack",
-      "Project 2"
-    ]
-  },
-  {
     "objectID": "exploration.html",
     "href": "exploration.html",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Data Exploration"
-    ]
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "exploration.html#title-2-header",
     "href": "exploration.html#title-2-header",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Data Exploration"
-    ]
-  },
-  {
-    "objectID": "Competition/project5.html",
-    "href": "Competition/project5.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Competition",
-      "Project 5"
-    ]
-  },
-  {
-    "objectID": "Competition/project3.html",
-    "href": "Competition/project3.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Competition",
-      "Project 3"
-    ]
-  },
-  {
-    "objectID": "Competition/project1.html",
-    "href": "Competition/project1.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Competition",
-      "Project 1"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Projects/project4.html",
-    "href": "Cleansing_Projects/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Data Cleansing",
-      "Project 4"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Projects/project2.html",
-    "href": "Cleansing_Projects/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Data Cleansing",
-      "Project 2"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Exploration/project5.html",
-    "href": "Cleansing_Exploration/project5.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "Cleansing_Exploration/project3.html",
-    "href": "Cleansing_Exploration/project3.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "Cleansing_Exploration/project1.html",
-    "href": "Cleansing_Exploration/project1.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top"
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "cleansing.html",
     "href": "cleansing.html",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Data Cleansing"
-    ]
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "cleansing.html#title-2-header",
     "href": "cleansing.html#title-2-header",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Data Cleansing"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Exploration/project2.html",
-    "href": "Cleansing_Exploration/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "Cleansing_Exploration/project4.html",
-    "href": "Cleansing_Exploration/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "Cleansing_Projects/project1.html",
-    "href": "Cleansing_Projects/project1.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Data Cleansing",
-      "Project 1"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Projects/project3.html",
-    "href": "Cleansing_Projects/project3.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Data Cleansing",
-      "Project 3"
-    ]
-  },
-  {
-    "objectID": "Cleansing_Projects/project5.html",
-    "href": "Cleansing_Projects/project5.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Data Cleansing",
-      "Project 5"
-    ]
-  },
-  {
-    "objectID": "Competition/project2.html",
-    "href": "Competition/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Competition",
-      "Project 2"
-    ]
-  },
-  {
-    "objectID": "Competition/project4.html",
-    "href": "Competition/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Competition",
-      "Project 4"
-    ]
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "competition.html",
     "href": "competition.html",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Competition"
-    ]
+    "text": "MarkDown Basics"
   },
   {
     "objectID": "competition.html#title-2-header",
     "href": "competition.html#title-2-header",
     "title": "about me",
     "section": "",
-    "text": "MarkDown Basics",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html",
+    "title": "Client Report - The War with Star Wars",
+    "section": "",
+    "text": "Imports and initial setup.\nimport pandas as pd\nimport altair as alt\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder\n\n# Loading in data\ndata = \"data/StarWars.csv\"\ndf = pd.read_csv(data, header=[0, 1])\n\n# Combine the first two rows into a single header\ndf.columns = ['_'.join(col).strip() for col in df.columns.values]\n\n# Function to remove special characters\ndef remove_special_chars(value):\n    if isinstance(value, str):\n        return ''.join(e for e in value if e.isalnum())\n    return value\n\n# Applying the function to all values in the DataFrame\ndf = df.map(remove_special_chars)\n\n#Strip out special characters\ndf.columns = df.columns.str.replace('[^A-Za-z0-9_]+', '', regex=True)\n\n# Setting NaN values to 0 in the entire DataFrame\ndf = df.fillna(0)",
     "crumbs": [
-      "Competition"
+      "Full Stack",
+      "The War with Star Wars"
     ]
   },
   {
-    "objectID": "Full_Stack/project1.html",
-    "href": "Full_Stack/project1.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
+    "title": "Client Report - The War with Star Wars",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nWho would have guessed that with machine learning one is able to get a good idea of a person’s income level based upon their knowledge of Star Wars. By taking factors such as their favorite character, physical location, and which episodes they have watched into account once can begin to zero in on their income level. While this was unlikly to be the original purpose for gathering the data, it shows that even more innocolus data can be used to help understand your audience.\nHighlight the Questions and Tasks",
     "crumbs": [
       "Full Stack",
-      "Project 1"
+      "The War with Star Wars"
     ]
   },
   {
-    "objectID": "Full_Stack/project3.html",
-    "href": "Full_Stack/project3.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nShorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.\nRenaming the table column names was easy once I was able to get ahold of the data. I have to check for and remove special characters, but once I had done that it came together pretty quickly.\n\n\nExample of table with the names fixed\n# Set the option to display all columns\npd.set_option('display.max_columns', None)\ndf.rename(columns={\n  'RespondentID_Unnamed0_level_1': \"Id\",\n  'Haveyouseenanyofthe6filmsintheStarWarsfranchise_Response': 'SeenAny',\n  'DoyouconsideryourselftobeafanoftheStarWarsfilmfranchise_Response': 'IsFan',\n  'WhichofthefollowingStarWarsfilmshaveyouseenPleaseselectallthatapply_StarWarsEpisodeIThePhantomMenace': 'SeenEpisode1',\n  'Unnamed4_level_0_StarWarsEpisodeIIAttackoftheClones':'SeenEpisode2',\n  'Unnamed5_level_0_StarWarsEpisodeIIIRevengeoftheSith':'SeenEpisode3',\n  'Unnamed6_level_0_StarWarsEpisodeIVANewHope':'SeenEpisode4',\n  'Unnamed7_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'SeenEpisode5',\n  'Unnamed8_level_0_StarWarsEpisodeVIReturnoftheJedi':'SeenEpisode6',\n  'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': '1stFavorite',\n  'PleaseranktheStarWarsfilmsinorderofpreferencewith1beingyourfavoritefilminthefranchiseand6beingyourleastfavoritefilm_StarWarsEpisodeIThePhantomMenace':'Episode1Rank',\n  'Unnamed10_level_0_StarWarsEpisodeIIAttackoftheClones':'Episode2Rank',\n  'Unnamed11_level_0_StarWarsEpisodeIIIRevengeoftheSith':'Episode3Rank',\n  'Unnamed12_level_0_StarWarsEpisodeIVANewHope':'Episode4Rank',\n  'Unnamed13_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'Episode5Rank',\n  'Unnamed14_level_0_StarWarsEpisodeVIReturnoftheJedi':'Episode6Rank',\n  'Pleasestatewhetheryouviewthefollowingcharactersfavorablyunfavorablyorareunfamiliarwithhimher_HanSolo': 'LikeHanSolo',\n  'Unnamed16_level_0_LukeSkywalker': 'LikeLuke',\n  'Unnamed17_level_0_PrincessLeiaOrgana': 'LikeLeia',\n  'Unnamed18_level_0_AnakinSkywalker': 'LikeAnakin',\n  'Unnamed19_level_0_ObiWanKenobi': 'LikeObiWan',\n  'Unnamed20_level_0_EmperorPalpatine': 'LikeEmperorPalpatine',\n  'Unnamed21_level_0_DarthVader': 'LikeDarthVader',\n  'Unnamed22_level_0_LandoCalrissian': 'LikeLando',\n  'Unnamed23_level_0_BobaFett': 'LikeBobaFett',\n  'Unnamed24_level_0_C3P0': 'LikeC3P0',\n  'Unnamed25_level_0_R2D2': 'LikeR2D2',\n  'Unnamed26_level_0_JarJarBinks': 'LikeJarJar',\n  'Unnamed27_level_0_PadmeAmidala': 'LikePadme',\n  'Unnamed28_level_0_Yoda': 'LikeYoda',\n  'Whichcharactershotfirst_Response': 'WhoShotFirst',\n  'AreyoufamiliarwiththeExpandedUniverse_Response': 'ExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheExpandedUniverse_Response': 'FanOfExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheStarTrekfranchise_Response': 'FanOfFranchise',\n  'Gender_Response': 'Gender',\n  'Age_Response': 'AgeRange',\n  'HouseholdIncome_Response': 'HouseholdIncomeRange',\n  'Education_Response': 'Education',\n  'LocationCensusRegion_Response': 'Location'\n}, inplace=True)\n\ndf.head(0)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nWhoShotFirst\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nGender\nAgeRange\nHouseholdIncomeRange\nEducation\nLocation",
     "crumbs": [
       "Full Stack",
-      "Project 3"
+      "The War with Star Wars"
     ]
   },
   {
-    "objectID": "Full_Stack/project5.html",
-    "href": "Full_Stack/project5.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nClean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made. Filter the dataset to respondents that have seen at least one film Create a new column that converts the age ranges to a single number. Drop the age range categorical column Create a new column that converts the education groupings to a single number. Drop the school categorical column Create a new column that converts the income ranges to a single number. Drop the income range categorical column Create your target (also known as “y” or “label”) column based on the new income range column One-hot encode all remaining categorical columns_\nIn order to filter the dataset to respondents that have seen at least one film I dropped all columns where the respondent answered no to the question ‘Have you seen any of the 6 films in the Star Wars franchise?’ Next, I removed any records from the data set where the respondent answered “no” to each of the individual “Which of the following Star Wars films have you seen?”\nAs age was recorded as an age range and not simply an age, I created a new column named age and set it to the median value of that range. I selected the median value as I wanted to retain some sort of relationship between the distances between possible ages to help the machine learning segment of this exercize later on.\nNext I created a new column to represent education. I set that value to a numeric representation of the number of grades that a person would ahve completed (on average) to have achieved that level of education. Doing it this way will help the model later as the numeric value is indicitive of the time put in to achieve that level of education.\nI converted the incom ranges to a single numeric value using a process similar to what I did with the age range data. I set the new value tot he median value of the range so that the ml model will be better able to gage relationships between the various salary levels.\nI created a target column named “MakesMoreThan50k” and set it equal to either a 0 or a 1 based upon wether the value of the Income column that I had previously created was over 50,000 or not.\nI then used sklearn’s One Hot Encoding to convert the remaining three categorical data sets (Location, Gender, WhoShotFirst). Prior to doing this I set any NaN values to “Unspecified” so that that data could be represented in the dataset.\n\n\nExample of the tidied data table\n# Removing any where the respondent said they have not seen any of the episodes\ndf = df[df['SeenAny'] != 'No']\n\n# Replacing specific values in the 'Episode1' column\ndf['SeenEpisode1'] = df['SeenEpisode1'].replace('StarWarsEpisodeIThePhantomMenace', 1)\ndf['SeenEpisode2'] = df['SeenEpisode2'].replace('StarWarsEpisodeIIAttackoftheClones', 1)\ndf['SeenEpisode3'] = df['SeenEpisode3'].replace('StarWarsEpisodeIIIRevengeoftheSith', 1)\ndf['SeenEpisode4'] = df['SeenEpisode4'].replace('StarWarsEpisodeIVANewHope', 1)\ndf['SeenEpisode5'] = df['SeenEpisode5'].replace('StarWarsEpisodeVTheEmpireStrikesBack', 1)\ndf['SeenEpisode6'] = df['SeenEpisode6'].replace('StarWarsEpisodeVIReturnoftheJedi', 1)\n\n# Checking if the really have seen at least one episode and removing them if they haven't\ndf['sum'] = df[['SeenEpisode1', 'SeenEpisode2', 'SeenEpisode3', 'SeenEpisode4', 'SeenEpisode5', 'SeenEpisode6']].sum(axis=1)\ndf = df[df['sum'] != 0]\ndf.drop(columns=['sum'], inplace=True)\n\n# Convert age range to a single number\ndf['Age'] = df['AgeRange'].map({\n  0: 0,\n  '1829': 24,\n  '4560': 53,\n  '3044': 37,\n  '60': 60\n})\n\n# Assign numerical to education level based on related average years in school\ndf['YearsInSchool'] = df['Education'].map({\n  0: 0,\n  'Lessthanhighschooldegree': 10,\n  'Highschooldegree': 12,\n  'SomecollegeorAssociatedegree': 14,\n  'Bachelordegree': 16,\n  'Graduatedegree': 20\n})\n\n# Income range to the middle number\ndf['Income'] = df['HouseholdIncomeRange'].map({\n  0: 0,\n  '024999': 12500,\n  '2500049999': 37500,\n  '5000099999': 75000,\n  '100000149999': 125000,\n  '150000': 175000,\n})\n\n# Create my target column\ndf['MakesMoreThan50k'] = df['Income'].apply(lambda x: 1 if x &gt; 50000 else 0)\n\n# Cleaning up data prior to applying one hot encoding\ndf['WhoShotFirst'] = df['WhoShotFirst'].replace(0, 'Unspecified')\ndf['Gender'] = df['Gender'].replace(0, 'Unspecified')\ndf['Location'] = df['Location'].replace(0, 'Unspecified')\n\n#distinct_values = df['Location'].unique()\n#distinct_values\n\n#fit\nohe = OneHotEncoder(handle_unknown = 'ignore', sparse_output=False)\nohe.fit(df[['Location', 'Gender', 'WhoShotFirst']])\n#transform\ndf_encoded = pd.DataFrame(ohe.transform(df[['Location', 'Gender', 'WhoShotFirst']]), columns=ohe.get_feature_names_out(['Location', 'Gender', 'WhoShotFirst']))\ndf_combined = pd.concat([df.reset_index(drop=True), df_encoded.reset_index(drop=True)], axis=1)\n\n# Remove columns that are no longer needed\ndf_combined.drop(columns=['AgeRange', 'Education', 'HouseholdIncomeRange', 'Location', 'Gender', 'WhoShotFirst'], inplace=True)\n\n# Replace non numeric strings with numeric equivalents\ndf_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']] = df_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']].replace({'Yes': 1, 'No': 0}).astype(float).astype(int)\ndf_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine', 'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']] = df_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine',  'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']].replace({\n  'Veryfavorably': 10,\n  'Somewhatfavorably': 5,\n  'Somewhatunfavorably': -5,\n  'Neitherfavorablynorunfavorablyneutral': 0,\n  'Veryunfavorably': -10,\n  'UnfamiliarNA': 0\n}).astype(float).astype(int)\n\ndf_combined.head(4)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nAge\nYearsInSchool\nIncome\nMakesMoreThan50k\nLocation_EastNorthCentral\nLocation_EastSouthCentral\nLocation_MiddleAtlantic\nLocation_Mountain\nLocation_NewEngland\nLocation_Pacific\nLocation_SouthAtlantic\nLocation_Unspecified\nLocation_WestNorthCentral\nLocation_WestSouthCentral\nGender_Female\nGender_Male\nGender_Unspecified\nWhoShotFirst_Greedo\nWhoShotFirst_Han\nWhoShotFirst_Idontunderstandthisquestion\nWhoShotFirst_Unspecified\n\n\n\n\n0\n3292879998\n1\n1\n1\n1\n1\n1\n1\n1\n3.0\n2.0\n1.0\n4.0\n5.0\n6.0\n10\n10\n10\n10\n10\n10\n10\n0\n0\n10\n10\n10\n10\n10\n1\n0\n0\n24\n12\n0\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n1\n3292765271\n1\n0\n1\n1\n1\n0\n0\n0\n1.0\n2.0\n3.0\n4.0\n5.0\n6.0\n5\n5\n5\n5\n5\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n24\n12\n12500\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n2\n3292763116\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n6.0\n1.0\n2.0\n4.0\n3.0\n10\n10\n10\n10\n10\n5\n10\n5\n-5\n10\n10\n10\n10\n10\n0\n0\n1\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n3\n3292731220\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n4.0\n6.0\n2.0\n1.0\n3.0\n10\n5\n5\n-5\n10\n-10\n5\n0\n10\n5\n5\n-10\n5\n5\n1\n0\n0\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n1.0\n0.0\n0.0\n0.0",
     "crumbs": [
       "Full Stack",
-      "Project 5"
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nValidate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.\nI was able to successfully recreate 2 of the tables provided in the GitHub article.\n\n\nRecreated visual\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'seenTheEpisode': [\n      df_combined['SeenEpisode1'].sum(),\n      df_combined['SeenEpisode2'].sum(),\n      df_combined['SeenEpisode3'].sum(),\n      df_combined['SeenEpisode4'].sum(),\n      df_combined['SeenEpisode5'].sum(),\n      df_combined['SeenEpisode6'].sum(),\n    ]\n})\n\ndata['value'] = (data['seenTheEpisode'] / len(df_combined)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"Which 'Star Wars' Movies Have You Seen?\",\n        \"subtitle\": f\"Of {len(df_combined)} respondents who have seen any film\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()\n\n\n\n\n\n\n\n\n\n\nRecreated visual\ndf_seenAll = df_combined[\n    (df_combined['SeenEpisode1'] + df_combined['SeenEpisode2'] + \n     df_combined['SeenEpisode3'] + df_combined['SeenEpisode4'] + \n     df_combined['SeenEpisode5'] + df_combined['SeenEpisode6']) == 6\n]\ndf_seenAll\n\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'bestEpisode': [\n      len(df_seenAll[df_seenAll['Episode1Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode2Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode3Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode4Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode5Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode6Rank'] == 1])\n    ]\n})\n\ndata['value'] = (data['bestEpisode'] / len(df_seenAll)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"What's the Best 'Star Wars' Movie?\",\n        \"subtitle\": f\"Of {len(df_seenAll)} respondents who have seen all films\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nBuild a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.\nI used XGBoost and originally had an accuracy of about 53%. After doing a little tweaking to the model I was able to get the accuracy slightly higher to 59%. Several of the other ways to gage accuracy (F1, Precision, Recall, R2, and Root Mean2) all score at around 63% so while not the 65% called out in the stretch I was able to get close to it.\n\n\nCode to train the model\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom functions.model_evaluation import evaluateModel\n\nX = df_combined[[\n#        \"SeenAny\", \n        \"IsFan\", \n        \"SeenEpisode1\", \n        \"SeenEpisode2\", \n        \"SeenEpisode3\", \n        \"SeenEpisode4\", \n        \"SeenEpisode5\", \n#        \"SeenEpisode6\", \n#        \"Episode1Rank\", \n#        \"Episode2Rank\", \n#        \"Episode3Rank\", \n#        \"Episode4Rank\", \n#        \"Episode5Rank\", \n#        \"Episode6Rank\", \n        \"LikeHanSolo\", \n        \"LikeLuke\", \n        \"LikeLeia\", \n        \"LikeAnakin\", \n        \"LikeObiWan\", \n        \"LikeEmperorPalpatine\", \n        \"LikeDarthVader\", \n        \"LikeLando\", \n        \"LikeBobaFett\", \n        \"LikeC3P0\", \n        \"LikeR2D2\", \n        \"LikeJarJar\", \n        \"LikePadme\", \n        \"LikeYoda\", \n        \"ExpandedUniverse\", \n        \"FanOfExpandedUniverse\", \n        \"FanOfFranchise\", \n        \"Age\", \n        \"YearsInSchool\", \n        \"Location_EastNorthCentral\", \n        \"Location_EastSouthCentral\",\n        \"Location_MiddleAtlantic\", \n        \"Location_Mountain\", \n        \"Location_NewEngland\", \n        \"Location_Pacific\", \n        \"Location_SouthAtlantic\", \n#        \"Location_Unspecified\",\n        \"Location_WestNorthCentral\", \n        \"Location_WestSouthCentral\",\n        \"Gender_Female\", \n        \"Gender_Male\", \n#        \"Gender_Unspecified\",\n        \"WhoShotFirst_Greedo\", \n        \"WhoShotFirst_Han\",\n        \"WhoShotFirst_Idontunderstandthisquestion\",\n#        \"WhoShotFirst_Unspecified\"\n    ]]\ny = df_combined['MakesMoreThan50k']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.29, random_state=43)\nmodel = evaluateModel(X_train, y_train, X_test, y_test, \"XGBoost\")\n\n\n\nXGBoost Accuracy: 0.5925925925925926\nXGBoost F1 Score: 0.6346863468634686\nXGBoost Precision Score: 0.6346863468634686\nXGBoost Recall Score: 0.6346863468634686\nXGBoost R2 Score: 0.6346863468634686\nXGBoost Root Mean2 Error: 0.6346863468634686",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
     ]
   },
   {
@@ -409,28 +254,6 @@
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "Machine_Learning/project2.html",
-    "href": "Machine_Learning/project2.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Machine Learning",
-      "Project 2"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/project4.html",
-    "href": "Machine_Learning/project4.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
-    "crumbs": [
-      "Machine Learning",
-      "Project 4"
-    ]
   },
   {
     "objectID": "ml.html",
@@ -453,36 +276,80 @@
     ]
   },
   {
-    "objectID": "Story_Telling/project1.html",
-    "href": "Story_Telling/project1.html",
-    "title": "Client Report - [Insert Project Title]",
+    "objectID": "Story_Telling/DS250-whatsInAName.html",
+    "href": "Story_Telling/DS250-whatsInAName.html",
+    "title": "Client Report - What’s in a name?",
     "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
     "crumbs": [
       "Story Telling",
-      "Project 1"
+      "What's in a Name"
     ]
   },
   {
-    "objectID": "Story_Telling/project3.html",
-    "href": "Story_Telling/project3.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "objectID": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
+    "href": "Story_Telling/DS250-whatsInAName.html#elevator-pitch",
+    "title": "Client Report - What’s in a name?",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nIt is fascinating to look at how modern media effects the names that parents give their children, as you can see by looking at the chart above. Sometimes however the relationship isn’t as obvious and requires a deeper dive in order to understand what the data is telling us. Many times it is not a single event that has an effect on a names popularity but a combination of events. The effect that each new event has upon the data alters the graph and it is a data scientists job to be able to identify the underlying data. It is also important to label the data to help ensure that your audience will be able to easily see the story that your data is telling them.\nHighlight the Questions and Tasks",
     "crumbs": [
       "Story Telling",
-      "Project 3"
+      "What's in a Name"
     ]
   },
   {
-    "objectID": "Story_Telling/project5.html",
-    "href": "Story_Telling/project5.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Paste in a template\n\n\n\n\n Back to top",
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-1",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nHow does your name at your birth year compare to its use historically?\nWhile the name Brett was around prior to the 1950s, it wasn’t until the mid 1950s where the popularity of the name began to take off. In 1977, the year that I was born, my name was nearing the height of it’s popularity, with about 3000 people being given the name Brett in that year.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brett\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brett\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1955, y=3500, xend=1977, yend=2979, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1955, y=3500, label=\"Year Born (1977)\", hjust=\"left\", \n    color=\"red\")\n    + scale_y_continuous(limits=(0, 4100))\n    + scale_x_continuous(limits=(1950, 2015))\n)",
     "crumbs": [
       "Story Telling",
-      "Project 5"
+      "What's in a Name"
+    ]
+  },
+  {
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-2",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nIf you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?\nThe most likely year that a person named Brittany was born would be in 1990 which would place her at 34 years old. This is where the name was most popular with over 32000 children being named Brittany. According to the data the name Brittany was not around prior to 1968 so I would not guess ages greater than 56.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[theNames['name'] == \"Brittany\"]\n\nfilteredNames = filteredNames.astype({\"Total\": \"int\", \"name\": \"string\", \"year\": \"int\"})\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Brittany\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1965, y=30000, xend=1990, yend=32562, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1965, y=30000, label=\"Most Likely Year is 1990 - 34yrs Old\", hjust=\"left\", \n    color=\"red\")\n    + scale_x_continuous(limits=(1965, 2015))\n    + scale_y_continuous(limits=(0, 34000))\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
+  },
+  {
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-3",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nMary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names in a single chart. What trends do you notice?\nRight off there are three trends here that I am noticing. First, as these are biblical names the popularity of each one of them save Martha see an uptick in popularity around the time of WW2. With the uncertainty that war and pre-war times bring I am not surprised that more biblical rooted names would begin to emerge as people turned to religion for comfort.\nThere are two exceptions to this observation.\n\nFirst the name Martha actually sees a decline in popularity at this same point in time. My thoughts as to the reason for this is primarily rooted in the fact that she is a more minor character in the bible and as such of lesser known than the other names.\nSecond, the name Mary had a second rise to popularity that spiked at around the year 1921. In doing a little research it seems that Mary was a symbol of protection durring WW1 and so my hypothesis is that this may be the reason why we are seeign that second spike before the curve aligns with the other biblical figure names.\n\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Mary\") | (theNames['name'] == \"Martha\") | (theNames['name'] == \"Peter\") | (theNames['name'] == \"Paul\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(aes(colour=\"name\"))\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + scale_x_continuous(limits=(1920, 2000))\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
+  },
+  {
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
+    "href": "Story_Telling/DS250-whatsInAName.html#questiontask-4",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nThink of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?\nFor a famous movie, I selected Casablanca. The main character in that movie is Victor and I thought there would be a marked increase in that name’s usage considering the popularity of the movie. What I found was that, while there was an uptick, it was not the movie, but some other event that transpired in the late 1930s that gave rise to the name’s popularity. This would suggest that the name of the main character from that movie was selected due to the event in the late 1930s. Following Casablanca’s release the name continued to rise higher, so I suspect that while not the original source of the increae in popularity, it probably served to spur the name’s use on to greater heights.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Victor\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\"))\n    + geom_point(size=2)\n    + labs(\n        title=\"Historical Naming Frequency\",\n        x=\"Year\",\n        y=\"Total Children Named Victor\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + geom_smooth(method=\"loess\", size=1)\n    + geom_segment(x=1925, y=3500, xend=1942, yend=2392, arrow=arrow(type=\"closed\"), color=\"red\")\n    + geom_label(x=1910, y=3500, label=\"Casablanca (1942)\", hjust=\"left\", \n    color=\"red\")\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
+    ]
+  },
+  {
+    "objectID": "Story_Telling/DS250-whatsInAName.html#questionstretch",
+    "href": "Story_Telling/DS250-whatsInAName.html#questionstretch",
+    "title": "Client Report - What’s in a name?",
+    "section": "QUESTION|Stretch",
+    "text": "QUESTION|Stretch\nReproduce the chart Elliot using the data from the names_year.csv file.\n\n\nShow the code\nimport pandas as pd\nimport numpy as np\nfrom lets_plot import *\n\nLetsPlot.setup_html(isolated_frame=False)\ntheNames = pd.read_csv(\"data/names_year.csv\")\n\n# Filter out all but the desired names\nfilteredNames = theNames[(theNames['name'] == \"Elliot\")]\n\n(ggplot(data = filteredNames, mapping = aes(x = \"year\", y = \"Total\", color = \"name\"))\n    + geom_path(size=1, color=\"blue\")\n    + labs(\n        title=\"Ellot... What?\",\n        x=\"Year\",\n        y=\"Total\",\n        color=\"name\",\n    )\n    + scale_x_continuous(format=\"d\")\n    + scale_x_continuous(limits=(1950, 2020))\n    + theme(\n        panel_background=element_rect(color=\"black\", fill=\"#90d5ff\", size=2)\n    )\n    + geom_segment(x=1982, y=0, xend=1982, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=1985, y=0, xend=1985, yend=1250, color=\"red\", linetype=\"dashed\")\n    + geom_segment(x=2002, y=0, xend=2002, yend=1250, color=\"red\", linetype=\"dashed\")\n    + scale_y_continuous(limits=(0, 1250))\n    + geom_text(x=1981, y=1250, label=\"E.T Released\", label_size=0, hjust=\"right\", color=\"black\", size=\"5\")\n    + geom_text(x=1986, y=1250, label=\"Second Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n    + geom_text(x=2003, y=1250, label=\"Third Release\", label_size=0, hjust=\"left\", color=\"black\", size=\"5\")\n)",
+    "crumbs": [
+      "Story Telling",
+      "What's in a Name"
     ]
   }
 ]
