@@ -860,6 +860,24 @@ ax.set_xlabel("Job title")</code></pre>
 <li><p>They would also like to see a separate report that includes only TV shows.</p></li>
 <li><p>For an upcoming community meeting, the group would like to present a simple chart showing “For Kids” and “For Adults” categories. The easiest way to accomplish this would be to <a href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/10_text_data.html">create a new column in your data frame that maps</a> each rating to the appropriate “For Kids” or “For Adults” label, then create a new visualization based on that column.</p></li>
 </ol>
+<div id="cell-30" class="cell" data-outputid="548b3554-1621-41d1-946d-6c7a7fe395cb" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> cleanedData.loc[theData[<span class="st">'type'</span>] <span class="op">!=</span> <span class="st">"Movie"</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>distinctTVRatings <span class="op">=</span> onlyTVData[<span class="st">'rating'</span>].unique()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>desiredTVRatings <span class="op">=</span> [<span class="st">'TV-Y7-FV'</span>, <span class="st">'TV-Y7'</span>, <span class="st">'TY-Y'</span>, <span class="st">'TV-G'</span>, <span class="st">'TV-PG'</span>, <span class="st">'TV-14'</span>, <span class="st">'TV-MA'</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> onlyTVData.loc[onlyTVData[<span class="st">'rating'</span>].isin(desiredTVRatings)]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>onlyTVData[<span class="st">'rating'</span>] <span class="op">=</span> pd.Categorical(onlyTVData[<span class="st">'rating'</span>], categories<span class="op">=</span>desiredTVRatings, ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> onlyTVData.sort_values(<span class="st">'rating'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>sns.catplot(data<span class="op">=</span>onlyTVData, x<span class="op">=</span><span class="st">'rating'</span>, kind<span class="op">=</span><span class="st">'count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exploration_01_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
