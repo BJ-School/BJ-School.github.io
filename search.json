@@ -1,187 +1,5 @@
 [
   {
-    "objectID": "story_telling.html",
-    "href": "story_telling.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "story_telling.html#title-2-header",
-    "href": "story_telling.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "ml.html",
-    "href": "ml.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "ml.html#title-2-header",
-    "href": "ml.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "competition.html",
-    "href": "competition.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "competition.html#title-2-header",
-    "href": "competition.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "",
-    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\nxgb_model.fit(X_train, y_train)\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.472117\n9           condition    0.189045\n5            numbaths    0.107404\n2            basement    0.044841\n4             numbdrm    0.040532\n3              nocars    0.040397\n8        pricepersqft    0.034854\n7  unfinishedbasement    0.028200\n0            livearea    0.022289\n1            finbsmnt    0.020322",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "Elevator pitch",
-    "text": "Elevator pitch\nThe most important feature to use when determining if a house was built before 1980 is the number of stories. This feature had the greatest effect on the model’s accuracy by far. Another important feature had to be engineered. That feature was the condition of the house as the older a house is the less likly it will be in excellend or very good condition. In the end it was a combination of selecting the best features as well as engineering a couple of additional features to train off of that allowed me to achieve over 90% accuracy.",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 1",
-    "text": "QUESTION|TASK 1\nCreate 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.\nThis chart demonstrates the relationship between the number of cars and the number of bedrooms. The data would seem to indicate that no car and single car garages are a good indicator that the house was built before 1980. Also with regards to 2 car garages, only very small houses (1-2 bedrooms) would be expected to have a 2 car garage if and only if they were build after 1980. Any isntances where the house has a 2 car garage and has 3 or more bedrooms is likely to be built before 1980.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt']\n).sample(500)\n\nchart = px.scatter_matrix(h_subset,\n  dimensions=['nocars', 'numbdrm'],\n  color='before1980'\n)\nchart.update_traces(diagonal_visible=False)\nchart.show()\n\n\n                                                \n\n\nThis chart gives me some ideas as to what fields are more indicitave of a house being built pre-1980. Specifically it looks like the fields finbsmnt, basement, nocars, numbdrm are some of the better fields to use in training my model.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\ncorr = h_subset.corr()\npx.imshow(corr, text_auto=True)",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 2",
-    "text": "QUESTION|TASK 2\nBuild a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy.\nI spent a large amount of time tuning the model’s parameters but was only able to achieve an accuracy of about 88%. When I was in one of the tutoring labs this last week, the tutor said something. He said that one of the thing he does it to take a moment and think about what he knows about the data. So I asked myself the question: “What do I know about pre 1980 houses vs more recently built ones?” A few things came to mind.\nFirst, older homes are less likly to have any portion of their basement unfinished. Over the years it is likely that any unfinished areas would have been completed.\nSecond, older homes generally have a lower value per square foot.\nThird, an older home will have sustained more wear and tear over the years. Newer homes would be more likly to be in excellend condition, whereas older ones would be more likly to only be average or worse.\nWith these three things in mind I created some new variables that the model could make use of.\n\n\nRead and format data\n# Include and execute your code here\n\n# Tuning the data\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\n\nOnce I made thise adjustments, all three models that I had previously attempted to use were able to achieve accuracy levels over 90%\n\n\nShow the code\n#Train the data\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\nfrom sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, r2_score, root_mean_squared_error\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nhgbm = HistGradientBoostingClassifier(max_iter=500, learning_rate=.07, max_depth=7, random_state=1).fit(X_train, y_train)\ny_pred = hgbm.predict(X_test)\nhgbm_score = hgbm.score(X_test, y_test)\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nhgbm_f1_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nhgbm_precision_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nhgbm_recall_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nhgbm_r2_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nhgbm_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\n\n# Fit the model\nxgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = xgb_model.predict(X_test)\nxgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nxgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nxgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nxgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nxgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nxgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nlgb_model = lgb.LGBMClassifier(n_estimators=250, max_depth=7, learning_rate=0.1, min_data_in_leaf=20, min_gain_to_split=0.18, verbose=-1)\n\n# Fit the model\nlgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = lgb_model.predict(X_test)\nlgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nlgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nlgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nlgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nlgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nlgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9008591299604527\nXGBoost F1 Score: 0.9214818014904418\nXGBoost Precision Score: 0.9214818014904418\nXGBoost Recall Score: 0.9214818014904418\nXGBoost R2 Score: 0.9214818014904418\nXGBoost Root Mean2 Error: 0.9214818014904418\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 3",
-    "text": "QUESTION|TASK 3\nJustify your classification model by discussing the most important features selected by your model.\nAs shown by the following chart, the most important feature by far is the number of stories. It is several times more effective than any of the other features. My initial suspition that the condition of the house might be a good indicator of age proved to be correct as that data engineered feature ended up being 2nd most important. The number of baths that a home has also ended up beign an important feature to use to train the model.\n\n\nShow the code\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.472117\n9           condition    0.189045\n5            numbaths    0.107404\n2            basement    0.044841\n4             numbdrm    0.040532\n3              nocars    0.040397\n8        pricepersqft    0.034854\n7  unfinishedbasement    0.028200\n0            livearea    0.022289\n1            finbsmnt    0.020322",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
-    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 4",
-    "text": "QUESTION|TASK 4\nDescribe the quality of your classification model using 2-3 different evaluation metrics.\nBetween the three classification models that I used I beleive that Hist GBM ended up being the best choice. All three models returned very similar numbers but the accuracy of 0.9014 made this model the best choice. All other scores remained closely related between the three models. The F1 score was also slightly higher than the other models but other than that the other metrics (Precision, Recall, R2, and Root Mean Squared Error) were almost identical between the three.\n\n\nRead and format data\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9008591299604527\nXGBoost F1 Score: 0.9214818014904418\nXGBoost Precision Score: 0.9214818014904418\nXGBoost Recall Score: 0.9214818014904418\nXGBoost R2 Score: 0.9214818014904418\nXGBoost Root Mean2 Error: 0.9214818014904418\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
-    "crumbs": [
-      "Machine Learning",
-      "Can you Predict That"
-    ]
-  },
-  {
-    "objectID": "exploration.html",
-    "href": "exploration.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "exploration.html#title-2-header",
-    "href": "exploration.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "resume.html#currently",
-    "href": "resume.html#currently",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
-  },
-  {
-    "objectID": "resume.html#education",
-    "href": "resume.html#education",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
-  },
-  {
-    "objectID": "resume.html#occupation",
-    "href": "resume.html#occupation",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "full_stack.html",
-    "href": "full_stack.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Full Stack"
-    ]
-  },
-  {
-    "objectID": "full_stack.html#title-2-header",
-    "href": "full_stack.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Full Stack"
-    ]
-  },
-  {
     "objectID": "Story_Telling/DS250-whatsInAName.html",
     "href": "Story_Telling/DS250-whatsInAName.html",
     "title": "Client Report - What’s in a name?",
@@ -259,6 +77,199 @@
     ]
   },
   {
+    "objectID": "full_stack.html",
+    "href": "full_stack.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Full Stack"
+    ]
+  },
+  {
+    "objectID": "full_stack.html#title-2-header",
+    "href": "full_stack.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Full Stack"
+    ]
+  },
+  {
+    "objectID": "competition.html",
+    "href": "competition.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "competition.html#title-2-header",
+    "href": "competition.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "exploration.html",
+    "href": "exploration.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "exploration.html#title-2-header",
+    "href": "exploration.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "resume.html#currently",
+    "href": "resume.html#currently",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
+  },
+  {
+    "objectID": "resume.html#occupation",
+    "href": "resume.html#occupation",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "ml.html",
+    "href": "ml.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "ml.html#title-2-header",
+    "href": "ml.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "cleansing.html",
+    "href": "cleansing.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "cleansing.html#title-2-header",
+    "href": "cleansing.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "story_telling.html",
+    "href": "story_telling.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "story_telling.html#title-2-header",
+    "href": "story_telling.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "index.html#title-2-header",
+    "href": "index.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html",
+    "href": "notebooks/Exploration_01.html",
+    "title": "Data Exploration 01",
+    "section": "",
+    "text": "A consumer watchdog group wants to see if Netflix has more movies for adults or children.\nUsing a dataset containing metadata for all of the movies Netflix had available on their platform in 2019, we’ll use the MPAA movie rating system to determine if they are correct."
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#mpaa-movie-ratings",
+    "href": "notebooks/Exploration_01.html#mpaa-movie-ratings",
+    "title": "Data Exploration 01",
+    "section": "MPAA Movie Ratings:",
+    "text": "MPAA Movie Ratings:\n\nG: All ages admitted.\nPG: Some material may not be suitable for children.\nPG-13: Some material may be inappropriate for children under 13.\nR: Under 17 requires accompanying parent or adult guardian\nNC-17: No One 17 and Under Admitted\n\nMost people would consider G and PG as ratings suitable for children. However, not everyone would agree that a PG-13 movie is necssarily a children’s movie. It is up to you to decide how to handle this."
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-1-import-pandas",
+    "href": "notebooks/Exploration_01.html#part-1-import-pandas",
+    "title": "Data Exploration 01",
+    "section": "Part 1: Import Pandas",
+    "text": "Part 1: Import Pandas\nThe pandas library is a python library used for data analysis and manipulation. It will provide the core functionality for most of what you do in the data exploration and preprocessing stages of most machine learning projects.\nPlease see this Getting Started Guide for information on the conventional way to import Pandas into your project, as well as other helpful tips for common Pandas tasks.\n\n# Part 1: Enter the code below to import Pandas according to the\n# conventional method.\nimport pandas as pd"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-2-load-the-data",
+    "href": "notebooks/Exploration_01.html#part-2-load-the-data",
+    "title": "Data Exploration 01",
+    "section": "Part 2: Load the data",
+    "text": "Part 2: Load the data\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 2: Load the dataset into a Pandas dataframe.\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n# Then, explore the data by seeing what the first few rows look like.\ntheData.head(5)\n\n\n  \n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n# Next, display a technical summary of the data to determine the data types of each column, and which columns have missing data.\ntheData.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nData columns (total 12 columns):\n #   Column        Non-Null Count  Dtype \n---  ------        --------------  ----- \n 0   show_id       6234 non-null   int64 \n 1   type          6234 non-null   object\n 2   title         6234 non-null   object\n 3   director      4265 non-null   object\n 4   cast          5664 non-null   object\n 5   country       5758 non-null   object\n 6   date_added    6223 non-null   object\n 7   release_year  6234 non-null   int64 \n 8   rating        6224 non-null   object\n 9   duration      6234 non-null   object\n 10  listed_in     6234 non-null   object\n 11  description   6234 non-null   object\ndtypes: int64(2), object(10)\nmemory usage: 584.6+ KB"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-3-filter-the-data",
+    "href": "notebooks/Exploration_01.html#part-3-filter-the-data",
+    "title": "Data Exploration 01",
+    "section": "Part 3: Filter the Data",
+    "text": "Part 3: Filter the Data\nSince we’re just interested in movies, we’ll need to filter out anything that isn’t a movie for our analysis. The type feature contains this information.\nOnce we have the subset, we should see how many rows it contains. There are a variety of ways to get the length of a data frame.\n\n# Use pandas's filtering abilitites to select the subset of data\n# that represents movies, then calculate how many rows are in the filtered data.\nminimalData = theData[['type', 'rating']]\ncleanedData = minimalData.dropna()\nonlyMovieData = cleanedData.loc[theData['type'] == \"Movie\"]\n\n\nMPAA Ratings\nNow that we have only movies, let’s get a quick count of the values being used in the rating feature.\n\n# Determine the number of records for each value of the \"rating\" feature.\n# Remember to count the values in your subset only, not in the original dataframe.\ndistinctRatings = onlyMovieData['rating'].unique()\nprint(distinctRatings)\n\n['R' 'PG-13' 'PG' 'G' 'NC-17']\n\n\n\n\nMore Filtering\nThere are apparently some “made for TV” movies in the list that don’t fit the MPAA rating scheme.\nLet’s filter some more to just see movies rated with the standard MPAA ratings of G, PG, PG-13, R, and NC-17.\n\n# Filter the list of movies to select a new subset containing only movies with\n# a standard MPAA rating. Calculate how many rows are in this new set, and\n# then see which ratings appear most often.\ndesiredRatings = [\"G\", \"PG\", \"PG-13\", \"R\", \"NC-17\"]\nonlyMovieData = onlyMovieData.loc[onlyMovieData['rating'].isin(desiredRatings)]\nonlyMovieData['rating'] = pd.Categorical(onlyMovieData['rating'], categories=desiredRatings, ordered=True)\nonlyMovieData = onlyMovieData.sort_values('rating')"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-4-visualization",
+    "href": "notebooks/Exploration_01.html#part-4-visualization",
+    "title": "Data Exploration 01",
+    "section": "Part 4: Visualization",
+    "text": "Part 4: Visualization\nNow that we have explored and preprocessed our data, let’s create a visualization to summarize our findings.\n\nExploration vs Presentation\nBroadly speaking, there are two types of visualizations: * Barebones visualizations you might use to get a quick, visual understanding of the data while you’re trying to decide how it all fits together. * Presentation-quality visualizations that you would include in a report or presentation for management or other stakeholders.\n\n\nVisualization Tools\nThere are many different visualization tools availble. In the sections below, we’ll explore the three most common. Each of these libraries has strengths and weaknesses.\nIt is probably a good idea for you to become familiar with each one, and then become proficient at whichever one you like the best.\n\n\nAltair\nThe Altair visualization library provides a large variety of very easy to use statistical charting tools.\nAltair uses a declarative language to build up charts piece by piece.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nalt.Chart(employees).mark_boxplot().encode(\n    x='job',\n    y='salary'\n)\n\n# Make a box plot style categorical plot, and customize the results\nalt.Chart(employees).mark_boxplot().encode(\n    alt.X('job', title='Job title'),\n    alt.Y('salary', title='Annual salary in thousands of $USD')\n).properties(\n  title='Salaries by Job Title'\n)\nLike with Pandas, there is a conventional way to import Altair into your projects.\n\n# Import the Altair library the conventional way.\nimport altair as alt\n\nLet’s create a barchart showing the count of each movie rating by using Altair’s aggregation capabilities.\nIn this example, we see the x axis being set to a feature called a, and the y axis set to the average() of a feature called b.\nIn our case, we want the x axis to be set to rating and the y axis to be the count() of rating.\n\n# Use Altair to create a bar chart comparing the count of each movie rating\nalt.Chart(onlyMovieData).mark_point().encode(\n    x='rating',\n    y='count(rating)'\n)\n\n\n\n\n\n\n\n\n\nSeaborn\nWhile Altair uses a “declarative” syntax for building charts piece by piece, the Seaborn library provides a large variety of pre-made charts for common statistical needs.\nThese charts are divided into different categories. Each category has a high-level interface you can use for simplicity, and then a specific function for each chart that you can use if you need more control over how the chart looks.\nSeaborn uses matplotlib for its drawing, and the chart-specific functions each return a matplitlib axes object if you need additional customization.\nFor example, there are several different types of categorical plots in seaborn: bar plots, box plots, point plots, count plots, swarm plots, etc…\nEach of these plots can be accessed using the catplot function.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nsns.catplot(data=employees, x='job', y='salary', kind='box')\n\n# Make a swarm plot style categorical plot\nsns.catplot(data=employees, x='job', y='salary', kind='swarm')\nAlternatively, you can use the plot specific functions to give yourself more control over the output by using matplotlib functions:\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = sns.boxplot(data=employees, x='job', y='salary')\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\nLike with Pandas, there is a conventional way to import Seaborn into your projects.\nOptionally, you may wish to set some default chart aesthetics by setting the chart style.\n\n# Import the seaborn library the conventional way. Then optionally configure\n# the default chart style.\nimport seaborn as sns\n\nSince the rating column uses categorical data, we need to use Seaborn’s categorical visualizations.\nIn particular, we want a “count plot” that will display a count of movie ratings.\n\n# Use seaborn to create a count plot comparing the count of each movie rating\nsns.catplot(data=onlyMovieData, x='rating', kind='count')\n\n\n\n\n\n\n\n\n\n\nPandas built-in plotting\nIn addition to libraries like Altair and Seaborn, Pandas has some built in charting functionality.\nWhile not as sophisticated as some of the other options, it is often good enough for quick visualizations.\nJust like with seaborn’s plotting functions, the pandas plotting functions return matplotlib axes objects, which can be further customized.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nemployees[ ['job','salary'] ].plot.box()\n\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = employees[ ['job','salary'] ].plot().box()\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\n\n# Use pandas' built in plotting functions to create a count plot comparing the count of each movie rating\n# This will be a little trickier than the other libraries, but one hint is that the pandas value_counts() function\n# actually returns a dataframe.\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\ncountsByRating = onlyMovieData['rating'].value_counts().sort_index()\nax = countsByRating.plot()\nax.set_title(\"Movie Count by Rating\")\nax.set_ylabel(\"# of Movies\")\nax.set_xlabel(\"Rating\")\n\nText(0.5, 0, 'Rating')"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#above-and-beyond",
+    "href": "notebooks/Exploration_01.html#above-and-beyond",
+    "title": "Data Exploration 01",
+    "section": "🌟 Above and Beyond 🌟",
+    "text": "🌟 Above and Beyond 🌟\nAfter reviewing your findings, the watchdog group would like some additional questions answered:\n\nHow are things affected if you include the “made for TV movies” that have been assigned TV ratings in your analysis, but still exclude unrated movies?\nThey would also like to see a separate report that includes only TV shows.\nFor an upcoming community meeting, the group would like to present a simple chart showing “For Kids” and “For Adults” categories. The easiest way to accomplish this would be to create a new column in your data frame that maps each rating to the appropriate “For Kids” or “For Adults” label, then create a new visualization based on that column."
+  },
+  {
     "objectID": "Full_Stack/DS250-theWarWithStarWars.html",
     "href": "Full_Stack/DS250-theWarWithStarWars.html",
     "title": "Client Report - The War with Star Wars",
@@ -325,31 +336,69 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "about me",
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html",
+    "title": "Client Report - [Insert Project Title]",
     "section": "",
-    "text": "MarkDown Basics"
+    "text": "Show the code\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\nxgb_model.fit(X_train, y_train)\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.476291\n9           condition    0.196271\n5            numbaths    0.100576\n2            basement    0.043908\n3              nocars    0.040785\n4             numbdrm    0.040583\n8        pricepersqft    0.034160\n7  unfinishedbasement    0.027251\n0            livearea    0.021706\n1            finbsmnt    0.018469",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
   },
   {
-    "objectID": "index.html#title-2-header",
-    "href": "index.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#elevator-pitch",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nThe most important feature to use when determining if a house was built before 1980 is the number of stories. This feature had the greatest effect on the model’s accuracy by far. Another important feature had to be engineered. That feature was the condition of the house as the older a house is the less likly it will be in excellend or very good condition. In the end it was a combination of selecting the best features as well as engineering a couple of additional features to train off of that allowed me to achieve over 90% accuracy.",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
   },
   {
-    "objectID": "cleansing.html",
-    "href": "cleansing.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-1",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nCreate 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.\nThis chart demonstrates the relationship between the number of cars and the number of bedrooms. The data would seem to indicate that no car and single car garages are a good indicator that the house was built before 1980. Also with regards to 2 car garages, only very small houses (1-2 bedrooms) would be expected to have a 2 car garage if and only if they were build after 1980. Any isntances where the house has a 2 car garage and has 3 or more bedrooms is likely to be built before 1980.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\nfrom sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt']\n).sample(500)\n\nchart = px.scatter_matrix(h_subset,\n  dimensions=['nocars', 'numbdrm'],\n  color='before1980'\n)\nchart.update_traces(diagonal_visible=False)\nchart.show()\n\n\n        \n        \n        \n\n\n                            \n                                            \n\n\nThis chart gives me some ideas as to what fields are more indicitave of a house being built pre-1980. Specifically it looks like the fields finbsmnt, basement, nocars, numbdrm are some of the better fields to use in training my model.\n\n\nRead and format data\n# Loading in packages\nimport pandas as pd\nimport numpy as np\nimport plotly.express as px\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\nfrom sklearn.naive_bayes import GaussianNB\n\n# Loading in data\nurl = \"https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv\"\ndwellings_ml = pd.read_csv(url)\n\nh_subset = dwellings_ml.filter(\n  ['livearea', 'finbsmnt', 'basement', 'yearbuilt', 'nocars', 'numbdrm', 'numbaths', 'before1980', 'stories', 'yrbuilt', 'sprice', 'floorlvl', 'condition_Excel', 'condition_VGood', 'condition_AVG', 'condition_Good']\n)\n\ncorr = h_subset.corr()\npx.imshow(corr, text_auto=True)",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
   },
   {
-    "objectID": "cleansing.html#title-2-header",
-    "href": "cleansing.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-2",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nBuild a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy.\nI spent a large amount of time tuning the model’s parameters but was only able to achieve an accuracy of about 88%. When I was in one of the tutoring labs this last week, the tutor said something. He said that one of the thing he does it to take a moment and think about what he knows about the data. So I asked myself the question: “What do I know about pre 1980 houses vs more recently built ones?” A few things came to mind.\nFirst, older homes are less likly to have any portion of their basement unfinished. Over the years it is likely that any unfinished areas would have been completed.\nSecond, older homes generally have a lower value per square foot.\nThird, an older home will have sustained more wear and tear over the years. Newer homes would be more likly to be in excellend condition, whereas older ones would be more likly to only be average or worse.\nWith these three things in mind I created some new variables that the model could make use of.\n\n\nRead and format data\n# Include and execute your code here\n\n# Tuning the data\n# Older homes are more likely to not have anything left unfinished\nh_subset['unfinishedbasement'] = h_subset['basement'] - h_subset['finbsmnt']\n\n# Older homes will ahve a lower value per square foot\nh_subset['pricepersqft'] = h_subset['sprice'] / h_subset['livearea']\n\n# Older homes would be more likely to have sustained more wear and tear\nh_subset['condition'] = h_subset['condition_Excel'] * 10 + h_subset['condition_VGood'] * 8 + h_subset['condition_Good'] * 6 + h_subset['condition_AVG'] * 4\n\n\nOnce I made thise adjustments, all three models that I had previously attempted to use were able to achieve accuracy levels over 90%\n\n\nShow the code\n#Train the data\nimport xgboost as xgb\nimport lightgbm as lgb\nfrom sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier, RandomForestClassifier\nfrom sklearn import metrics\nfrom sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, r2_score, root_mean_squared_error\n\nX = h_subset[['livearea', 'finbsmnt', 'basement', 'nocars', 'numbdrm', 'numbaths', 'stories', 'unfinishedbasement', 'pricepersqft', 'condition']]\ny = h_subset['before1980']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.32, random_state=42)\n\nhgbm = HistGradientBoostingClassifier(max_iter=500, learning_rate=.07, max_depth=7, random_state=1).fit(X_train, y_train)\ny_pred = hgbm.predict(X_test)\nhgbm_score = hgbm.score(X_test, y_test)\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nhgbm_f1_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nhgbm_precision_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nhgbm_recall_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nhgbm_r2_score = f1_score(y_test, y_pred)\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nhgbm_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\n\nxgb_model = xgb.XGBClassifier(n_estimators=250, max_depth=6, learning_rate=0.1)\n\n# Fit the model\nxgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = xgb_model.predict(X_test)\nxgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nxgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nxgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nxgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nxgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nxgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nlgb_model = lgb.LGBMClassifier(n_estimators=250, max_depth=7, learning_rate=0.1, min_data_in_leaf=20, min_gain_to_split=0.18, verbose=-1)\n\n# Fit the model\nlgb_model.fit(X_train, y_train)\n\n# Predict and evaluate\ny_pred = lgb_model.predict(X_test)\nlgb_accuracy = accuracy_score(y_test, y_pred)\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nlgb_f1_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nlgb_precision_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nlgb_recall_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nlgb_r2_score = f1_score(y_test, y_pred)\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nlgb_root_mean2_error = f1_score(y_test, y_pred)\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9029046774853402\nXGBoost F1 Score: 0.923027027027027\nXGBoost Precision Score: 0.923027027027027\nXGBoost Recall Score: 0.923027027027027\nXGBoost R2 Score: 0.923027027027027\nXGBoost Root Mean2 Error: 0.923027027027027\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
+  },
+  {
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-3",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nJustify your classification model by discussing the most important features selected by your model.\nAs shown by the following chart, the most important feature by far is the number of stories. It is several times more effective than any of the other features. My initial suspition that the condition of the house might be a good indicator of age proved to be correct as that data engineered feature ended up being 2nd most important. The number of baths that a home has also ended up beign an important feature to use to train the model.\n\n\nShow the code\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n# Get feature importances from the trained XGBoost model\nfeature_importances = xgb_model.feature_importances_\n# Create a DataFrame for feature importances\nfeature_importance_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importances})\n# Sort the DataFrame by importance in descending order\nfeature_importance_df = feature_importance_df.sort_values('Importance', ascending=False)\n# Display the feature importance table\nprint(feature_importance_df)\n# Create a heatmap of feature importances\nplt.figure(figsize=(10, 6))\nsns.heatmap(feature_importance_df[['Importance']].sort_values('Importance', ascending=False), annot=True, cmap='viridis', fmt=\".2f\")\nplt.title('Feature Importances (XGBoost)')\nplt.xlabel('Importance')\nplt.ylabel('Features')\nplt.show()\n\n\n              Feature  Importance\n6             stories    0.476291\n9           condition    0.196271\n5            numbaths    0.100576\n2            basement    0.043908\n3              nocars    0.040785\n4             numbdrm    0.040583\n8        pricepersqft    0.034160\n7  unfinishedbasement    0.027251\n0            livearea    0.021706\n1            finbsmnt    0.018469",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
+  },
+  {
+    "objectID": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
+    "href": "Machine_Learning/DS250-canYouPredictThat.html#questiontask-4",
+    "title": "Client Report - [Insert Project Title]",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nDescribe the quality of your classification model using 2-3 different evaluation metrics.\nBetween the three classification models that I used I beleive that Hist GBM ended up being the best choice. All three models returned very similar numbers but the accuracy of 0.9014 made this model the best choice. All other scores remained closely related between the three models. The F1 score was also slightly higher than the other models but other than that the other metrics (Precision, Recall, R2, and Root Mean Squared Error) were almost identical between the three.\n\n\nRead and format data\nprint(f\"Hist GBM Accuracy: {hgbm_score}\")\nprint(f\"Hist GBM F1 Score: {hgbm_f1_score}\")\nprint(f\"Hist GBM Precision Score: {hgbm_precision_score}\")\nprint(f\"Hist GBM Recall Score: {hgbm_recall_score}\")\nprint(f\"Hist GBM R2 Score: {hgbm_r2_score}\")\nprint(f\"Hist GBM Root Mean2 Error: {hgbm_root_mean2_error}\")\n\nprint(f\"\\nXGBoost Accuracy: {xgb_accuracy}\")\nprint(f\"XGBoost F1 Score: {xgb_f1_score}\")\nprint(f\"XGBoost Precision Score: {xgb_precision_score}\")\nprint(f\"XGBoost Recall Score: {xgb_recall_score}\")\nprint(f\"XGBoost R2 Score: {xgb_r2_score}\")\nprint(f\"XGBoost Root Mean2 Error: {xgb_root_mean2_error}\")\n\nprint(f\"\\nLightGBM Accuracy: {lgb_accuracy}\")\nprint(f\"LightGBM F1 Score: {lgb_f1_score}\")\nprint(f\"LightGBM Precision Score: {lgb_precision_score}\")\nprint(f\"LightGBM Recall Score: {lgb_recall_score}\")\nprint(f\"LightGBM R2 Score: {lgb_r2_score}\")\nprint(f\"LightGBM Root Mean2 Error: {lgb_root_mean2_error}\")\n\n\nHist GBM Accuracy: 0.9014046093004228\nHist GBM F1 Score: 0.9219812236969893\nHist GBM Precision Score: 0.9219812236969893\nHist GBM Recall Score: 0.9219812236969893\nHist GBM R2 Score: 0.9219812236969893\nHist GBM Root Mean2 Error: 0.9219812236969893\n\nXGBoost Accuracy: 0.9029046774853402\nXGBoost F1 Score: 0.923027027027027\nXGBoost Precision Score: 0.923027027027027\nXGBoost Recall Score: 0.923027027027027\nXGBoost R2 Score: 0.923027027027027\nXGBoost Root Mean2 Error: 0.923027027027027\n\nLightGBM Accuracy: 0.9007227601254603\nLightGBM F1 Score: 0.9212632489725286\nLightGBM Precision Score: 0.9212632489725286\nLightGBM Recall Score: 0.9212632489725286\nLightGBM R2 Score: 0.9212632489725286\nLightGBM Root Mean2 Error: 0.9212632489725286",
+    "crumbs": [
+      "Machine Learning",
+      "Can you Predict That"
+    ]
   }
 ]
