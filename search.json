@@ -111,18 +111,114 @@
     "text": "MarkDown Basics"
   },
   {
-    "objectID": "exploration.html",
-    "href": "exploration.html",
+    "objectID": "notebooks/Exploration_02.html",
+    "href": "notebooks/Exploration_02.html",
+    "title": "Data Exploration 02",
+    "section": "",
+    "text": "You’re working as a data analyst at a cereal marketing company in New York.\nIn a strategy meeting, the marketing director tells you that in 2018, the US weight loss industry was worth over $72 Billion dollars, growing 4% compared to the previous year.\nIn contrast, sales of cold cereal fell 6% to $8.5 billion during the same time period.\nCereal executives have approached the marketing company asking how they can somehow tap into the weight loss market growth to boost the sales of their cereal brands.\nYour assignment is to analyze a dataset of nutritional information for major US cereals, and calculate some metrics that can be used by the marketing team."
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
+    "href": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
+    "title": "Data Exploration 02",
+    "section": "Part 1: Import Pandas and load the data",
+    "text": "Part 1: Import Pandas and load the data\nRemember to import Pandas the conventional way. If you’ve forgotten how, you may want to review Data Exploration 01.\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 1: Enter your code below to import Pandas according to the\n# conventional method. Then load the dataset into a Pandas dataframe.\n\n# Write any code needed to explore the data by seeing what the first few\n# rows look like. Then display a technical summary of the data to determine\n# the data types of each column, and which columns have missing data.\n\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
+    "href": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
+    "title": "Data Exploration 02",
+    "section": "Part 2: Calculate Summary Statistics",
+    "text": "Part 2: Calculate Summary Statistics\nThe marketing team has determined that when choosing a cereal, consumers are most interested in calories, sugars, fiber, fat, and protein.\nFirst, let’s calcuate some summary statistics for these categories across the entire dataset. We’re particularly intrested in the mean, median, standard deviation, min, and max values.\nThere are multiple ways to accomplish this.\n\n# Part 2: Enter your code below to calculate summary statistics for the\n# calories, sugars, fiber, fat, and protein features.\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['calories', 'sugars', 'fiber', 'fat', 'protein']\ntheStatistics = calculateSummaryStatistics(theData, theFieldsOfInterest)\n\nprint(theStatistics)\n#print(summaryStatisticsMerged)\n\n                Mean  Median   Min    Max        Std\ncalories  106.883117   110.0  50.0  160.0  19.484119\nsugars      6.922078     7.0  -1.0   15.0   4.444885\nfiber       2.151948     2.0   0.0   14.0   2.383364\nfat         1.012987     1.0   0.0    5.0   1.006473\nprotein     2.545455     3.0   1.0    6.0   1.094790"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-3-transform-data",
+    "href": "notebooks/Exploration_02.html#part-3-transform-data",
+    "title": "Data Exploration 02",
+    "section": "Part 3: Transform Data",
+    "text": "Part 3: Transform Data\nTo make analysis easier, you want to convert the manufacturer codes used in the dataset to the manufacturer names.\nFirst, display the count of each manufacturer code value used in the dataset (found in the mfr column).\nThen, create a new column with the appropriate manufacturer name for each entry, using this mapping:\nA = American Home Food Products\nG = General Mills\nK = Kelloggs\nN = Nabisco\nP = Post\nQ = Quaker Oats\nR = Ralston Purina\n\nNote: While the tutorial linked above uses the replace function, using the map function instead can often be much faster and more memory efficient, especially for large datasets.\n\n\n# Display the count of values for the manufacturer code (\"mfr\" column), then\n# create a new column containing the appropriate manufacturer names.\ndef getManufacturer(theAbbreviation):\n  manufacturerData = {\n    'A': 'American Home Food Products',\n    'G': 'General Mills',\n    'K': 'Kelloggs',\n    'N': 'Nabisco',\n    'P': 'Post',\n    'Q': 'Quaker Oats',\n    'R': 'Ralston Purina'\n  }\n  return manufacturerData.get(theAbbreviation, '')\n\nmanufacturerCount = theData[['mfr']].value_counts()\nprint(manufacturerCount)\n\ntheMappedData = theData\ntheMappedData['manufacturer'] = theMappedData['mfr'].map(getManufacturer)\ntheMappedData.head(5)\n\nmfr\nK      23\nG      22\nP       9\nR       8\nQ       8\nN       6\nA       1\nName: count, dtype: int64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-4-visualization",
+    "href": "notebooks/Exploration_02.html#part-4-visualization",
+    "title": "Data Exploration 02",
+    "section": "Part 4: Visualization",
+    "text": "Part 4: Visualization\nLet’s do some more data exploration visually.\nImport your visualization library of choice and set any needed configuration options.\n\n# Import your visualization library\nimport seaborn as sns\n\n\nSugar Distribution\nMarketing tells us that their surveys have revealed that sugar content is the number one concern of consumers when choosing cereal.\nThey would like to see the following visualizations:\n\nA histogram plot of the sugar content in all cereals.\nA scatter plot showing the relationship between sugar and calories.\nA box plot showing the distribution of sugar content by manufacturer.\n\n\n# Create the three visualzations requested by the the marketing team\nsns.displot(theData['sugars'], kind='hist')\nsns.relplot(data=theData, x='sugars', y='calories', kind='scatter')\nsns.catplot(data=theMappedData, x='manufacturer', y='sugars', kind='box', aspect=2)"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#above-and-beyond",
+    "href": "notebooks/Exploration_02.html#above-and-beyond",
+    "title": "Data Exploration 02",
+    "section": "🌟 Above and Beyond 🌟",
+    "text": "🌟 Above and Beyond 🌟\nThe marketing team is pleased with what you’ve accomplished so far. They have a meeting with top cereal executives in the morning, and they’d like you to do as many of the following additional tasks as you have time for:\n\nWeight Watchers used to have an older points system that used this formula: (calories / 50) + (fat / 12) - (fiber / 5), but only the first 4 grams of fiber were included in the calculation. For comparison’s sake, create an additional column with the calculation for the old points system.\nMarketing really likes the boxplot of the sugar content for each cereal, they’d like similar plots for calories and fat, but using different color schemes for each chart.\n\n\ndef calculatePointsOld(theFood):\n  theFiber = min(theFood.fiber, 4)\n  return round((theFood.calories / 50) + (theFood.fat / 12) - (theFiber / 5))\n\ntheMappedData['oldWeightWatchesPoints'] = theMappedData.apply(calculatePointsOld, axis=1)\ntheMappedData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\nweightWatchesPoints\noldWeightWatchesPoints\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n3\n1\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n6\n2\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n3\n1\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n1\n0\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina\n5\n2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
   },
   {
-    "objectID": "exploration.html#title-2-header",
-    "href": "exploration.html#title-2-header",
+    "objectID": "index.html#title-2-header",
+    "href": "index.html#title-2-header",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "story_telling.html",
+    "href": "story_telling.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "story_telling.html#title-2-header",
+    "href": "story_telling.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "cleansing.html",
+    "href": "cleansing.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "cleansing.html#title-2-header",
+    "href": "cleansing.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "ml.html",
+    "href": "ml.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "ml.html#title-2-header",
+    "href": "ml.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
   },
   {
     "objectID": "resume.html",
@@ -153,69 +249,15 @@
     "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
   },
   {
-    "objectID": "ml.html",
-    "href": "ml.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "ml.html#title-2-header",
-    "href": "ml.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "cleansing.html",
-    "href": "cleansing.html",
+    "objectID": "exploration.html",
+    "href": "exploration.html",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
   },
   {
-    "objectID": "cleansing.html#title-2-header",
-    "href": "cleansing.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "story_telling.html",
-    "href": "story_telling.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "story_telling.html#title-2-header",
-    "href": "story_telling.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "index.html#title-2-header",
-    "href": "index.html#title-2-header",
+    "objectID": "exploration.html#title-2-header",
+    "href": "exploration.html#title-2-header",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
@@ -246,7 +288,7 @@
     "href": "notebooks/Exploration_01.html#part-2-load-the-data",
     "title": "Data Exploration 01",
     "section": "Part 2: Load the data",
-    "text": "Part 2: Load the data\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 2: Load the dataset into a Pandas dataframe.\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n# Then, explore the data by seeing what the first few rows look like.\ntheData.head(5)\n\n\n  \n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n# Next, display a technical summary of the data to determine the data types of each column, and which columns have missing data.\ntheData.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nData columns (total 12 columns):\n #   Column        Non-Null Count  Dtype \n---  ------        --------------  ----- \n 0   show_id       6234 non-null   int64 \n 1   type          6234 non-null   object\n 2   title         6234 non-null   object\n 3   director      4265 non-null   object\n 4   cast          5664 non-null   object\n 5   country       5758 non-null   object\n 6   date_added    6223 non-null   object\n 7   release_year  6234 non-null   int64 \n 8   rating        6224 non-null   object\n 9   duration      6234 non-null   object\n 10  listed_in     6234 non-null   object\n 11  description   6234 non-null   object\ndtypes: int64(2), object(10)\nmemory usage: 584.6+ KB"
+    "text": "Part 2: Load the data\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 2: Load the dataset into a Pandas dataframe.\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n# Then, explore the data by seeing what the first few rows look like.\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n# Next, display a technical summary of the data to determine the data types of each column, and which columns have missing data.\ntheData.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nData columns (total 12 columns):\n #   Column        Non-Null Count  Dtype \n---  ------        --------------  ----- \n 0   show_id       6234 non-null   int64 \n 1   type          6234 non-null   object\n 2   title         6234 non-null   object\n 3   director      4265 non-null   object\n 4   cast          5664 non-null   object\n 5   country       5758 non-null   object\n 6   date_added    6223 non-null   object\n 7   release_year  6234 non-null   int64 \n 8   rating        6224 non-null   object\n 9   duration      6234 non-null   object\n 10  listed_in     6234 non-null   object\n 11  description   6234 non-null   object\ndtypes: int64(2), object(10)\nmemory usage: 584.6+ KB"
   },
   {
     "objectID": "notebooks/Exploration_01.html#part-3-filter-the-data",
