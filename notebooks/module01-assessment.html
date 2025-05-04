@@ -403,332 +403,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question-1" class="level3">
 <h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
 <p>Load the dataset into a Pandas data frame and determine what data type is used to store the <code>release_year</code> feature.</p>
-<div id="cell-4" class="cell" data-outputid="9c2f10a6-af7e-4b90-844d-766f15927936" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:345}}" data-execution_count="12">
+<div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ab38ea98-8013-4cde-99e0-dee9ae879b1d" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dataSource <span class="op">=</span> <span class="st">" https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<div id="df-46385f19-186e-4caf-acd7-c183998686d6" class="colab-df-container">
-    <div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">show_id</th>
-<th data-quarto-table-cell-role="th">type</th>
-<th data-quarto-table-cell-role="th">title</th>
-<th data-quarto-table-cell-role="th">director</th>
-<th data-quarto-table-cell-role="th">cast</th>
-<th data-quarto-table-cell-role="th">country</th>
-<th data-quarto-table-cell-role="th">date_added</th>
-<th data-quarto-table-cell-role="th">release_year</th>
-<th data-quarto-table-cell-role="th">rating</th>
-<th data-quarto-table-cell-role="th">duration</th>
-<th data-quarto-table-cell-role="th">listed_in</th>
-<th data-quarto-table-cell-role="th">description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>81145628</td>
-<td>Movie</td>
-<td>Norm of the North: King Sized Adventure</td>
-<td>Richard Finn, Tim Maltby</td>
-<td>Alan Marriott, Andrew Toth, Brian Dobson, Cole...</td>
-<td>United States, India, South Korea, China</td>
-<td>September 9, 2019</td>
-<td>2019</td>
-<td>TV-PG</td>
-<td>90 min</td>
-<td>Children &amp; Family Movies, Comedies</td>
-<td>Before planning an awesome wedding for his gra...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>80117401</td>
-<td>Movie</td>
-<td>Jandino: Whatever it Takes</td>
-<td>NaN</td>
-<td>Jandino Asporaat</td>
-<td>United Kingdom</td>
-<td>September 9, 2016</td>
-<td>2016</td>
-<td>TV-MA</td>
-<td>94 min</td>
-<td>Stand-Up Comedy</td>
-<td>Jandino Asporaat riffs on the challenges of ra...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>70234439</td>
-<td>TV Show</td>
-<td>Transformers Prime</td>
-<td>NaN</td>
-<td>Peter Cullen, Sumalee Montano, Frank Welker, J...</td>
-<td>United States</td>
-<td>September 8, 2018</td>
-<td>2013</td>
-<td>TV-Y7-FV</td>
-<td>1 Season</td>
-<td>Kids' TV</td>
-<td>With the help of three human allies, the Autob...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>80058654</td>
-<td>TV Show</td>
-<td>Transformers: Robots in Disguise</td>
-<td>NaN</td>
-<td>Will Friedle, Darren Criss, Constance Zimmer, ...</td>
-<td>United States</td>
-<td>September 8, 2018</td>
-<td>2016</td>
-<td>TV-Y7</td>
-<td>1 Season</td>
-<td>Kids' TV</td>
-<td>When a prison ship crash unleashes hundreds of...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>80125979</td>
-<td>Movie</td>
-<td>#realityhigh</td>
-<td>Fernando Lebrija</td>
-<td>Nesta Cooper, Kate Walsh, John Michael Higgins...</td>
-<td>United States</td>
-<td>September 8, 2017</td>
-<td>2017</td>
-<td>TV-14</td>
-<td>99 min</td>
-<td>Comedies</td>
-<td>When nerdy high schooler Dani finally attracts...</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-46385f19-186e-4caf-acd7-c183998686d6')" title="Convert this dataframe to an interactive table." style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-46385f19-186e-4caf-acd7-c183998686d6 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-46385f19-186e-4caf-acd7-c183998686d6');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-    <div id="df-9afd26cf-d141-4379-9e2e-165f27a89c10">
-      <button class="colab-df-quickchart" onclick="quickchart('df-9afd26cf-d141-4379-9e2e-165f27a89c10')" title="Suggest charts" style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
-    </g>
-</svg>
-      </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-9afd26cf-d141-4379-9e2e-165f27a89c10 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>theData[<span class="st">'release_year'</span>].info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.series.Series'&gt;
+RangeIndex: 6234 entries, 0 to 6233
+Series name: release_year
+Non-Null Count  Dtype
+--------------  -----
+6234 non-null   int64
+dtypes: int64(1)
+memory usage: 48.8 KB</code></pre>
 </div>
 </div>
 </section>
 <section id="question-2" class="level3">
 <h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>Filter your dataset so it contains only <code>TV Shows</code>. How many of those TV Shows were rated <code>TV-Y7</code>?</p>
-<div id="cell-6" class="cell" data-outputid="59044038-ea4c-4256-8af3-198019706a36" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>minimalData <span class="op">=</span> theData[[<span class="st">'type'</span>, <span class="st">'rating'</span>, <span class="st">'release_year'</span>]]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cleanedData <span class="op">=</span> minimalData.dropna()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> cleanedData.loc[theData[<span class="st">'type'</span>] <span class="op">!=</span> <span class="st">"Movie"</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>distinctTVRatings <span class="op">=</span> onlyTVData[<span class="st">'rating'</span>].unique()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>desiredTVRatings <span class="op">=</span> [<span class="st">'TV-Y7'</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> onlyTVData.loc[onlyTVData[<span class="st">'rating'</span>].isin(desiredTVRatings)]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(onlyTVData))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="59044038-ea4c-4256-8af3-198019706a36" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>minimalData <span class="op">=</span> theData[[<span class="st">'type'</span>, <span class="st">'rating'</span>, <span class="st">'release_year'</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cleanedData <span class="op">=</span> minimalData.dropna()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> cleanedData.loc[theData[<span class="st">'type'</span>] <span class="op">!=</span> <span class="st">"Movie"</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>distinctTVRatings <span class="op">=</span> onlyTVData[<span class="st">'rating'</span>].unique()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>desiredTVRatings <span class="op">=</span> [<span class="st">'TV-Y7'</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>onlyTVData <span class="op">=</span> onlyTVData.loc[onlyTVData[<span class="st">'rating'</span>].isin(desiredTVRatings)]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(onlyTVData))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>100</code></pre>
 </div>
@@ -737,10 +440,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question-3" class="level3">
 <h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
 <p>Further filter your dataset so it only contains TV Shows released between the years 2000 and 2009 inclusive. How many of <em>those</em> shows were rated <code>TV-Y7</code>?</p>
-<div id="cell-8" class="cell" data-outputid="811d3308-7b28-437f-f6d4-35787b6458e2" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>desiredYears <span class="op">=</span> [<span class="dv">2000</span>, <span class="dv">2001</span>, <span class="dv">2002</span>, <span class="dv">2003</span>, <span class="dv">2004</span>, <span class="dv">2005</span>, <span class="dv">2006</span>, <span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>onlyCertainYears <span class="op">=</span> onlyTVData.loc[onlyTVData[<span class="st">'release_year'</span>].isin(desiredYears)]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(onlyCertainYears))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="811d3308-7b28-437f-f6d4-35787b6458e2" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>desiredYears <span class="op">=</span> [<span class="dv">2000</span>, <span class="dv">2001</span>, <span class="dv">2002</span>, <span class="dv">2003</span>, <span class="dv">2004</span>, <span class="dv">2005</span>, <span class="dv">2006</span>, <span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>onlyCertainYears <span class="op">=</span> onlyTVData.loc[onlyTVData[<span class="st">'release_year'</span>].isin(desiredYears)]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(onlyCertainYears))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>4</code></pre>
 </div>
@@ -753,32 +456,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question-4" class="level3">
 <h3 class="anchored" data-anchor-id="question-4">Question 4</h3>
 <p>After importing the dataset into a pandas data frame, determine the median amount of <code>protein</code> in cereal brands manufactured by Kelloggs. (<code>mfr</code> code “K”)</p>
-<div id="cell-11" class="cell" data-outputid="cda36bb1-c270-48a0-f513-24793b8d3963" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:241}}" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dataSource <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv"</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>kellogsData <span class="op">=</span> theData.loc[theData[<span class="st">'mfr'</span>].isin([<span class="st">'K'</span>])]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculateSummaryStatistics(theData, fieldsOfInterest):</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMean <span class="op">=</span> theData[fieldsOfInterest].mean()</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMedian <span class="op">=</span> theData[fieldsOfInterest].median()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMin <span class="op">=</span> theData[fieldsOfInterest].<span class="bu">min</span>()</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMax <span class="op">=</span> theData[fieldsOfInterest].<span class="bu">max</span>()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsStd <span class="op">=</span> theData[fieldsOfInterest].std()</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Concatenate</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMerged <span class="op">=</span> pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Label the columns</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMerged.columns <span class="op">=</span> [<span class="st">'Mean'</span>, <span class="st">'Median'</span>, <span class="st">'Min'</span>, <span class="st">'Max'</span>, <span class="st">'Std'</span>]</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> summaryStatisticsMerged</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>theFieldsOfInterest <span class="op">=</span> [<span class="st">'protein'</span>]</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>theStatistics <span class="op">=</span> calculateSummaryStatistics(kellogsData, theFieldsOfInterest)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theStatistics.Median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:241}}" data-outputid="cda36bb1-c270-48a0-f513-24793b8d3963" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dataSource <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>kellogsData <span class="op">=</span> theData.loc[theData[<span class="st">'mfr'</span>].isin([<span class="st">'K'</span>])]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculateSummaryStatistics(theData, fieldsOfInterest):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMean <span class="op">=</span> theData[fieldsOfInterest].mean()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMedian <span class="op">=</span> theData[fieldsOfInterest].median()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMin <span class="op">=</span> theData[fieldsOfInterest].<span class="bu">min</span>()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMax <span class="op">=</span> theData[fieldsOfInterest].<span class="bu">max</span>()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsStd <span class="op">=</span> theData[fieldsOfInterest].std()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Concatenate</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMerged <span class="op">=</span> pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Label the columns</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  summaryStatisticsMerged.columns <span class="op">=</span> [<span class="st">'Mean'</span>, <span class="st">'Median'</span>, <span class="st">'Min'</span>, <span class="st">'Max'</span>, <span class="st">'Std'</span>]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> summaryStatisticsMerged</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>theFieldsOfInterest <span class="op">=</span> [<span class="st">'protein'</span>]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>theStatistics <span class="op">=</span> calculateSummaryStatistics(kellogsData, theFieldsOfInterest)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theStatistics.Median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>protein    3.0
 Name: Median, dtype: float64</code></pre>
@@ -1123,20 +826,20 @@ Name: Median, dtype: float64</code></pre>
 <pre><code>healthiness = (protein + fiber) / sugar</code></pre>
 <p>Create a new <code>healthiness</code> column populated with values based on the above formula.</p>
 <p>Then, determine the median healthiness value for only General Mills cereals (<code>mfr</code> = “G”), rounded to two decimal places.</p>
-<div id="cell-13" class="cell" data-outputid="ad1c8c53-078f-4b9e-ca3e-1afb35794203" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculateHealthiness(theFood):</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">round</span>(theFood.protein <span class="op">+</span> theFood.fiber <span class="op">/</span> theFood.sugars)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>theData.head()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['healthiness'] = theData.apply(calculateHealthiness, axis=1)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>onlyGeneralMills <span class="op">=</span> theData[theData[<span class="st">'mfr'</span>] <span class="op">==</span> <span class="st">'G'</span>]</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>onlyGeneralMills[<span class="st">'healthiness'</span>] <span class="op">=</span> onlyGeneralMills.<span class="bu">apply</span>(calculateHealthiness, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#onlyGeneralMills.head(5)</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>theFieldsOfInterest <span class="op">=</span> [<span class="st">'healthiness'</span>]</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>theStatistics2 <span class="op">=</span> calculateSummaryStatistics(onlyGeneralMills, theFieldsOfInterest)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theStatistics2.Median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ad1c8c53-078f-4b9e-ca3e-1afb35794203" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculateHealthiness(theFood):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">round</span>(theFood.protein <span class="op">+</span> theFood.fiber <span class="op">/</span> theFood.sugars)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>theData.head()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['healthiness'] = theData.apply(calculateHealthiness, axis=1)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>onlyGeneralMills <span class="op">=</span> theData[theData[<span class="st">'mfr'</span>] <span class="op">==</span> <span class="st">'G'</span>]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>onlyGeneralMills[<span class="st">'healthiness'</span>] <span class="op">=</span> onlyGeneralMills.<span class="bu">apply</span>(calculateHealthiness, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#onlyGeneralMills.head(5)</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>theFieldsOfInterest <span class="op">=</span> [<span class="st">'healthiness'</span>]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>theStatistics2 <span class="op">=</span> calculateSummaryStatistics(onlyGeneralMills, theFieldsOfInterest)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(theStatistics2.Median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>healthiness    2.0
 Name: Median, dtype: float64</code></pre>
@@ -1162,19 +865,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <pre><code>Surname, Given names</code></pre>
 <p>For example, if a passenger’s <code>Name</code> is <code>Braund, Mr. Owen Harris</code>, the <code>NameGroup</code> column should contain the value <code>b</code>.</p>
 <p>Then count how many passengers have a <code>NameGroup</code> value of <code>k</code>.</p>
-<div id="cell-16" class="cell" data-outputid="39a79791-7269-40a9-f0ad-127a19e01988" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dataSource <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv"</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['SplitNames'] = theData['Name'].str.split()</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['Surname'] = theData['SplitNames'].str[-1]</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['NameGroup'] = theData['Surname'].str[0]</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>theData[<span class="st">'NameGroup'</span>] <span class="op">=</span> theData[<span class="st">'Name'</span>].<span class="bu">str</span>[<span class="dv">0</span>]</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(theData[theData[<span class="st">'NameGroup'</span>] <span class="op">==</span> <span class="st">'K'</span>]))</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#theData.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="39a79791-7269-40a9-f0ad-127a19e01988" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dataSource <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>theData <span class="op">=</span> pd.read_csv(dataSource)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['SplitNames'] = theData['Name'].str.split()</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['Surname'] = theData['SplitNames'].str[-1]</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#theData['NameGroup'] = theData['Surname'].str[0]</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>theData[<span class="st">'NameGroup'</span>] <span class="op">=</span> theData[<span class="st">'Name'</span>].<span class="bu">str</span>[<span class="dv">0</span>]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(theData[theData[<span class="st">'NameGroup'</span>] <span class="op">==</span> <span class="st">'K'</span>]))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#theData.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>28</code></pre>
 </div>
