@@ -111,6 +111,151 @@
     "text": "MarkDown Basics"
   },
   {
+    "objectID": "notebooks/module01-assessment.html",
+    "href": "notebooks/module01-assessment.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "This assignment will test how well you’re able to perform various data science-related tasks.\nEach Problem Group below will center around a particular dataset that you have worked with before.\nTo ensure you receive full credit for a question, make sure you demonstrate the appropriate pandas, altair, or other commands as requested in the provided code blocks.\nYou may find that some questions require multiple steps to fully answer. Others require some mental arithmetic in addition to pandas commands. Use your best judgment."
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#submission",
+    "href": "notebooks/module01-assessment.html#submission",
+    "title": "Introduction",
+    "section": "Submission",
+    "text": "Submission\nEach problem group asks a series of questions. This assignment consists of two submissions:\n\nAfter completing the questions below, open the Module 01 Assessment Quiz in Canvas and enter your answers to these questions there.\nAfter completing and submitting the quiz, save this Colab notebook as a GitHub Gist (You’ll need to create a GitHub account for this), by selecting Save a copy as a GitHub Gist from the File menu above.\nIn Canvas, open the Module 01 Assessment GitHub Gist assignment and paste the GitHub Gist URL for this notebook. Then submit that assignment."
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-1",
+    "href": "notebooks/module01-assessment.html#problem-group-1",
+    "title": "Introduction",
+    "section": "Problem Group 1",
+    "text": "Problem Group 1\nFor the questions in this group, you’ll work with the Netflix Movies Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\n\nQuestion 1\nLoad the dataset into a Pandas data frame and determine what data type is used to store the release_year feature.\n\nimport pandas as pd\n\ndataSource = \" https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n\nQuestion 2\nFilter your dataset so it contains only TV Shows. How many of those TV Shows were rated TV-Y7?\n\nminimalData = theData[['type', 'rating', 'release_year']]\ncleanedData = minimalData.dropna()\nonlyTVData = cleanedData.loc[theData['type'] != \"Movie\"]\ndistinctTVRatings = onlyTVData['rating'].unique()\ndesiredTVRatings = ['TV-Y7']\nonlyTVData = onlyTVData.loc[onlyTVData['rating'].isin(desiredTVRatings)]\nprint(len(onlyTVData))\n\n100\n\n\n\n\nQuestion 3\nFurther filter your dataset so it only contains TV Shows released between the years 2000 and 2009 inclusive. How many of those shows were rated TV-Y7?\n\ndesiredYears = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]\nonlyCertainYears = onlyTVData.loc[onlyTVData['release_year'].isin(desiredYears)]\nprint(len(onlyCertainYears))\n\n4"
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-2",
+    "href": "notebooks/module01-assessment.html#problem-group-2",
+    "title": "Introduction",
+    "section": "Problem Group 2",
+    "text": "Problem Group 2\nFor the questions in this group, you’ll work with the Cereal Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\n\nQuestion 4\nAfter importing the dataset into a pandas data frame, determine the median amount of protein in cereal brands manufactured by Kelloggs. (mfr code “K”)\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\nkellogsData = theData.loc[theData['mfr'].isin(['K'])]\n\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['protein']\ntheStatistics = calculateSummaryStatistics(kellogsData, theFieldsOfInterest)\n\nprint(theStatistics.Median)\n\nprotein    3.0\nName: Median, dtype: float64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n\nQuestion 5\nIn order to comply with new government regulations, all cereals must now come with a “Healthiness” rating. This rating is calculated based on this formula:\nhealthiness = (protein + fiber) / sugar\nCreate a new healthiness column populated with values based on the above formula.\nThen, determine the median healthiness value for only General Mills cereals (mfr = “G”), rounded to two decimal places.\n\ndef calculateHealthiness(theFood):\n  return round(theFood.protein + theFood.fiber / theFood.sugars)\n\ntheData.head()\n#theData['healthiness'] = theData.apply(calculateHealthiness, axis=1)\n\nonlyGeneralMills = theData[theData['mfr'] == 'G']\nonlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)\n#onlyGeneralMills.head(5)\n\ntheFieldsOfInterest = ['healthiness']\ntheStatistics2 = calculateSummaryStatistics(onlyGeneralMills, theFieldsOfInterest)\nprint(theStatistics2.Median)\n\nhealthiness    2.0\nName: Median, dtype: float64\n\n\nSettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  onlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)"
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-3",
+    "href": "notebooks/module01-assessment.html#problem-group-3",
+    "title": "Introduction",
+    "section": "Problem Group 3",
+    "text": "Problem Group 3\nFor the questions in this group, you’ll work with the Titanic Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\n\nQuestion 6\nAfter loading the dataset into a pandas DataFrame, create a new column called NameGroup that contains the first letter of the passenger’s surname in lower case.\nNote that in the dataset, passenger’s names are provided in the Name column and are listed as:\nSurname, Given names\nFor example, if a passenger’s Name is Braund, Mr. Owen Harris, the NameGroup column should contain the value b.\nThen count how many passengers have a NameGroup value of k.\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\"\ntheData = pd.read_csv(dataSource)\n\n#theData['SplitNames'] = theData['Name'].str.split()\n#theData['Surname'] = theData['SplitNames'].str[-1]\n#theData['NameGroup'] = theData['Surname'].str[0]\n\ntheData['NameGroup'] = theData['Name'].str[0]\nprint(len(theData[theData['NameGroup'] == 'K']))\n#theData.head()\n\n28"
+  },
+  {
+    "objectID": "exploration.html",
+    "href": "exploration.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "exploration.html#title-2-header",
+    "href": "exploration.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "resume.html#currently",
+    "href": "resume.html#currently",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
+  },
+  {
+    "objectID": "resume.html#occupation",
+    "href": "resume.html#occupation",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "ml.html",
+    "href": "ml.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "ml.html#title-2-header",
+    "href": "ml.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "cleansing.html",
+    "href": "cleansing.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "cleansing.html#title-2-header",
+    "href": "cleansing.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "story_telling.html",
+    "href": "story_telling.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "story_telling.html#title-2-header",
+    "href": "story_telling.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Story Telling"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "index.html#title-2-header",
+    "href": "index.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
     "objectID": "notebooks/Exploration_02.html",
     "href": "notebooks/Exploration_02.html",
     "title": "Data Exploration 02",
@@ -151,116 +296,6 @@
     "title": "Data Exploration 02",
     "section": "🌟 Above and Beyond 🌟",
     "text": "🌟 Above and Beyond 🌟\nThe marketing team is pleased with what you’ve accomplished so far. They have a meeting with top cereal executives in the morning, and they’d like you to do as many of the following additional tasks as you have time for:\n\nWeight Watchers used to have an older points system that used this formula: (calories / 50) + (fat / 12) - (fiber / 5), but only the first 4 grams of fiber were included in the calculation. For comparison’s sake, create an additional column with the calculation for the old points system.\nMarketing really likes the boxplot of the sugar content for each cereal, they’d like similar plots for calories and fat, but using different color schemes for each chart.\n\n\ndef calculatePointsOld(theFood):\n  theFiber = min(theFood.fiber, 4)\n  return round((theFood.calories / 50) + (theFood.fat / 12) - (theFiber / 5))\n\ntheMappedData['oldWeightWatchesPoints'] = theMappedData.apply(calculatePointsOld, axis=1)\ntheMappedData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\nweightWatchesPoints\noldWeightWatchesPoints\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n3\n1\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n6\n2\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n3\n1\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n1\n0\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina\n5\n2"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "index.html#title-2-header",
-    "href": "index.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "story_telling.html",
-    "href": "story_telling.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "story_telling.html#title-2-header",
-    "href": "story_telling.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Story Telling"
-    ]
-  },
-  {
-    "objectID": "cleansing.html",
-    "href": "cleansing.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "cleansing.html#title-2-header",
-    "href": "cleansing.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "ml.html",
-    "href": "ml.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "ml.html#title-2-header",
-    "href": "ml.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "resume.html#currently",
-    "href": "resume.html#currently",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
-  },
-  {
-    "objectID": "resume.html#education",
-    "href": "resume.html#education",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
-  },
-  {
-    "objectID": "resume.html#occupation",
-    "href": "resume.html#occupation",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "exploration.html",
-    "href": "exploration.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "exploration.html#title-2-header",
-    "href": "exploration.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
   },
   {
     "objectID": "notebooks/Exploration_01.html",
