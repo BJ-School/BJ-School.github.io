@@ -28,7 +28,7 @@
       "cell_type": "code",
       "source": [
         "# import pandas as pd\n",
-        "def reportDatasetSummary(theData, rankBy=None):\n",
+        "def reportDatasetSummary(theData, sortBy=\"columnName\"):\n",
         "    summary = {\n",
         "        'columnName': [],\n",
         "        'numberOfNAValues': [],\n",
@@ -53,34 +53,34 @@
         "\n",
         "    summary_df = pd.DataFrame(summary)\n",
         "\n",
-        "    if rankBy:\n",
-        "        if pd.api.types.is_numeric_dtype(summary_df[rankBy]):\n",
-        "            summary_df = summary_df.sort_values(by=rankBy, ascending=False)\n",
+        "    if sortBy:\n",
+        "        if pd.api.types.is_numeric_dtype(summary_df[sortBy]):\n",
+        "            summary_df = summary_df.sort_values(by=sortBy, ascending=False)\n",
         "        else:\n",
-        "            summary_df = summary_df.sort_values(by=rankBy, ascending=True)\n",
+        "            summary_df = summary_df.sort_values(by=sortBy, ascending=True)\n",
         "\n",
         "    return summary_df.head(100)\n",
         "\n",
         "# import pandas as pd\n",
         "# import textwrap\n",
-        "import pandas as pd\n",
-        "import textwrap\n",
-        "\n",
-        "def reportDistinctValues(dataFrame):\n",
+        "def reportDistinctValues(dataFrame, rankBy=\"columnName\"):\n",
         "    distinctValues = {}\n",
         "    for column in dataFrame.columns:\n",
         "        valueCounts = dataFrame[column].value_counts()\n",
-        "        column_type = dataFrame[column].dtype\n",
+        "        columnType = dataFrame[column].dtype\n",
         "\n",
         "        if pd.api.types.is_numeric_dtype(dataFrame[column]):\n",
         "            valueCounts = valueCounts.sort_index()\n",
         "\n",
         "        distinctValues[column] = [f\"{value} ({count})\" for value, count in valueCounts.items()]\n",
         "\n",
-        "    for column, values in distinctValues.items():\n",
-        "        column_type = dataFrame[column].dtype\n",
-        "        wrapped_values = textwrap.fill(\", \".join(values), width=200, break_long_words=False, break_on_hyphens=False)\n",
-        "        print(f\"{column} ({column_type}):\\n\" + wrapped_values + \"\\n\")\n",
+        "    # Sort the results based on the rankBy variable\n",
+        "    sortedColumns = sorted(distinctValues.keys(), key=lambda col: dataFrame[col].dtype if rankBy == \"columnType\" else col)\n",
+        "\n",
+        "    for column in sortedColumns:\n",
+        "        columnType = dataFrame[column].dtype\n",
+        "        wrappedValues = textwrap.fill(\", \".join(distinctValues[column]), width=200, break_long_words=False, break_on_hyphens=False)\n",
+        "        print(f\"{column} ({columnType}):\\n\" + wrappedValues + \"\\n\")\n",
         "\n",
         "# import pandas as pd\n",
         "def reportNaValue(theData):\n",
@@ -89,13 +89,13 @@
         "    naCountsSorted.index.name = 'Field'\n",
         "    naCountsSorted.name = 'Qty'\n",
         "    total_records = len(theData)\n",
-        "    print(f\"Data Set Report - NA Values ({total_records})\")\n",
+        "    #print(f\"Data Set Report - NA Values ({total_records})\")\n",
         "    return naCountsSorted.head(100)"
       ],
       "metadata": {
         "id": "gx4Vq2U-CHvR"
       },
-      "execution_count": 83,
+      "execution_count": 124,
       "outputs": []
     },
     {
@@ -546,12 +546,12 @@
           "base_uri": "https://localhost:8080/",
           "height": 677
         },
-        "outputId": "9b49c036-c652-487c-9280-737ea53a6490"
+        "outputId": "b18077fe-ae9d-4637-b634-92d603554055"
       },
       "source": [
         "reportDatasetSummary(theData, 'columnName')"
       ],
-      "execution_count": 89,
+      "execution_count": 126,
       "outputs": [
         {
           "output_type": "execute_result",
@@ -603,7 +603,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-bef272d7-d265-4bf9-a169-9cd0eb1fc3bd\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-93f1e57d-10c6-4494-978e-457e9d6074b7\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -817,7 +817,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-bef272d7-d265-4bf9-a169-9cd0eb1fc3bd')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-93f1e57d-10c6-4494-978e-457e9d6074b7')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -869,12 +869,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-bef272d7-d265-4bf9-a169-9cd0eb1fc3bd button.colab-df-convert');\n",
+              "        document.querySelector('#df-93f1e57d-10c6-4494-978e-457e9d6074b7 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-bef272d7-d265-4bf9-a169-9cd0eb1fc3bd');\n",
+              "        const element = document.querySelector('#df-93f1e57d-10c6-4494-978e-457e9d6074b7');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -894,8 +894,8 @@
               "  </div>\n",
               "\n",
               "\n",
-              "    <div id=\"df-7a4b7ced-ee3b-462f-a9ba-a3dfab721aad\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-7a4b7ced-ee3b-462f-a9ba-a3dfab721aad')\"\n",
+              "    <div id=\"df-411a9809-0dad-44a6-83d4-44ff5a285e1b\">\n",
+              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-411a9809-0dad-44a6-83d4-44ff5a285e1b')\"\n",
               "                title=\"Suggest charts\"\n",
               "                style=\"display:none;\">\n",
               "\n",
@@ -1014,7 +1014,7 @@
               "        }\n",
               "        (() => {\n",
               "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-7a4b7ced-ee3b-462f-a9ba-a3dfab721aad button');\n",
+              "            document.querySelector('#df-411a9809-0dad-44a6-83d4-44ff5a285e1b button');\n",
               "          quickchartButtonEl.style.display =\n",
               "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "        })();\n",
@@ -1030,7 +1030,7 @@
             }
           },
           "metadata": {},
-          "execution_count": 89
+          "execution_count": 126
         }
       ]
     },
@@ -1040,13 +1040,13 @@
         "reportDistinctValues(theData)"
       ],
       "metadata": {
-        "id": "ooKGz6rPOKvk",
-        "outputId": "43b43411-10ba-4996-bbb1-a384410d971b",
         "colab": {
           "base_uri": "https://localhost:8080/"
-        }
+        },
+        "id": "ooKGz6rPOKvk",
+        "outputId": "1f213739-3660-4a48-f935-e54f43d31ff8"
       },
-      "execution_count": 90,
+      "execution_count": 127,
       "outputs": [
         {
           "output_type": "stream",
@@ -1058,57 +1058,32 @@
             "(582), 56 (632), 57 (578), 58 (529), 59 (415), 60 (251), 61 (64), 62 (55), 63 (50), 64 (50), 65 (43), 66 (50), 67 (19), 68 (32), 69 (29), 70 (42), 71 (47), 72 (30), 73 (30), 74 (30), 75 (21), 76 (30),\n",
             "77 (19), 78 (24), 79 (13), 80 (30), 81 (16), 82 (17), 83 (17), 84 (7), 85 (13), 86 (7), 87 (1), 88 (20), 89 (2), 91 (2), 92 (4), 94 (1), 95 (1), 98 (2)\n",
             "\n",
-            "job (object):\n",
-            "admin. (9400), blue-collar (8329), technician (6066), services (3548), management (2648), retired (1534), entrepreneur (1308), self-employed (1274), housemaid (962), unemployed (913), student (793)\n",
-            "\n",
-            "marital (object):\n",
-            "married (22456), single (10410), divorced (4134)\n",
-            "\n",
-            "education (object):\n",
-            "university.degree (10949), high.school (8554), basic.9y (5427), professional.course (4742), basic.4y (3764), basic.6y (2082), illiterate (16)\n",
-            "\n",
-            "default (object):\n",
-            "no (29341), yes (3)\n",
-            "\n",
-            "housing (object):\n",
-            "yes (19474), no (16701)\n",
-            "\n",
-            "loan (object):\n",
-            "no (30590), yes (5585)\n",
-            "\n",
-            "contact (object):\n",
-            "cellular (23515), telephone (13554)\n",
-            "\n",
-            "month (object):\n",
-            "may (12370), jul (6445), aug (5555), jun (4817), nov (3698), apr (2369), oct (653), sep (508), mar (496), dec (158)\n",
-            "\n",
-            "day_of_week (object):\n",
-            "thu (7742), mon (7657), wed (7347), tue (7287), fri (7036)\n",
-            "\n",
             "campaign (int64):\n",
             "1 (15874), 2 (9554), 3 (4804), 4 (2378), 5 (1432), 6 (855), 7 (559), 8 (363), 9 (265), 10 (207), 11 (164), 12 (112), 13 (81), 14 (55), 15 (47), 16 (44), 17 (50), 18 (30), 19 (26), 20 (29), 21 (21), 22\n",
             "(17), 23 (13), 24 (13), 25 (7), 26 (6), 27 (10), 28 (7), 29 (10), 30 (7), 31 (7), 32 (3), 33 (4), 34 (2), 35 (5), 37 (1), 39 (1), 40 (2), 41 (1), 42 (2), 56 (1)\n",
             "\n",
-            "pdays (int64):\n",
-            "0 (14), 1 (23), 2 (54), 3 (396), 4 (107), 5 (42), 6 (371), 7 (56), 8 (16), 9 (56), 10 (50), 11 (26), 12 (55), 13 (32), 14 (18), 15 (22), 16 (10), 17 (8), 18 (6), 19 (3), 20 (1), 21 (2), 22 (2), 25\n",
-            "(1), 26 (1), 27 (1), 999 (35696)\n",
-            "\n",
-            "previous (int64):\n",
-            "0 (31988), 1 (4116), 2 (684), 3 (196), 4 (64), 5 (15), 6 (5), 7 (1)\n",
-            "\n",
-            "poutcome (object):\n",
-            "nonexistent (31988), failure (3843), success (1238)\n",
-            "\n",
-            "emp.var.rate (float64):\n",
-            "-3.4 (973), -3.0 (150), -2.9 (1520), -1.8 (8234), -1.7 (692), -1.1 (572), -0.2 (8), -0.1 (3314), 1.1 (7001), 1.4 (14605)\n",
+            "cons.conf.idx (float64):\n",
+            "-50.8 (116), -50.0 (256), -49.5 (189), -47.1 (2213), -46.2 (5171), -45.9 (8), -42.7 (6000), -42.0 (3250), -41.8 (3958), -40.8 (661), -40.4 (64), -40.3 (282), -40.0 (198), -39.8 (198), -38.3 (212),\n",
+            "-37.5 (267), -36.4 (7001), -36.1 (4647), -34.8 (240), -34.6 (156), -33.6 (163), -33.0 (150), -31.4 (696), -30.1 (332), -29.8 (241), -26.9 (400)\n",
             "\n",
             "cons.price.idx (float64):\n",
             "92.201 (696), 92.379 (241), 92.431 (400), 92.469 (163), 92.649 (332), 92.713 (150), 92.756 (8), 92.843 (256), 92.893 (5171), 92.963 (661), 93.075 (2213), 93.2 (3250), 93.369 (240), 93.444 (4647),\n",
             "93.749 (156), 93.798 (64), 93.876 (198), 93.918 (6000), 93.994 (7001), 94.027 (212), 94.055 (198), 94.199 (267), 94.215 (282), 94.465 (3958), 94.601 (189), 94.767 (116)\n",
             "\n",
-            "cons.conf.idx (float64):\n",
-            "-50.8 (116), -50.0 (256), -49.5 (189), -47.1 (2213), -46.2 (5171), -45.9 (8), -42.7 (6000), -42.0 (3250), -41.8 (3958), -40.8 (661), -40.4 (64), -40.3 (282), -40.0 (198), -39.8 (198), -38.3 (212),\n",
-            "-37.5 (267), -36.4 (7001), -36.1 (4647), -34.8 (240), -34.6 (156), -33.6 (163), -33.0 (150), -31.4 (696), -30.1 (332), -29.8 (241), -26.9 (400)\n",
+            "contact (object):\n",
+            "cellular (23515), telephone (13554)\n",
+            "\n",
+            "day_of_week (object):\n",
+            "thu (7742), mon (7657), wed (7347), tue (7287), fri (7036)\n",
+            "\n",
+            "default (object):\n",
+            "no (29341), yes (3)\n",
+            "\n",
+            "education (object):\n",
+            "university.degree (10949), high.school (8554), basic.9y (5427), professional.course (4742), basic.4y (3764), basic.6y (2082), illiterate (16)\n",
+            "\n",
+            "emp.var.rate (float64):\n",
+            "-3.4 (973), -3.0 (150), -2.9 (1520), -1.8 (8234), -1.7 (692), -1.1 (572), -0.2 (8), -0.1 (3314), 1.1 (7001), 1.4 (14605)\n",
             "\n",
             "euribor3m (float64):\n",
             "0.634 (8), 0.635 (40), 0.636 (14), 0.637 (5), 0.638 (6), 0.639 (16), 0.64 (10), 0.642 (32), 0.643 (20), 0.644 (32), 0.645 (23), 0.646 (42), 0.649 (9), 0.65 (11), 0.651 (7), 0.652 (31), 0.653 (17),\n",
@@ -1131,8 +1106,33 @@
             "4.865 (335), 4.866 (313), 4.912 (6), 4.918 (4), 4.921 (3), 4.936 (6), 4.947 (85), 4.955 (94), 4.956 (20), 4.957 (489), 4.958 (527), 4.959 (812), 4.96 (904), 4.961 (1728), 4.962 (2346), 4.963 (2222),\n",
             "4.964 (1058), 4.965 (965), 4.966 (549), 4.967 (570), 4.968 (895), 4.97 (151), 5.0 (7), 5.045 (7)\n",
             "\n",
+            "housing (object):\n",
+            "yes (19474), no (16701)\n",
+            "\n",
+            "job (object):\n",
+            "admin. (9400), blue-collar (8329), technician (6066), services (3548), management (2648), retired (1534), entrepreneur (1308), self-employed (1274), housemaid (962), unemployed (913), student (793)\n",
+            "\n",
+            "loan (object):\n",
+            "no (30590), yes (5585)\n",
+            "\n",
+            "marital (object):\n",
+            "married (22456), single (10410), divorced (4134)\n",
+            "\n",
+            "month (object):\n",
+            "may (12370), jul (6445), aug (5555), jun (4817), nov (3698), apr (2369), oct (653), sep (508), mar (496), dec (158)\n",
+            "\n",
             "nr.employed (float64):\n",
             "4963.6 (572), 4991.6 (692), 5008.7 (594), 5017.5 (973), 5023.5 (150), 5076.2 (1520), 5099.1 (7640), 5176.3 (8), 5191.0 (7001), 5195.8 (3314), 5228.1 (14605)\n",
+            "\n",
+            "pdays (int64):\n",
+            "0 (14), 1 (23), 2 (54), 3 (396), 4 (107), 5 (42), 6 (371), 7 (56), 8 (16), 9 (56), 10 (50), 11 (26), 12 (55), 13 (32), 14 (18), 15 (22), 16 (10), 17 (8), 18 (6), 19 (3), 20 (1), 21 (2), 22 (2), 25\n",
+            "(1), 26 (1), 27 (1), 999 (35696)\n",
+            "\n",
+            "poutcome (object):\n",
+            "nonexistent (31988), failure (3843), success (1238)\n",
+            "\n",
+            "previous (int64):\n",
+            "0 (31988), 1 (4116), 2 (684), 3 (196), 4 (64), 5 (15), 6 (5), 7 (1)\n",
             "\n",
             "y (object):\n",
             "no (32861), yes (4208)\n",
@@ -1147,22 +1147,15 @@
         "id": "RnGBwGVZPyyh",
         "colab": {
           "base_uri": "https://localhost:8080/",
-          "height": 321
+          "height": 304
         },
-        "outputId": "8dc160b5-0095-4be1-b9d1-e52e7c6dc0aa"
+        "outputId": "e5e4cfd9-950d-4a6d-9f16-3e25b1c3494f"
       },
       "source": [
         "reportNaValue(theData)"
       ],
-      "execution_count": 88,
+      "execution_count": 128,
       "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Data Set Report - NA Values (37069)\n"
-          ]
-        },
         {
           "output_type": "execute_result",
           "data": {
@@ -1233,7 +1226,7 @@
             ]
           },
           "metadata": {},
-          "execution_count": 88
+          "execution_count": 128
         }
       ]
     },
@@ -1243,7 +1236,7 @@
         "id": "CVSfaqgKPzE2"
       },
       "source": [],
-      "execution_count": null,
+      "execution_count": 125,
       "outputs": []
     }
   ]
