@@ -16,17 +16,32 @@
       "cell_type": "code",
       "source": [
         "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import seaborn as sns\n",
         "import textwrap"
       ],
       "metadata": {
         "id": "IWMgKRIACfzZ"
       },
-      "execution_count": 43,
+      "execution_count": 169,
       "outputs": []
     },
     {
       "cell_type": "code",
       "source": [
+        "# import seaborn as sns\n",
+        "# import matplotlib.pyplot as plt\n",
+        "def graphCategoricalVsTarget(theData, targetValue, limit=None):\n",
+        "    categoricalData = theData.select_dtypes(include='object').columns\n",
+        "    if isinstance(limit, int) and limit > 0:\n",
+        "        categoricalData = categoricalData[:limit]\n",
+        "\n",
+        "    for col in categoricalData:\n",
+        "        plt.figure(figsize=(5, 4))\n",
+        "        sns.barplot(x=targetValue, y=col, data=theData)\n",
+        "        plt.title(f\"Our Target vs {col}\")\n",
+        "        plt.show()\n",
+        "\n",
         "# import pandas as pd\n",
         "def reportDatasetSummary(theData, sortBy=\"columnName\"):\n",
         "    summary = {\n",
@@ -95,58 +110,42 @@
       "metadata": {
         "id": "gx4Vq2U-CHvR"
       },
-      "execution_count": 124,
+      "execution_count": 214,
       "outputs": []
     },
     {
       "cell_type": "code",
-      "metadata": {
-        "id": "mA0HPVmIBT4C"
-      },
       "source": [
         "theOriginalData = pd.read_csv('https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/bank.csv')\n",
-        "\n",
-        "# Lower case column names and remove any leading or training whitespace characters\n",
-        "theData.columns = theOriginalData.columns.str.strip().str.lower()\n",
-        "\n",
-        "# Replace all 'unknown' values\n",
-        "theData = theData.replace('unknown', pd.NA).copy()\n"
+        "# theOriginalData.head(5)"
       ],
-      "execution_count": 56,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
       "metadata": {
-        "id": "StiU5QcPPxqQ",
+        "id": "JlYrV7r-cO67",
+        "outputId": "6b730f75-2b4c-45b0-c57b-da263542361f",
         "colab": {
           "base_uri": "https://localhost:8080/",
           "height": 206
-        },
-        "outputId": "3dbb5c6b-d364-4bf2-e7db-c35f5a60b180"
+        }
       },
-      "source": [
-        "theData.head(5)"
-      ],
-      "execution_count": 57,
+      "execution_count": 160,
       "outputs": [
         {
           "output_type": "execute_result",
           "data": {
             "text/plain": [
-              "   age        job  marital    education default housing loan    contact month  \\\n",
-              "0   56  housemaid  married     basic.4y      no      no   no  telephone   may   \n",
-              "1   57   services  married  high.school    <NA>      no   no  telephone   may   \n",
-              "2   37   services  married  high.school      no     yes   no  telephone   may   \n",
-              "3   40     admin.  married     basic.6y      no      no   no  telephone   may   \n",
-              "4   56   services  married  high.school      no      no  yes  telephone   may   \n",
+              "   age        job  marital    education  default housing loan    contact  \\\n",
+              "0   56  housemaid  married     basic.4y       no      no   no  telephone   \n",
+              "1   57   services  married  high.school  unknown      no   no  telephone   \n",
+              "2   37   services  married  high.school       no     yes   no  telephone   \n",
+              "3   40     admin.  married     basic.6y       no      no   no  telephone   \n",
+              "4   56   services  married  high.school       no      no  yes  telephone   \n",
               "\n",
-              "  day_of_week  campaign  pdays  previous     poutcome  emp.var.rate  \\\n",
-              "0         mon         1    999         0  nonexistent           1.1   \n",
-              "1         mon         1    999         0  nonexistent           1.1   \n",
-              "2         mon         1    999         0  nonexistent           1.1   \n",
-              "3         mon         1    999         0  nonexistent           1.1   \n",
-              "4         mon         1    999         0  nonexistent           1.1   \n",
+              "  month day_of_week  campaign  pdays  previous     poutcome  emp.var.rate  \\\n",
+              "0   may         mon         1    999         0  nonexistent           1.1   \n",
+              "1   may         mon         1    999         0  nonexistent           1.1   \n",
+              "2   may         mon         1    999         0  nonexistent           1.1   \n",
+              "3   may         mon         1    999         0  nonexistent           1.1   \n",
+              "4   may         mon         1    999         0  nonexistent           1.1   \n",
               "\n",
               "   cons.price.idx  cons.conf.idx  euribor3m  nr.employed   y  \n",
               "0          93.994          -36.4      4.857       5191.0  no  \n",
@@ -157,7 +156,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-c277fc2f-0d55-4dcd-bbcd-e9b4b1eddbfc\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-b7bb24d3-ff55-4bb1-aef8-cfe552e86c10\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -228,7 +227,7 @@
               "      <td>services</td>\n",
               "      <td>married</td>\n",
               "      <td>high.school</td>\n",
-              "      <td>&lt;NA&gt;</td>\n",
+              "      <td>unknown</td>\n",
               "      <td>no</td>\n",
               "      <td>no</td>\n",
               "      <td>telephone</td>\n",
@@ -320,7 +319,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-c277fc2f-0d55-4dcd-bbcd-e9b4b1eddbfc')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-b7bb24d3-ff55-4bb1-aef8-cfe552e86c10')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -372,12 +371,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-c277fc2f-0d55-4dcd-bbcd-e9b4b1eddbfc button.colab-df-convert');\n",
+              "        document.querySelector('#df-b7bb24d3-ff55-4bb1-aef8-cfe552e86c10 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-c277fc2f-0d55-4dcd-bbcd-e9b4b1eddbfc');\n",
+              "        const element = document.querySelector('#df-b7bb24d3-ff55-4bb1-aef8-cfe552e86c10');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -397,8 +396,8 @@
               "  </div>\n",
               "\n",
               "\n",
-              "    <div id=\"df-df1541cc-c259-4d61-8ad2-ccfb0e34fba6\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-df1541cc-c259-4d61-8ad2-ccfb0e34fba6')\"\n",
+              "    <div id=\"df-8b90ab5b-c52b-4ce8-9058-049423611b98\">\n",
+              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-8b90ab5b-c52b-4ce8-9058-049423611b98')\"\n",
               "                title=\"Suggest charts\"\n",
               "                style=\"display:none;\">\n",
               "\n",
@@ -517,7 +516,7 @@
               "        }\n",
               "        (() => {\n",
               "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-df1541cc-c259-4d61-8ad2-ccfb0e34fba6 button');\n",
+              "            document.querySelector('#df-8b90ab5b-c52b-4ce8-9058-049423611b98 button');\n",
               "          quickchartButtonEl.style.display =\n",
               "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "        })();\n",
@@ -529,14 +528,484 @@
             ],
             "application/vnd.google.colaboratory.intrinsic+json": {
               "type": "dataframe",
-              "variable_name": "theData",
-              "summary": "{\n  \"name\": \"theData\",\n  \"rows\": 37069,\n  \"fields\": [\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 10,\n        \"min\": 17,\n        \"max\": 98,\n        \"num_unique_values\": 78,\n        \"samples\": [\n          28,\n          56,\n          27\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"job\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 11,\n        \"samples\": [\n          \"retired\",\n          \"housemaid\",\n          \"entrepreneur\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"marital\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"married\",\n          \"single\",\n          \"divorced\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 7,\n        \"samples\": [\n          \"basic.4y\",\n          \"high.school\",\n          \"university.degree\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"default\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"yes\",\n          \"no\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"housing\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"yes\",\n          \"no\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"loan\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"yes\",\n          \"no\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"contact\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"cellular\",\n          \"telephone\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"month\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 10,\n        \"samples\": [\n          \"apr\",\n          \"jun\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"day_of_week\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"tue\",\n          \"fri\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"campaign\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2,\n        \"min\": 1,\n        \"max\": 56,\n        \"num_unique_values\": 41,\n        \"samples\": [\n          35,\n          19\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pdays\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 187,\n        \"min\": 0,\n        \"max\": 999,\n        \"num_unique_values\": 27,\n        \"samples\": [\n          7,\n          12\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"previous\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 7,\n        \"num_unique_values\": 8,\n        \"samples\": [\n          1,\n          5\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"poutcome\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"nonexistent\",\n          \"failure\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"emp.var.rate\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.5722872589150396,\n        \"min\": -3.4,\n        \"max\": 1.4,\n        \"num_unique_values\": 10,\n        \"samples\": [\n          -1.7,\n          1.4\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cons.price.idx\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.5793386580321098,\n        \"min\": 92.201,\n        \"max\": 94.767,\n        \"num_unique_values\": 26,\n        \"samples\": [\n          93.075,\n          92.713\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cons.conf.idx\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4.628895451881355,\n        \"min\": -50.8,\n        \"max\": -26.9,\n        \"num_unique_values\": 26,\n        \"samples\": [\n          -47.1,\n          -33.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"euribor3m\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.7344958164374205,\n        \"min\": 0.634,\n        \"max\": 5.045,\n        \"num_unique_values\": 314,\n        \"samples\": [\n          0.969,\n          4.76\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"nr.employed\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 72.29447628833586,\n        \"min\": 4963.6,\n        \"max\": 5228.1,\n        \"num_unique_values\": 11,\n        \"samples\": [\n          5076.2,\n          5191.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"y\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"yes\",\n          \"no\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+              "variable_name": "theOriginalData",
+              "summary": "{\n  \"name\": \"theOriginalData\",\n  \"rows\": 37069,\n  \"fields\": [\n    {\n      \"column\": \"age\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 10,\n        \"min\": 17,\n        \"max\": 98,\n        \"num_unique_values\": 78,\n        \"samples\": [\n          28,\n          56,\n          27\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"job\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 12,\n        \"samples\": [\n          \"entrepreneur\",\n          \"management\",\n          \"housemaid\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"marital\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 4,\n        \"samples\": [\n          \"single\",\n          \"unknown\",\n          \"married\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"education\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 8,\n        \"samples\": [\n          \"high.school\",\n          \"unknown\",\n          \"basic.4y\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"default\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"no\",\n          \"unknown\",\n          \"yes\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"housing\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"no\",\n          \"yes\",\n          \"unknown\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"loan\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"no\",\n          \"yes\",\n          \"unknown\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"contact\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"cellular\",\n          \"telephone\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"month\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 10,\n        \"samples\": [\n          \"apr\",\n          \"jun\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"day_of_week\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 5,\n        \"samples\": [\n          \"tue\",\n          \"fri\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"campaign\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 2,\n        \"min\": 1,\n        \"max\": 56,\n        \"num_unique_values\": 41,\n        \"samples\": [\n          35,\n          19\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pdays\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 187,\n        \"min\": 0,\n        \"max\": 999,\n        \"num_unique_values\": 27,\n        \"samples\": [\n          7,\n          12\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"previous\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0,\n        \"min\": 0,\n        \"max\": 7,\n        \"num_unique_values\": 8,\n        \"samples\": [\n          1,\n          5\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"poutcome\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 3,\n        \"samples\": [\n          \"nonexistent\",\n          \"failure\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"emp.var.rate\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.5722872589150396,\n        \"min\": -3.4,\n        \"max\": 1.4,\n        \"num_unique_values\": 10,\n        \"samples\": [\n          -1.7,\n          1.4\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cons.price.idx\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 0.5793386580321098,\n        \"min\": 92.201,\n        \"max\": 94.767,\n        \"num_unique_values\": 26,\n        \"samples\": [\n          93.075,\n          92.713\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"cons.conf.idx\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 4.628895451881355,\n        \"min\": -50.8,\n        \"max\": -26.9,\n        \"num_unique_values\": 26,\n        \"samples\": [\n          -47.1,\n          -33.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"euribor3m\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 1.7344958164374205,\n        \"min\": 0.634,\n        \"max\": 5.045,\n        \"num_unique_values\": 314,\n        \"samples\": [\n          0.969,\n          4.76\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"nr.employed\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 72.29447628833586,\n        \"min\": 4963.6,\n        \"max\": 5228.1,\n        \"num_unique_values\": 11,\n        \"samples\": [\n          5076.2,\n          5191.0\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"y\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"yes\",\n          \"no\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
             }
           },
           "metadata": {},
-          "execution_count": 57
+          "execution_count": 160
         }
       ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "mA0HPVmIBT4C"
+      },
+      "source": [
+        "theData = theOriginalData\n",
+        "\n",
+        "# Lower case column names and remove any leading or training whitespace characters\n",
+        "theData.columns = theOriginalData.columns.str.strip().str.lower()\n",
+        "\n",
+        "# Replace all 'unknown' values\n",
+        "theData = theData.replace('unknown', pd.NA).copy()\n",
+        "\n",
+        "# Define target value and set it to a binary\n",
+        "theData['theTarget'] = theData['y'].map({'yes': 1, 'no': 0})\n"
+      ],
+      "execution_count": 161,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "StiU5QcPPxqQ",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 236
+        },
+        "collapsed": true,
+        "outputId": "417a26c9-f521-4d03-b8ce-acfedb9f05d1"
+      },
+      "source": [
+        "theData.head(5)"
+      ],
+      "execution_count": 162,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "   age        job  marital    education default housing loan    contact month  \\\n",
+              "0   56  housemaid  married     basic.4y      no      no   no  telephone   may   \n",
+              "1   57   services  married  high.school    <NA>      no   no  telephone   may   \n",
+              "2   37   services  married  high.school      no     yes   no  telephone   may   \n",
+              "3   40     admin.  married     basic.6y      no      no   no  telephone   may   \n",
+              "4   56   services  married  high.school      no      no  yes  telephone   may   \n",
+              "\n",
+              "  day_of_week  ...  pdays  previous     poutcome emp.var.rate  cons.price.idx  \\\n",
+              "0         mon  ...    999         0  nonexistent          1.1          93.994   \n",
+              "1         mon  ...    999         0  nonexistent          1.1          93.994   \n",
+              "2         mon  ...    999         0  nonexistent          1.1          93.994   \n",
+              "3         mon  ...    999         0  nonexistent          1.1          93.994   \n",
+              "4         mon  ...    999         0  nonexistent          1.1          93.994   \n",
+              "\n",
+              "   cons.conf.idx  euribor3m  nr.employed   y theTarget  \n",
+              "0          -36.4      4.857       5191.0  no         0  \n",
+              "1          -36.4      4.857       5191.0  no         0  \n",
+              "2          -36.4      4.857       5191.0  no         0  \n",
+              "3          -36.4      4.857       5191.0  no         0  \n",
+              "4          -36.4      4.857       5191.0  no         0  \n",
+              "\n",
+              "[5 rows x 21 columns]"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-df30e994-f9e9-4621-a18d-383ce81d1a8a\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>age</th>\n",
+              "      <th>job</th>\n",
+              "      <th>marital</th>\n",
+              "      <th>education</th>\n",
+              "      <th>default</th>\n",
+              "      <th>housing</th>\n",
+              "      <th>loan</th>\n",
+              "      <th>contact</th>\n",
+              "      <th>month</th>\n",
+              "      <th>day_of_week</th>\n",
+              "      <th>...</th>\n",
+              "      <th>pdays</th>\n",
+              "      <th>previous</th>\n",
+              "      <th>poutcome</th>\n",
+              "      <th>emp.var.rate</th>\n",
+              "      <th>cons.price.idx</th>\n",
+              "      <th>cons.conf.idx</th>\n",
+              "      <th>euribor3m</th>\n",
+              "      <th>nr.employed</th>\n",
+              "      <th>y</th>\n",
+              "      <th>theTarget</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>56</td>\n",
+              "      <td>housemaid</td>\n",
+              "      <td>married</td>\n",
+              "      <td>basic.4y</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>telephone</td>\n",
+              "      <td>may</td>\n",
+              "      <td>mon</td>\n",
+              "      <td>...</td>\n",
+              "      <td>999</td>\n",
+              "      <td>0</td>\n",
+              "      <td>nonexistent</td>\n",
+              "      <td>1.1</td>\n",
+              "      <td>93.994</td>\n",
+              "      <td>-36.4</td>\n",
+              "      <td>4.857</td>\n",
+              "      <td>5191.0</td>\n",
+              "      <td>no</td>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>57</td>\n",
+              "      <td>services</td>\n",
+              "      <td>married</td>\n",
+              "      <td>high.school</td>\n",
+              "      <td>&lt;NA&gt;</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>telephone</td>\n",
+              "      <td>may</td>\n",
+              "      <td>mon</td>\n",
+              "      <td>...</td>\n",
+              "      <td>999</td>\n",
+              "      <td>0</td>\n",
+              "      <td>nonexistent</td>\n",
+              "      <td>1.1</td>\n",
+              "      <td>93.994</td>\n",
+              "      <td>-36.4</td>\n",
+              "      <td>4.857</td>\n",
+              "      <td>5191.0</td>\n",
+              "      <td>no</td>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>37</td>\n",
+              "      <td>services</td>\n",
+              "      <td>married</td>\n",
+              "      <td>high.school</td>\n",
+              "      <td>no</td>\n",
+              "      <td>yes</td>\n",
+              "      <td>no</td>\n",
+              "      <td>telephone</td>\n",
+              "      <td>may</td>\n",
+              "      <td>mon</td>\n",
+              "      <td>...</td>\n",
+              "      <td>999</td>\n",
+              "      <td>0</td>\n",
+              "      <td>nonexistent</td>\n",
+              "      <td>1.1</td>\n",
+              "      <td>93.994</td>\n",
+              "      <td>-36.4</td>\n",
+              "      <td>4.857</td>\n",
+              "      <td>5191.0</td>\n",
+              "      <td>no</td>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>40</td>\n",
+              "      <td>admin.</td>\n",
+              "      <td>married</td>\n",
+              "      <td>basic.6y</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>telephone</td>\n",
+              "      <td>may</td>\n",
+              "      <td>mon</td>\n",
+              "      <td>...</td>\n",
+              "      <td>999</td>\n",
+              "      <td>0</td>\n",
+              "      <td>nonexistent</td>\n",
+              "      <td>1.1</td>\n",
+              "      <td>93.994</td>\n",
+              "      <td>-36.4</td>\n",
+              "      <td>4.857</td>\n",
+              "      <td>5191.0</td>\n",
+              "      <td>no</td>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>56</td>\n",
+              "      <td>services</td>\n",
+              "      <td>married</td>\n",
+              "      <td>high.school</td>\n",
+              "      <td>no</td>\n",
+              "      <td>no</td>\n",
+              "      <td>yes</td>\n",
+              "      <td>telephone</td>\n",
+              "      <td>may</td>\n",
+              "      <td>mon</td>\n",
+              "      <td>...</td>\n",
+              "      <td>999</td>\n",
+              "      <td>0</td>\n",
+              "      <td>nonexistent</td>\n",
+              "      <td>1.1</td>\n",
+              "      <td>93.994</td>\n",
+              "      <td>-36.4</td>\n",
+              "      <td>4.857</td>\n",
+              "      <td>5191.0</td>\n",
+              "      <td>no</td>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>5 rows × 21 columns</p>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-df30e994-f9e9-4621-a18d-383ce81d1a8a')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-df30e994-f9e9-4621-a18d-383ce81d1a8a button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-df30e994-f9e9-4621-a18d-383ce81d1a8a');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    <div id=\"df-07848961-386f-4cf0-862f-4d58cdb892ca\">\n",
+              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-07848961-386f-4cf0-862f-4d58cdb892ca')\"\n",
+              "                title=\"Suggest charts\"\n",
+              "                style=\"display:none;\">\n",
+              "\n",
+              "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "     width=\"24px\">\n",
+              "    <g>\n",
+              "        <path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z\"/>\n",
+              "    </g>\n",
+              "</svg>\n",
+              "      </button>\n",
+              "\n",
+              "<style>\n",
+              "  .colab-df-quickchart {\n",
+              "      --bg-color: #E8F0FE;\n",
+              "      --fill-color: #1967D2;\n",
+              "      --hover-bg-color: #E2EBFA;\n",
+              "      --hover-fill-color: #174EA6;\n",
+              "      --disabled-fill-color: #AAA;\n",
+              "      --disabled-bg-color: #DDD;\n",
+              "  }\n",
+              "\n",
+              "  [theme=dark] .colab-df-quickchart {\n",
+              "      --bg-color: #3B4455;\n",
+              "      --fill-color: #D2E3FC;\n",
+              "      --hover-bg-color: #434B5C;\n",
+              "      --hover-fill-color: #FFFFFF;\n",
+              "      --disabled-bg-color: #3B4455;\n",
+              "      --disabled-fill-color: #666;\n",
+              "  }\n",
+              "\n",
+              "  .colab-df-quickchart {\n",
+              "    background-color: var(--bg-color);\n",
+              "    border: none;\n",
+              "    border-radius: 50%;\n",
+              "    cursor: pointer;\n",
+              "    display: none;\n",
+              "    fill: var(--fill-color);\n",
+              "    height: 32px;\n",
+              "    padding: 0;\n",
+              "    width: 32px;\n",
+              "  }\n",
+              "\n",
+              "  .colab-df-quickchart:hover {\n",
+              "    background-color: var(--hover-bg-color);\n",
+              "    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "    fill: var(--button-hover-fill-color);\n",
+              "  }\n",
+              "\n",
+              "  .colab-df-quickchart-complete:disabled,\n",
+              "  .colab-df-quickchart-complete:disabled:hover {\n",
+              "    background-color: var(--disabled-bg-color);\n",
+              "    fill: var(--disabled-fill-color);\n",
+              "    box-shadow: none;\n",
+              "  }\n",
+              "\n",
+              "  .colab-df-spinner {\n",
+              "    border: 2px solid var(--fill-color);\n",
+              "    border-color: transparent;\n",
+              "    border-bottom-color: var(--fill-color);\n",
+              "    animation:\n",
+              "      spin 1s steps(1) infinite;\n",
+              "  }\n",
+              "\n",
+              "  @keyframes spin {\n",
+              "    0% {\n",
+              "      border-color: transparent;\n",
+              "      border-bottom-color: var(--fill-color);\n",
+              "      border-left-color: var(--fill-color);\n",
+              "    }\n",
+              "    20% {\n",
+              "      border-color: transparent;\n",
+              "      border-left-color: var(--fill-color);\n",
+              "      border-top-color: var(--fill-color);\n",
+              "    }\n",
+              "    30% {\n",
+              "      border-color: transparent;\n",
+              "      border-left-color: var(--fill-color);\n",
+              "      border-top-color: var(--fill-color);\n",
+              "      border-right-color: var(--fill-color);\n",
+              "    }\n",
+              "    40% {\n",
+              "      border-color: transparent;\n",
+              "      border-right-color: var(--fill-color);\n",
+              "      border-top-color: var(--fill-color);\n",
+              "    }\n",
+              "    60% {\n",
+              "      border-color: transparent;\n",
+              "      border-right-color: var(--fill-color);\n",
+              "    }\n",
+              "    80% {\n",
+              "      border-color: transparent;\n",
+              "      border-right-color: var(--fill-color);\n",
+              "      border-bottom-color: var(--fill-color);\n",
+              "    }\n",
+              "    90% {\n",
+              "      border-color: transparent;\n",
+              "      border-bottom-color: var(--fill-color);\n",
+              "    }\n",
+              "  }\n",
+              "</style>\n",
+              "\n",
+              "      <script>\n",
+              "        async function quickchart(key) {\n",
+              "          const quickchartButtonEl =\n",
+              "            document.querySelector('#' + key + ' button');\n",
+              "          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.\n",
+              "          quickchartButtonEl.classList.add('colab-df-spinner');\n",
+              "          try {\n",
+              "            const charts = await google.colab.kernel.invokeFunction(\n",
+              "                'suggestCharts', [key], {});\n",
+              "          } catch (error) {\n",
+              "            console.error('Error during call to suggestCharts:', error);\n",
+              "          }\n",
+              "          quickchartButtonEl.classList.remove('colab-df-spinner');\n",
+              "          quickchartButtonEl.classList.add('colab-df-quickchart-complete');\n",
+              "        }\n",
+              "        (() => {\n",
+              "          let quickchartButtonEl =\n",
+              "            document.querySelector('#df-07848961-386f-4cf0-862f-4d58cdb892ca button');\n",
+              "          quickchartButtonEl.style.display =\n",
+              "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "        })();\n",
+              "      </script>\n",
+              "    </div>\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "variable_name": "theData"
+            }
+          },
+          "metadata": {},
+          "execution_count": 162
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "f7FgCOEjULV0"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Report - Original Dataset"
+      ],
+      "metadata": {
+        "id": "0qDs_hxlUEpV"
+      }
     },
     {
       "cell_type": "code",
@@ -546,12 +1015,13 @@
           "base_uri": "https://localhost:8080/",
           "height": 677
         },
-        "outputId": "b18077fe-ae9d-4637-b634-92d603554055"
+        "collapsed": true,
+        "outputId": "b717e878-8daf-49f4-a08a-fcfdf813f45d"
       },
       "source": [
         "reportDatasetSummary(theData, 'columnName')"
       ],
-      "execution_count": 126,
+      "execution_count": 129,
       "outputs": [
         {
           "output_type": "execute_result",
@@ -603,7 +1073,7 @@
             ],
             "text/html": [
               "\n",
-              "  <div id=\"df-93f1e57d-10c6-4494-978e-457e9d6074b7\" class=\"colab-df-container\">\n",
+              "  <div id=\"df-b9e2b9d9-9921-4e8a-9807-c03626183122\" class=\"colab-df-container\">\n",
               "    <div>\n",
               "<style scoped>\n",
               "    .dataframe tbody tr th:only-of-type {\n",
@@ -817,7 +1287,7 @@
               "    <div class=\"colab-df-buttons\">\n",
               "\n",
               "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-93f1e57d-10c6-4494-978e-457e9d6074b7')\"\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-b9e2b9d9-9921-4e8a-9807-c03626183122')\"\n",
               "            title=\"Convert this dataframe to an interactive table.\"\n",
               "            style=\"display:none;\">\n",
               "\n",
@@ -869,12 +1339,12 @@
               "\n",
               "    <script>\n",
               "      const buttonEl =\n",
-              "        document.querySelector('#df-93f1e57d-10c6-4494-978e-457e9d6074b7 button.colab-df-convert');\n",
+              "        document.querySelector('#df-b9e2b9d9-9921-4e8a-9807-c03626183122 button.colab-df-convert');\n",
               "      buttonEl.style.display =\n",
               "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "\n",
               "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-93f1e57d-10c6-4494-978e-457e9d6074b7');\n",
+              "        const element = document.querySelector('#df-b9e2b9d9-9921-4e8a-9807-c03626183122');\n",
               "        const dataTable =\n",
               "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
               "                                                    [key], {});\n",
@@ -894,8 +1364,8 @@
               "  </div>\n",
               "\n",
               "\n",
-              "    <div id=\"df-411a9809-0dad-44a6-83d4-44ff5a285e1b\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-411a9809-0dad-44a6-83d4-44ff5a285e1b')\"\n",
+              "    <div id=\"df-5c6a1d34-6456-4370-92a5-d13a9508d396\">\n",
+              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-5c6a1d34-6456-4370-92a5-d13a9508d396')\"\n",
               "                title=\"Suggest charts\"\n",
               "                style=\"display:none;\">\n",
               "\n",
@@ -1014,7 +1484,7 @@
               "        }\n",
               "        (() => {\n",
               "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-411a9809-0dad-44a6-83d4-44ff5a285e1b button');\n",
+              "            document.querySelector('#df-5c6a1d34-6456-4370-92a5-d13a9508d396 button');\n",
               "          quickchartButtonEl.style.display =\n",
               "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
               "        })();\n",
@@ -1030,9 +1500,18 @@
             }
           },
           "metadata": {},
-          "execution_count": 126
+          "execution_count": 129
         }
       ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Report - Distinct Values"
+      ],
+      "metadata": {
+        "id": "OHjE53nXUO8G"
+      }
     },
     {
       "cell_type": "code",
@@ -1043,10 +1522,11 @@
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
+        "collapsed": true,
         "id": "ooKGz6rPOKvk",
-        "outputId": "1f213739-3660-4a48-f935-e54f43d31ff8"
+        "outputId": "43cb6d46-2e74-4dea-c544-3090559a560a"
       },
-      "execution_count": 127,
+      "execution_count": 194,
       "outputs": [
         {
           "output_type": "stream",
@@ -1134,12 +1614,24 @@
             "previous (int64):\n",
             "0 (31988), 1 (4116), 2 (684), 3 (196), 4 (64), 5 (15), 6 (5), 7 (1)\n",
             "\n",
+            "theTarget (int64):\n",
+            "0 (32861), 1 (4208)\n",
+            "\n",
             "y (object):\n",
             "no (32861), yes (4208)\n",
             "\n"
           ]
         }
       ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Report - NA Values"
+      ],
+      "metadata": {
+        "id": "l9EIPC6uUUrE"
+      }
     },
     {
       "cell_type": "code",
@@ -1149,6 +1641,7 @@
           "base_uri": "https://localhost:8080/",
           "height": 304
         },
+        "collapsed": true,
         "outputId": "e5e4cfd9-950d-4a6d-9f16-3e25b1c3494f"
       },
       "source": [
@@ -1231,12 +1724,110 @@
       ]
     },
     {
+      "cell_type": "markdown",
+      "source": [
+        "## Graph All Categorical Features"
+      ],
+      "metadata": {
+        "id": "whsHKZicXgMI"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "graphCategoricalVsTarget2(theData, 'theTarget', 3)"
+      ],
+      "metadata": {
+        "id": "V_LL4RNCXlDJ",
+        "outputId": "33ff1182-2b07-4700-8f9e-3b3af0ebcfc7",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 590
+        }
+      },
+      "execution_count": 213,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7c39c92cb150>\n",
+            "job\n",
+            "admin.           0.131277\n",
+            "blue-collar      0.068195\n",
+            "entrepreneur     0.086391\n",
+            "housemaid        0.099792\n",
+            "management       0.114426\n",
+            "retired          0.252282\n",
+            "self-employed    0.107535\n",
+            "services         0.082582\n",
+            "student          0.313997\n",
+            "technician       0.108638\n",
+            "unemployed       0.146769\n",
+            "Name: theTarget, dtype: float64\n",
+            "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7c39c913b490>\n",
+            "marital\n",
+            "divorced    0.106193\n",
+            "married     0.102200\n",
+            "single      0.140730\n",
+            "Name: theTarget, dtype: float64\n",
+            "<pandas.core.groupby.generic.DataFrameGroupBy object at 0x7c39c9329e50>\n",
+            "education\n",
+            "basic.4y               0.102550\n",
+            "basic.6y               0.081172\n",
+            "basic.9y               0.077022\n",
+            "high.school            0.109890\n",
+            "illiterate             0.250000\n",
+            "professional.course    0.113876\n",
+            "university.degree      0.139008\n",
+            "Name: theTarget, dtype: float64\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 500x400 with 0 Axes>"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 500x400 with 0 Axes>"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 500x400 with 0 Axes>"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Data Wrangling - Initial"
+      ],
+      "metadata": {
+        "id": "CNqE-p53Uf0A"
+      }
+    },
+    {
       "cell_type": "code",
       "metadata": {
         "id": "CVSfaqgKPzE2"
       },
       "source": [],
-      "execution_count": 125,
+      "execution_count": 132,
       "outputs": []
     }
   ]
