@@ -1,5 +1,209 @@
 [
   {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html",
+    "title": "Client Report - The War with Star Wars",
+    "section": "",
+    "text": "Imports and initial setup.\nimport pandas as pd\nimport altair as alt\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder\n\n# Loading in data\ndata = \"data/StarWars.csv\"\ndf = pd.read_csv(data, header=[0, 1])\n\n# Combine the first two rows into a single header\ndf.columns = ['_'.join(col).strip() for col in df.columns.values]\n\n# Function to remove special characters\ndef remove_special_chars(value):\n    if isinstance(value, str):\n        return ''.join(e for e in value if e.isalnum())\n    return value\n\n# Applying the function to all values in the DataFrame\ndf = df.map(remove_special_chars)\n\n#Strip out special characters\ndf.columns = df.columns.str.replace('[^A-Za-z0-9_]+', '', regex=True)\n\n# Setting NaN values to 0 in the entire DataFrame\ndf = df.fillna(0)",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
+    "title": "Client Report - The War with Star Wars",
+    "section": "Elevator pitch",
+    "text": "Elevator pitch\nWho would have guessed that with machine learning one is able to get a good idea of a person’s income level based upon their knowledge of Star Wars. By taking factors such as their favorite character, physical location, and which episodes they have watched into account once can begin to zero in on their income level. While this was unlikly to be the original purpose for gathering the data, it shows that even more innocolus data can be used to help understand your audience.\nHighlight the Questions and Tasks",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 1",
+    "text": "QUESTION|TASK 1\nShorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.\nRenaming the table column names was easy once I was able to get ahold of the data. I have to check for and remove special characters, but once I had done that it came together pretty quickly.\n\n\nExample of table with the names fixed\n# Set the option to display all columns\npd.set_option('display.max_columns', None)\ndf.rename(columns={\n  'RespondentID_Unnamed0_level_1': \"Id\",\n  'Haveyouseenanyofthe6filmsintheStarWarsfranchise_Response': 'SeenAny',\n  'DoyouconsideryourselftobeafanoftheStarWarsfilmfranchise_Response': 'IsFan',\n  'WhichofthefollowingStarWarsfilmshaveyouseenPleaseselectallthatapply_StarWarsEpisodeIThePhantomMenace': 'SeenEpisode1',\n  'Unnamed4_level_0_StarWarsEpisodeIIAttackoftheClones':'SeenEpisode2',\n  'Unnamed5_level_0_StarWarsEpisodeIIIRevengeoftheSith':'SeenEpisode3',\n  'Unnamed6_level_0_StarWarsEpisodeIVANewHope':'SeenEpisode4',\n  'Unnamed7_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'SeenEpisode5',\n  'Unnamed8_level_0_StarWarsEpisodeVIReturnoftheJedi':'SeenEpisode6',\n  'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': '1stFavorite',\n  'PleaseranktheStarWarsfilmsinorderofpreferencewith1beingyourfavoritefilminthefranchiseand6beingyourleastfavoritefilm_StarWarsEpisodeIThePhantomMenace':'Episode1Rank',\n  'Unnamed10_level_0_StarWarsEpisodeIIAttackoftheClones':'Episode2Rank',\n  'Unnamed11_level_0_StarWarsEpisodeIIIRevengeoftheSith':'Episode3Rank',\n  'Unnamed12_level_0_StarWarsEpisodeIVANewHope':'Episode4Rank',\n  'Unnamed13_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'Episode5Rank',\n  'Unnamed14_level_0_StarWarsEpisodeVIReturnoftheJedi':'Episode6Rank',\n  'Pleasestatewhetheryouviewthefollowingcharactersfavorablyunfavorablyorareunfamiliarwithhimher_HanSolo': 'LikeHanSolo',\n  'Unnamed16_level_0_LukeSkywalker': 'LikeLuke',\n  'Unnamed17_level_0_PrincessLeiaOrgana': 'LikeLeia',\n  'Unnamed18_level_0_AnakinSkywalker': 'LikeAnakin',\n  'Unnamed19_level_0_ObiWanKenobi': 'LikeObiWan',\n  'Unnamed20_level_0_EmperorPalpatine': 'LikeEmperorPalpatine',\n  'Unnamed21_level_0_DarthVader': 'LikeDarthVader',\n  'Unnamed22_level_0_LandoCalrissian': 'LikeLando',\n  'Unnamed23_level_0_BobaFett': 'LikeBobaFett',\n  'Unnamed24_level_0_C3P0': 'LikeC3P0',\n  'Unnamed25_level_0_R2D2': 'LikeR2D2',\n  'Unnamed26_level_0_JarJarBinks': 'LikeJarJar',\n  'Unnamed27_level_0_PadmeAmidala': 'LikePadme',\n  'Unnamed28_level_0_Yoda': 'LikeYoda',\n  'Whichcharactershotfirst_Response': 'WhoShotFirst',\n  'AreyoufamiliarwiththeExpandedUniverse_Response': 'ExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheExpandedUniverse_Response': 'FanOfExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheStarTrekfranchise_Response': 'FanOfFranchise',\n  'Gender_Response': 'Gender',\n  'Age_Response': 'AgeRange',\n  'HouseholdIncome_Response': 'HouseholdIncomeRange',\n  'Education_Response': 'Education',\n  'LocationCensusRegion_Response': 'Location'\n}, inplace=True)\n\ndf.head(0)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nWhoShotFirst\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nGender\nAgeRange\nHouseholdIncomeRange\nEducation\nLocation",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 2",
+    "text": "QUESTION|TASK 2\nClean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made. Filter the dataset to respondents that have seen at least one film Create a new column that converts the age ranges to a single number. Drop the age range categorical column Create a new column that converts the education groupings to a single number. Drop the school categorical column Create a new column that converts the income ranges to a single number. Drop the income range categorical column Create your target (also known as “y” or “label”) column based on the new income range column One-hot encode all remaining categorical columns_\nIn order to filter the dataset to respondents that have seen at least one film I dropped all columns where the respondent answered no to the question ‘Have you seen any of the 6 films in the Star Wars franchise?’ Next, I removed any records from the data set where the respondent answered “no” to each of the individual “Which of the following Star Wars films have you seen?”\nAs age was recorded as an age range and not simply an age, I created a new column named age and set it to the median value of that range. I selected the median value as I wanted to retain some sort of relationship between the distances between possible ages to help the machine learning segment of this exercize later on.\nNext I created a new column to represent education. I set that value to a numeric representation of the number of grades that a person would ahve completed (on average) to have achieved that level of education. Doing it this way will help the model later as the numeric value is indicitive of the time put in to achieve that level of education.\nI converted the incom ranges to a single numeric value using a process similar to what I did with the age range data. I set the new value tot he median value of the range so that the ml model will be better able to gage relationships between the various salary levels.\nI created a target column named “MakesMoreThan50k” and set it equal to either a 0 or a 1 based upon wether the value of the Income column that I had previously created was over 50,000 or not.\nI then used sklearn’s One Hot Encoding to convert the remaining three categorical data sets (Location, Gender, WhoShotFirst). Prior to doing this I set any NaN values to “Unspecified” so that that data could be represented in the dataset.\n\n\nExample of the tidied data table\n# Removing any where the respondent said they have not seen any of the episodes\ndf = df[df['SeenAny'] != 'No']\n\n# Replacing specific values in the 'Episode1' column\ndf['SeenEpisode1'] = df['SeenEpisode1'].replace('StarWarsEpisodeIThePhantomMenace', 1)\ndf['SeenEpisode2'] = df['SeenEpisode2'].replace('StarWarsEpisodeIIAttackoftheClones', 1)\ndf['SeenEpisode3'] = df['SeenEpisode3'].replace('StarWarsEpisodeIIIRevengeoftheSith', 1)\ndf['SeenEpisode4'] = df['SeenEpisode4'].replace('StarWarsEpisodeIVANewHope', 1)\ndf['SeenEpisode5'] = df['SeenEpisode5'].replace('StarWarsEpisodeVTheEmpireStrikesBack', 1)\ndf['SeenEpisode6'] = df['SeenEpisode6'].replace('StarWarsEpisodeVIReturnoftheJedi', 1)\n\n# Checking if the really have seen at least one episode and removing them if they haven't\ndf['sum'] = df[['SeenEpisode1', 'SeenEpisode2', 'SeenEpisode3', 'SeenEpisode4', 'SeenEpisode5', 'SeenEpisode6']].sum(axis=1)\ndf = df[df['sum'] != 0]\ndf.drop(columns=['sum'], inplace=True)\n\n# Convert age range to a single number\ndf['Age'] = df['AgeRange'].map({\n  0: 0,\n  '1829': 24,\n  '4560': 53,\n  '3044': 37,\n  '60': 60\n})\n\n# Assign numerical to education level based on related average years in school\ndf['YearsInSchool'] = df['Education'].map({\n  0: 0,\n  'Lessthanhighschooldegree': 10,\n  'Highschooldegree': 12,\n  'SomecollegeorAssociatedegree': 14,\n  'Bachelordegree': 16,\n  'Graduatedegree': 20\n})\n\n# Income range to the middle number\ndf['Income'] = df['HouseholdIncomeRange'].map({\n  0: 0,\n  '024999': 12500,\n  '2500049999': 37500,\n  '5000099999': 75000,\n  '100000149999': 125000,\n  '150000': 175000,\n})\n\n# Create my target column\ndf['MakesMoreThan50k'] = df['Income'].apply(lambda x: 1 if x &gt; 50000 else 0)\n\n# Cleaning up data prior to applying one hot encoding\ndf['WhoShotFirst'] = df['WhoShotFirst'].replace(0, 'Unspecified')\ndf['Gender'] = df['Gender'].replace(0, 'Unspecified')\ndf['Location'] = df['Location'].replace(0, 'Unspecified')\n\n#distinct_values = df['Location'].unique()\n#distinct_values\n\n#fit\nohe = OneHotEncoder(handle_unknown = 'ignore', sparse_output=False)\nohe.fit(df[['Location', 'Gender', 'WhoShotFirst']])\n#transform\ndf_encoded = pd.DataFrame(ohe.transform(df[['Location', 'Gender', 'WhoShotFirst']]), columns=ohe.get_feature_names_out(['Location', 'Gender', 'WhoShotFirst']))\ndf_combined = pd.concat([df.reset_index(drop=True), df_encoded.reset_index(drop=True)], axis=1)\n\n# Remove columns that are no longer needed\ndf_combined.drop(columns=['AgeRange', 'Education', 'HouseholdIncomeRange', 'Location', 'Gender', 'WhoShotFirst'], inplace=True)\n\n# Replace non numeric strings with numeric equivalents\ndf_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']] = df_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']].replace({'Yes': 1, 'No': 0}).astype(float).astype(int)\ndf_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine', 'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']] = df_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine',  'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']].replace({\n  'Veryfavorably': 10,\n  'Somewhatfavorably': 5,\n  'Somewhatunfavorably': -5,\n  'Neitherfavorablynorunfavorablyneutral': 0,\n  'Veryunfavorably': -10,\n  'UnfamiliarNA': 0\n}).astype(float).astype(int)\n\ndf_combined.head(4)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nAge\nYearsInSchool\nIncome\nMakesMoreThan50k\nLocation_EastNorthCentral\nLocation_EastSouthCentral\nLocation_MiddleAtlantic\nLocation_Mountain\nLocation_NewEngland\nLocation_Pacific\nLocation_SouthAtlantic\nLocation_Unspecified\nLocation_WestNorthCentral\nLocation_WestSouthCentral\nGender_Female\nGender_Male\nGender_Unspecified\nWhoShotFirst_Greedo\nWhoShotFirst_Han\nWhoShotFirst_Idontunderstandthisquestion\nWhoShotFirst_Unspecified\n\n\n\n\n0\n3292879998\n1\n1\n1\n1\n1\n1\n1\n1\n3.0\n2.0\n1.0\n4.0\n5.0\n6.0\n10\n10\n10\n10\n10\n10\n10\n0\n0\n10\n10\n10\n10\n10\n1\n0\n0\n24\n12\n0\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n1\n3292765271\n1\n0\n1\n1\n1\n0\n0\n0\n1.0\n2.0\n3.0\n4.0\n5.0\n6.0\n5\n5\n5\n5\n5\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n24\n12\n12500\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n2\n3292763116\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n6.0\n1.0\n2.0\n4.0\n3.0\n10\n10\n10\n10\n10\n5\n10\n5\n-5\n10\n10\n10\n10\n10\n0\n0\n1\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n3\n3292731220\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n4.0\n6.0\n2.0\n1.0\n3.0\n10\n5\n5\n-5\n10\n-10\n5\n0\n10\n5\n5\n-10\n5\n5\n1\n0\n0\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n1.0\n0.0\n0.0\n0.0",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 3",
+    "text": "QUESTION|TASK 3\nValidate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.\nI was able to successfully recreate 2 of the tables provided in the GitHub article.\n\n\nRecreated visual\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'seenTheEpisode': [\n      df_combined['SeenEpisode1'].sum(),\n      df_combined['SeenEpisode2'].sum(),\n      df_combined['SeenEpisode3'].sum(),\n      df_combined['SeenEpisode4'].sum(),\n      df_combined['SeenEpisode5'].sum(),\n      df_combined['SeenEpisode6'].sum(),\n    ]\n})\n\ndata['value'] = (data['seenTheEpisode'] / len(df_combined)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"Which 'Star Wars' Movies Have You Seen?\",\n        \"subtitle\": f\"Of {len(df_combined)} respondents who have seen any film\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()\n\n\n\n\n\n\n\n\n\n\nRecreated visual\ndf_seenAll = df_combined[\n    (df_combined['SeenEpisode1'] + df_combined['SeenEpisode2'] + \n     df_combined['SeenEpisode3'] + df_combined['SeenEpisode4'] + \n     df_combined['SeenEpisode5'] + df_combined['SeenEpisode6']) == 6\n]\ndf_seenAll\n\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'bestEpisode': [\n      len(df_seenAll[df_seenAll['Episode1Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode2Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode3Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode4Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode5Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode6Rank'] == 1])\n    ]\n})\n\ndata['value'] = (data['bestEpisode'] / len(df_seenAll)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"What's the Best 'Star Wars' Movie?\",\n        \"subtitle\": f\"Of {len(df_seenAll)} respondents who have seen all films\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
+    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
+    "title": "Client Report - The War with Star Wars",
+    "section": "QUESTION|TASK 4",
+    "text": "QUESTION|TASK 4\nBuild a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.\nI used XGBoost and originally had an accuracy of about 53%. After doing a little tweaking to the model I was able to get the accuracy slightly higher to 59%. Several of the other ways to gage accuracy (F1, Precision, Recall, R2, and Root Mean2) all score at around 63% so while not the 65% called out in the stretch I was able to get close to it.\n\n\nCode to train the model\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom functions.model_evaluation import evaluateModel\n\nX = df_combined[[\n#        \"SeenAny\", \n        \"IsFan\", \n        \"SeenEpisode1\", \n        \"SeenEpisode2\", \n        \"SeenEpisode3\", \n        \"SeenEpisode4\", \n        \"SeenEpisode5\", \n#        \"SeenEpisode6\", \n#        \"Episode1Rank\", \n#        \"Episode2Rank\", \n#        \"Episode3Rank\", \n#        \"Episode4Rank\", \n#        \"Episode5Rank\", \n#        \"Episode6Rank\", \n        \"LikeHanSolo\", \n        \"LikeLuke\", \n        \"LikeLeia\", \n        \"LikeAnakin\", \n        \"LikeObiWan\", \n        \"LikeEmperorPalpatine\", \n        \"LikeDarthVader\", \n        \"LikeLando\", \n        \"LikeBobaFett\", \n        \"LikeC3P0\", \n        \"LikeR2D2\", \n        \"LikeJarJar\", \n        \"LikePadme\", \n        \"LikeYoda\", \n        \"ExpandedUniverse\", \n        \"FanOfExpandedUniverse\", \n        \"FanOfFranchise\", \n        \"Age\", \n        \"YearsInSchool\", \n        \"Location_EastNorthCentral\", \n        \"Location_EastSouthCentral\",\n        \"Location_MiddleAtlantic\", \n        \"Location_Mountain\", \n        \"Location_NewEngland\", \n        \"Location_Pacific\", \n        \"Location_SouthAtlantic\", \n#        \"Location_Unspecified\",\n        \"Location_WestNorthCentral\", \n        \"Location_WestSouthCentral\",\n        \"Gender_Female\", \n        \"Gender_Male\", \n#        \"Gender_Unspecified\",\n        \"WhoShotFirst_Greedo\", \n        \"WhoShotFirst_Han\",\n        \"WhoShotFirst_Idontunderstandthisquestion\",\n#        \"WhoShotFirst_Unspecified\"\n    ]]\ny = df_combined['MakesMoreThan50k']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.29, random_state=43)\nmodel = evaluateModel(X_train, y_train, X_test, y_test, \"XGBoost\")\n\n\n\nXGBoost Accuracy: 0.5925925925925926\nXGBoost F1 Score: 0.6346863468634686\nXGBoost Precision Score: 0.6346863468634686\nXGBoost Recall Score: 0.6346863468634686\nXGBoost R2 Score: 0.6346863468634686\nXGBoost Root Mean2 Error: 0.6346863468634686",
+    "crumbs": [
+      "Full Stack",
+      "The War with Star Wars"
+    ]
+  },
+  {
+    "objectID": "full_stack.html",
+    "href": "full_stack.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Full Stack"
+    ]
+  },
+  {
+    "objectID": "full_stack.html#title-2-header",
+    "href": "full_stack.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Full Stack"
+    ]
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html",
+    "href": "notebooks/Exploration_01.html",
+    "title": "Data Exploration 01",
+    "section": "",
+    "text": "A consumer watchdog group wants to see if Netflix has more movies for adults or children.\nUsing a dataset containing metadata for all of the movies Netflix had available on their platform in 2019, we’ll use the MPAA movie rating system to determine if they are correct."
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#mpaa-movie-ratings",
+    "href": "notebooks/Exploration_01.html#mpaa-movie-ratings",
+    "title": "Data Exploration 01",
+    "section": "MPAA Movie Ratings:",
+    "text": "MPAA Movie Ratings:\n\nG: All ages admitted.\nPG: Some material may not be suitable for children.\nPG-13: Some material may be inappropriate for children under 13.\nR: Under 17 requires accompanying parent or adult guardian\nNC-17: No One 17 and Under Admitted\n\nMost people would consider G and PG as ratings suitable for children. However, not everyone would agree that a PG-13 movie is necssarily a children’s movie. It is up to you to decide how to handle this."
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-1-import-pandas",
+    "href": "notebooks/Exploration_01.html#part-1-import-pandas",
+    "title": "Data Exploration 01",
+    "section": "Part 1: Import Pandas",
+    "text": "Part 1: Import Pandas\nThe pandas library is a python library used for data analysis and manipulation. It will provide the core functionality for most of what you do in the data exploration and preprocessing stages of most machine learning projects.\nPlease see this Getting Started Guide for information on the conventional way to import Pandas into your project, as well as other helpful tips for common Pandas tasks.\n\n# Part 1: Enter the code below to import Pandas according to the\n# conventional method.\nimport pandas as pd"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-2-load-the-data",
+    "href": "notebooks/Exploration_01.html#part-2-load-the-data",
+    "title": "Data Exploration 01",
+    "section": "Part 2: Load the data",
+    "text": "Part 2: Load the data\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 2: Load the dataset into a Pandas dataframe.\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n# Then, explore the data by seeing what the first few rows look like.\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n# Next, display a technical summary of the data to determine the data types of each column, and which columns have missing data.\ntheData.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nData columns (total 12 columns):\n #   Column        Non-Null Count  Dtype \n---  ------        --------------  ----- \n 0   show_id       6234 non-null   int64 \n 1   type          6234 non-null   object\n 2   title         6234 non-null   object\n 3   director      4265 non-null   object\n 4   cast          5664 non-null   object\n 5   country       5758 non-null   object\n 6   date_added    6223 non-null   object\n 7   release_year  6234 non-null   int64 \n 8   rating        6224 non-null   object\n 9   duration      6234 non-null   object\n 10  listed_in     6234 non-null   object\n 11  description   6234 non-null   object\ndtypes: int64(2), object(10)\nmemory usage: 584.6+ KB"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-3-filter-the-data",
+    "href": "notebooks/Exploration_01.html#part-3-filter-the-data",
+    "title": "Data Exploration 01",
+    "section": "Part 3: Filter the Data",
+    "text": "Part 3: Filter the Data\nSince we’re just interested in movies, we’ll need to filter out anything that isn’t a movie for our analysis. The type feature contains this information.\nOnce we have the subset, we should see how many rows it contains. There are a variety of ways to get the length of a data frame.\n\n# Use pandas's filtering abilitites to select the subset of data\n# that represents movies, then calculate how many rows are in the filtered data.\nminimalData = theData[['type', 'rating']]\ncleanedData = minimalData.dropna()\nonlyMovieData = cleanedData.loc[theData['type'] == \"Movie\"]\n\n\nMPAA Ratings\nNow that we have only movies, let’s get a quick count of the values being used in the rating feature.\n\n# Determine the number of records for each value of the \"rating\" feature.\n# Remember to count the values in your subset only, not in the original dataframe.\ndistinctRatings = onlyMovieData['rating'].unique()\nprint(distinctRatings)\n\n['R' 'PG-13' 'PG' 'G' 'NC-17']\n\n\n\n\nMore Filtering\nThere are apparently some “made for TV” movies in the list that don’t fit the MPAA rating scheme.\nLet’s filter some more to just see movies rated with the standard MPAA ratings of G, PG, PG-13, R, and NC-17.\n\n# Filter the list of movies to select a new subset containing only movies with\n# a standard MPAA rating. Calculate how many rows are in this new set, and\n# then see which ratings appear most often.\ndesiredRatings = [\"G\", \"PG\", \"PG-13\", \"R\", \"NC-17\"]\nonlyMovieData = onlyMovieData.loc[onlyMovieData['rating'].isin(desiredRatings)]\nonlyMovieData['rating'] = pd.Categorical(onlyMovieData['rating'], categories=desiredRatings, ordered=True)\nonlyMovieData = onlyMovieData.sort_values('rating')"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#part-4-visualization",
+    "href": "notebooks/Exploration_01.html#part-4-visualization",
+    "title": "Data Exploration 01",
+    "section": "Part 4: Visualization",
+    "text": "Part 4: Visualization\nNow that we have explored and preprocessed our data, let’s create a visualization to summarize our findings.\n\nExploration vs Presentation\nBroadly speaking, there are two types of visualizations: * Barebones visualizations you might use to get a quick, visual understanding of the data while you’re trying to decide how it all fits together. * Presentation-quality visualizations that you would include in a report or presentation for management or other stakeholders.\n\n\nVisualization Tools\nThere are many different visualization tools availble. In the sections below, we’ll explore the three most common. Each of these libraries has strengths and weaknesses.\nIt is probably a good idea for you to become familiar with each one, and then become proficient at whichever one you like the best.\n\n\nAltair\nThe Altair visualization library provides a large variety of very easy to use statistical charting tools.\nAltair uses a declarative language to build up charts piece by piece.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nalt.Chart(employees).mark_boxplot().encode(\n    x='job',\n    y='salary'\n)\n\n# Make a box plot style categorical plot, and customize the results\nalt.Chart(employees).mark_boxplot().encode(\n    alt.X('job', title='Job title'),\n    alt.Y('salary', title='Annual salary in thousands of $USD')\n).properties(\n  title='Salaries by Job Title'\n)\nLike with Pandas, there is a conventional way to import Altair into your projects.\n\n# Import the Altair library the conventional way.\nimport altair as alt\n\nLet’s create a barchart showing the count of each movie rating by using Altair’s aggregation capabilities.\nIn this example, we see the x axis being set to a feature called a, and the y axis set to the average() of a feature called b.\nIn our case, we want the x axis to be set to rating and the y axis to be the count() of rating.\n\n# Use Altair to create a bar chart comparing the count of each movie rating\nalt.Chart(onlyMovieData).mark_point().encode(\n    x='rating',\n    y='count(rating)'\n)\n\n\n\n\n\n\n\n\n\nSeaborn\nWhile Altair uses a “declarative” syntax for building charts piece by piece, the Seaborn library provides a large variety of pre-made charts for common statistical needs.\nThese charts are divided into different categories. Each category has a high-level interface you can use for simplicity, and then a specific function for each chart that you can use if you need more control over how the chart looks.\nSeaborn uses matplotlib for its drawing, and the chart-specific functions each return a matplitlib axes object if you need additional customization.\nFor example, there are several different types of categorical plots in seaborn: bar plots, box plots, point plots, count plots, swarm plots, etc…\nEach of these plots can be accessed using the catplot function.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nsns.catplot(data=employees, x='job', y='salary', kind='box')\n\n# Make a swarm plot style categorical plot\nsns.catplot(data=employees, x='job', y='salary', kind='swarm')\nAlternatively, you can use the plot specific functions to give yourself more control over the output by using matplotlib functions:\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = sns.boxplot(data=employees, x='job', y='salary')\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\nLike with Pandas, there is a conventional way to import Seaborn into your projects.\nOptionally, you may wish to set some default chart aesthetics by setting the chart style.\n\n# Import the seaborn library the conventional way. Then optionally configure\n# the default chart style.\nimport seaborn as sns\n\nSince the rating column uses categorical data, we need to use Seaborn’s categorical visualizations.\nIn particular, we want a “count plot” that will display a count of movie ratings.\n\n# Use seaborn to create a count plot comparing the count of each movie rating\nsns.catplot(data=onlyMovieData, x='rating', kind='count')\n\n\n\n\n\n\n\n\n\n\nPandas built-in plotting\nIn addition to libraries like Altair and Seaborn, Pandas has some built in charting functionality.\nWhile not as sophisticated as some of the other options, it is often good enough for quick visualizations.\nJust like with seaborn’s plotting functions, the pandas plotting functions return matplotlib axes objects, which can be further customized.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nemployees[ ['job','salary'] ].plot.box()\n\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = employees[ ['job','salary'] ].plot().box()\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\n\n# Use pandas' built in plotting functions to create a count plot comparing the count of each movie rating\n# This will be a little trickier than the other libraries, but one hint is that the pandas value_counts() function\n# actually returns a dataframe.\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\ncountsByRating = onlyMovieData['rating'].value_counts().sort_index()\nax = countsByRating.plot()\nax.set_title(\"Movie Count by Rating\")\nax.set_ylabel(\"# of Movies\")\nax.set_xlabel(\"Rating\")\n\nText(0.5, 0, 'Rating')"
+  },
+  {
+    "objectID": "notebooks/Exploration_01.html#above-and-beyond",
+    "href": "notebooks/Exploration_01.html#above-and-beyond",
+    "title": "Data Exploration 01",
+    "section": "🌟 Above and Beyond 🌟",
+    "text": "🌟 Above and Beyond 🌟\nAfter reviewing your findings, the watchdog group would like some additional questions answered:\n\nHow are things affected if you include the “made for TV movies” that have been assigned TV ratings in your analysis, but still exclude unrated movies?\nThey would also like to see a separate report that includes only TV shows.\nFor an upcoming community meeting, the group would like to present a simple chart showing “For Kids” and “For Adults” categories. The easiest way to accomplish this would be to create a new column in your data frame that maps each rating to the appropriate “For Kids” or “For Adults” label, then create a new visualization based on that column.\n\n\nonlyTVData = cleanedData.loc[theData['type'] != \"Movie\"]\ndistinctTVRatings = onlyTVData['rating'].unique()\ndesiredTVRatings = ['TV-Y7-FV', 'TV-Y7', 'TY-Y', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA']\nonlyTVData = onlyTVData.loc[onlyTVData['rating'].isin(desiredTVRatings)]\nonlyTVData['rating'] = pd.Categorical(onlyTVData['rating'], categories=desiredTVRatings, ordered=True)\nonlyTVData = onlyTVData.sort_values('rating')\n\nimport seaborn as sns\nsns.catplot(data=onlyTVData, x='rating', kind='count')"
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html",
+    "href": "notebooks/module01-assessment.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "This assignment will test how well you’re able to perform various data science-related tasks.\nEach Problem Group below will center around a particular dataset that you have worked with before.\nTo ensure you receive full credit for a question, make sure you demonstrate the appropriate pandas, altair, or other commands as requested in the provided code blocks.\nYou may find that some questions require multiple steps to fully answer. Others require some mental arithmetic in addition to pandas commands. Use your best judgment."
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#submission",
+    "href": "notebooks/module01-assessment.html#submission",
+    "title": "Introduction",
+    "section": "Submission",
+    "text": "Submission\nEach problem group asks a series of questions. This assignment consists of two submissions:\n\nAfter completing the questions below, open the Module 01 Assessment Quiz in Canvas and enter your answers to these questions there.\nAfter completing and submitting the quiz, save this Colab notebook as a GitHub Gist (You’ll need to create a GitHub account for this), by selecting Save a copy as a GitHub Gist from the File menu above.\nIn Canvas, open the Module 01 Assessment GitHub Gist assignment and paste the GitHub Gist URL for this notebook. Then submit that assignment."
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-1",
+    "href": "notebooks/module01-assessment.html#problem-group-1",
+    "title": "Introduction",
+    "section": "Problem Group 1",
+    "text": "Problem Group 1\nFor the questions in this group, you’ll work with the Netflix Movies Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\n\nQuestion 1\nLoad the dataset into a Pandas data frame and determine what data type is used to store the release_year feature.\n\nimport pandas as pd\n\ndataSource = \" https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\ntheData['release_year'].info()\n\n&lt;class 'pandas.core.series.Series'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nSeries name: release_year\nNon-Null Count  Dtype\n--------------  -----\n6234 non-null   int64\ndtypes: int64(1)\nmemory usage: 48.8 KB\n\n\n\n\nQuestion 2\nFilter your dataset so it contains only TV Shows. How many of those TV Shows were rated TV-Y7?\n\nminimalData = theData[['type', 'rating', 'release_year']]\ncleanedData = minimalData.dropna()\nonlyTVData = cleanedData.loc[theData['type'] != \"Movie\"]\ndistinctTVRatings = onlyTVData['rating'].unique()\ndesiredTVRatings = ['TV-Y7']\nonlyTVData = onlyTVData.loc[onlyTVData['rating'].isin(desiredTVRatings)]\nprint(len(onlyTVData))\n\n100\n\n\n\n\nQuestion 3\nFurther filter your dataset so it only contains TV Shows released between the years 2000 and 2009 inclusive. How many of those shows were rated TV-Y7?\n\ndesiredYears = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]\nonlyCertainYears = onlyTVData.loc[onlyTVData['release_year'].isin(desiredYears)]\nprint(len(onlyCertainYears))\n\n4"
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-2",
+    "href": "notebooks/module01-assessment.html#problem-group-2",
+    "title": "Introduction",
+    "section": "Problem Group 2",
+    "text": "Problem Group 2\nFor the questions in this group, you’ll work with the Cereal Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\n\nQuestion 4\nAfter importing the dataset into a pandas data frame, determine the median amount of protein in cereal brands manufactured by Kelloggs. (mfr code “K”)\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\nkellogsData = theData.loc[theData['mfr'].isin(['K'])]\n\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['protein']\ntheStatistics = calculateSummaryStatistics(kellogsData, theFieldsOfInterest)\n\nprint(theStatistics.Median)\n\nprotein    3.0\nName: Median, dtype: float64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n\nQuestion 5\nIn order to comply with new government regulations, all cereals must now come with a “Healthiness” rating. This rating is calculated based on this formula:\nhealthiness = (protein + fiber) / sugar\nCreate a new healthiness column populated with values based on the above formula.\nThen, determine the median healthiness value for only General Mills cereals (mfr = “G”), rounded to two decimal places.\n\ndef calculateHealthiness(theFood):\n  return round(theFood.protein + theFood.fiber / theFood.sugars)\n\ntheData.head()\n#theData['healthiness'] = theData.apply(calculateHealthiness, axis=1)\n\nonlyGeneralMills = theData[theData['mfr'] == 'G']\nonlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)\n#onlyGeneralMills.head(5)\n\ntheFieldsOfInterest = ['healthiness']\ntheStatistics2 = calculateSummaryStatistics(onlyGeneralMills, theFieldsOfInterest)\nprint(theStatistics2.Median)\n\nhealthiness    2.0\nName: Median, dtype: float64\n\n\nSettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  onlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)"
+  },
+  {
+    "objectID": "notebooks/module01-assessment.html#problem-group-3",
+    "href": "notebooks/module01-assessment.html#problem-group-3",
+    "title": "Introduction",
+    "section": "Problem Group 3",
+    "text": "Problem Group 3\nFor the questions in this group, you’ll work with the Titanic Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\n\nQuestion 6\nAfter loading the dataset into a pandas DataFrame, create a new column called NameGroup that contains the first letter of the passenger’s surname in lower case.\nNote that in the dataset, passenger’s names are provided in the Name column and are listed as:\nSurname, Given names\nFor example, if a passenger’s Name is Braund, Mr. Owen Harris, the NameGroup column should contain the value b.\nThen count how many passengers have a NameGroup value of k.\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\"\ntheData = pd.read_csv(dataSource)\n\n#theData['SplitNames'] = theData['Name'].str.split()\n#theData['Surname'] = theData['SplitNames'].str[-1]\n#theData['NameGroup'] = theData['Surname'].str[0]\n\ntheData['NameGroup'] = theData['Name'].str[0]\nprint(len(theData[theData['NameGroup'] == 'K']))\n#theData.head()\n\n28"
+  },
+  {
+    "objectID": "competition.html",
+    "href": "competition.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "competition.html#title-2-header",
+    "href": "competition.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "ml.html",
+    "href": "ml.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "ml.html#title-2-header",
+    "href": "ml.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
     "objectID": "Story_Telling/DS250-whatsInAName.html",
     "href": "Story_Telling/DS250-whatsInAName.html",
     "title": "Client Report - What’s in a name?",
@@ -77,151 +281,6 @@
     ]
   },
   {
-    "objectID": "full_stack.html",
-    "href": "full_stack.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Full Stack"
-    ]
-  },
-  {
-    "objectID": "full_stack.html#title-2-header",
-    "href": "full_stack.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Full Stack"
-    ]
-  },
-  {
-    "objectID": "competition.html",
-    "href": "competition.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "competition.html#title-2-header",
-    "href": "competition.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "notebooks/module01-assessment.html",
-    "href": "notebooks/module01-assessment.html",
-    "title": "Introduction",
-    "section": "",
-    "text": "This assignment will test how well you’re able to perform various data science-related tasks.\nEach Problem Group below will center around a particular dataset that you have worked with before.\nTo ensure you receive full credit for a question, make sure you demonstrate the appropriate pandas, altair, or other commands as requested in the provided code blocks.\nYou may find that some questions require multiple steps to fully answer. Others require some mental arithmetic in addition to pandas commands. Use your best judgment."
-  },
-  {
-    "objectID": "notebooks/module01-assessment.html#submission",
-    "href": "notebooks/module01-assessment.html#submission",
-    "title": "Introduction",
-    "section": "Submission",
-    "text": "Submission\nEach problem group asks a series of questions. This assignment consists of two submissions:\n\nAfter completing the questions below, open the Module 01 Assessment Quiz in Canvas and enter your answers to these questions there.\nAfter completing and submitting the quiz, save this Colab notebook as a GitHub Gist (You’ll need to create a GitHub account for this), by selecting Save a copy as a GitHub Gist from the File menu above.\nIn Canvas, open the Module 01 Assessment GitHub Gist assignment and paste the GitHub Gist URL for this notebook. Then submit that assignment."
-  },
-  {
-    "objectID": "notebooks/module01-assessment.html#problem-group-1",
-    "href": "notebooks/module01-assessment.html#problem-group-1",
-    "title": "Introduction",
-    "section": "Problem Group 1",
-    "text": "Problem Group 1\nFor the questions in this group, you’ll work with the Netflix Movies Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\n\nQuestion 1\nLoad the dataset into a Pandas data frame and determine what data type is used to store the release_year feature.\n\nimport pandas as pd\n\ndataSource = \" https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\ntheData['release_year'].info()\n\n&lt;class 'pandas.core.series.Series'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nSeries name: release_year\nNon-Null Count  Dtype\n--------------  -----\n6234 non-null   int64\ndtypes: int64(1)\nmemory usage: 48.8 KB\n\n\n\n\nQuestion 2\nFilter your dataset so it contains only TV Shows. How many of those TV Shows were rated TV-Y7?\n\nminimalData = theData[['type', 'rating', 'release_year']]\ncleanedData = minimalData.dropna()\nonlyTVData = cleanedData.loc[theData['type'] != \"Movie\"]\ndistinctTVRatings = onlyTVData['rating'].unique()\ndesiredTVRatings = ['TV-Y7']\nonlyTVData = onlyTVData.loc[onlyTVData['rating'].isin(desiredTVRatings)]\nprint(len(onlyTVData))\n\n100\n\n\n\n\nQuestion 3\nFurther filter your dataset so it only contains TV Shows released between the years 2000 and 2009 inclusive. How many of those shows were rated TV-Y7?\n\ndesiredYears = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]\nonlyCertainYears = onlyTVData.loc[onlyTVData['release_year'].isin(desiredYears)]\nprint(len(onlyCertainYears))\n\n4"
-  },
-  {
-    "objectID": "notebooks/module01-assessment.html#problem-group-2",
-    "href": "notebooks/module01-assessment.html#problem-group-2",
-    "title": "Introduction",
-    "section": "Problem Group 2",
-    "text": "Problem Group 2\nFor the questions in this group, you’ll work with the Cereal Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\n\nQuestion 4\nAfter importing the dataset into a pandas data frame, determine the median amount of protein in cereal brands manufactured by Kelloggs. (mfr code “K”)\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\nkellogsData = theData.loc[theData['mfr'].isin(['K'])]\n\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['protein']\ntheStatistics = calculateSummaryStatistics(kellogsData, theFieldsOfInterest)\n\nprint(theStatistics.Median)\n\nprotein    3.0\nName: Median, dtype: float64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n\nQuestion 5\nIn order to comply with new government regulations, all cereals must now come with a “Healthiness” rating. This rating is calculated based on this formula:\nhealthiness = (protein + fiber) / sugar\nCreate a new healthiness column populated with values based on the above formula.\nThen, determine the median healthiness value for only General Mills cereals (mfr = “G”), rounded to two decimal places.\n\ndef calculateHealthiness(theFood):\n  return round(theFood.protein + theFood.fiber / theFood.sugars)\n\ntheData.head()\n#theData['healthiness'] = theData.apply(calculateHealthiness, axis=1)\n\nonlyGeneralMills = theData[theData['mfr'] == 'G']\nonlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)\n#onlyGeneralMills.head(5)\n\ntheFieldsOfInterest = ['healthiness']\ntheStatistics2 = calculateSummaryStatistics(onlyGeneralMills, theFieldsOfInterest)\nprint(theStatistics2.Median)\n\nhealthiness    2.0\nName: Median, dtype: float64\n\n\nSettingWithCopyWarning: \nA value is trying to be set on a copy of a slice from a DataFrame.\nTry using .loc[row_indexer,col_indexer] = value instead\n\nSee the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n  onlyGeneralMills['healthiness'] = onlyGeneralMills.apply(calculateHealthiness, axis=1)"
-  },
-  {
-    "objectID": "notebooks/module01-assessment.html#problem-group-3",
-    "href": "notebooks/module01-assessment.html#problem-group-3",
-    "title": "Introduction",
-    "section": "Problem Group 3",
-    "text": "Problem Group 3\nFor the questions in this group, you’ll work with the Titanic Dataset found at this url: https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\n\nQuestion 6\nAfter loading the dataset into a pandas DataFrame, create a new column called NameGroup that contains the first letter of the passenger’s surname in lower case.\nNote that in the dataset, passenger’s names are provided in the Name column and are listed as:\nSurname, Given names\nFor example, if a passenger’s Name is Braund, Mr. Owen Harris, the NameGroup column should contain the value b.\nThen count how many passengers have a NameGroup value of k.\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/titanic.csv\"\ntheData = pd.read_csv(dataSource)\n\n#theData['SplitNames'] = theData['Name'].str.split()\n#theData['Surname'] = theData['SplitNames'].str[-1]\n#theData['NameGroup'] = theData['Surname'].str[0]\n\ntheData['NameGroup'] = theData['Name'].str[0]\nprint(len(theData[theData['NameGroup'] == 'K']))\n#theData.head()\n\n28"
-  },
-  {
-    "objectID": "exploration.html",
-    "href": "exploration.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "exploration.html#title-2-header",
-    "href": "exploration.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "resume.html",
-    "href": "resume.html",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "resume.html#currently",
-    "href": "resume.html#currently",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
-  },
-  {
-    "objectID": "resume.html#education",
-    "href": "resume.html#education",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
-  },
-  {
-    "objectID": "resume.html#occupation",
-    "href": "resume.html#occupation",
-    "title": "Brett Jameson",
-    "section": "",
-    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
-  },
-  {
-    "objectID": "ml.html",
-    "href": "ml.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "ml.html#title-2-header",
-    "href": "ml.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "cleansing.html",
-    "href": "cleansing.html",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "cleansing.html#title-2-header",
-    "href": "cleansing.html#title-2-header",
-    "title": "about me",
-    "section": "",
-    "text": "MarkDown Basics"
-  },
-  {
     "objectID": "story_telling.html",
     "href": "story_telling.html",
     "title": "about me",
@@ -242,175 +301,18 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "exploration.html",
+    "href": "exploration.html",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
   },
   {
-    "objectID": "index.html#title-2-header",
-    "href": "index.html#title-2-header",
+    "objectID": "exploration.html#title-2-header",
+    "href": "exploration.html#title-2-header",
     "title": "about me",
     "section": "",
     "text": "MarkDown Basics"
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html",
-    "href": "notebooks/Exploration_02.html",
-    "title": "Data Exploration 02",
-    "section": "",
-    "text": "You’re working as a data analyst at a cereal marketing company in New York.\nIn a strategy meeting, the marketing director tells you that in 2018, the US weight loss industry was worth over $72 Billion dollars, growing 4% compared to the previous year.\nIn contrast, sales of cold cereal fell 6% to $8.5 billion during the same time period.\nCereal executives have approached the marketing company asking how they can somehow tap into the weight loss market growth to boost the sales of their cereal brands.\nYour assignment is to analyze a dataset of nutritional information for major US cereals, and calculate some metrics that can be used by the marketing team."
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
-    "href": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
-    "title": "Data Exploration 02",
-    "section": "Part 1: Import Pandas and load the data",
-    "text": "Part 1: Import Pandas and load the data\nRemember to import Pandas the conventional way. If you’ve forgotten how, you may want to review Data Exploration 01.\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 1: Enter your code below to import Pandas according to the\n# conventional method. Then load the dataset into a Pandas dataframe.\n\n# Write any code needed to explore the data by seeing what the first few\n# rows look like. Then display a technical summary of the data to determine\n# the data types of each column, and which columns have missing data.\n\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843"
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
-    "href": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
-    "title": "Data Exploration 02",
-    "section": "Part 2: Calculate Summary Statistics",
-    "text": "Part 2: Calculate Summary Statistics\nThe marketing team has determined that when choosing a cereal, consumers are most interested in calories, sugars, fiber, fat, and protein.\nFirst, let’s calcuate some summary statistics for these categories across the entire dataset. We’re particularly intrested in the mean, median, standard deviation, min, and max values.\nThere are multiple ways to accomplish this.\n\n# Part 2: Enter your code below to calculate summary statistics for the\n# calories, sugars, fiber, fat, and protein features.\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['calories', 'sugars', 'fiber', 'fat', 'protein']\ntheStatistics = calculateSummaryStatistics(theData, theFieldsOfInterest)\n\nprint(theStatistics)\n#print(summaryStatisticsMerged)\n\n                Mean  Median   Min    Max        Std\ncalories  106.883117   110.0  50.0  160.0  19.484119\nsugars      6.922078     7.0  -1.0   15.0   4.444885\nfiber       2.151948     2.0   0.0   14.0   2.383364\nfat         1.012987     1.0   0.0    5.0   1.006473\nprotein     2.545455     3.0   1.0    6.0   1.094790"
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html#part-3-transform-data",
-    "href": "notebooks/Exploration_02.html#part-3-transform-data",
-    "title": "Data Exploration 02",
-    "section": "Part 3: Transform Data",
-    "text": "Part 3: Transform Data\nTo make analysis easier, you want to convert the manufacturer codes used in the dataset to the manufacturer names.\nFirst, display the count of each manufacturer code value used in the dataset (found in the mfr column).\nThen, create a new column with the appropriate manufacturer name for each entry, using this mapping:\nA = American Home Food Products\nG = General Mills\nK = Kelloggs\nN = Nabisco\nP = Post\nQ = Quaker Oats\nR = Ralston Purina\n\nNote: While the tutorial linked above uses the replace function, using the map function instead can often be much faster and more memory efficient, especially for large datasets.\n\n\n# Display the count of values for the manufacturer code (\"mfr\" column), then\n# create a new column containing the appropriate manufacturer names.\ndef getManufacturer(theAbbreviation):\n  manufacturerData = {\n    'A': 'American Home Food Products',\n    'G': 'General Mills',\n    'K': 'Kelloggs',\n    'N': 'Nabisco',\n    'P': 'Post',\n    'Q': 'Quaker Oats',\n    'R': 'Ralston Purina'\n  }\n  return manufacturerData.get(theAbbreviation, '')\n\nmanufacturerCount = theData[['mfr']].value_counts()\nprint(manufacturerCount)\n\ntheMappedData = theData\ntheMappedData['manufacturer'] = theMappedData['mfr'].map(getManufacturer)\ntheMappedData.head(5)\n\nmfr\nK      23\nG      22\nP       9\nR       8\nQ       8\nN       6\nA       1\nName: count, dtype: int64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina"
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html#part-4-visualization",
-    "href": "notebooks/Exploration_02.html#part-4-visualization",
-    "title": "Data Exploration 02",
-    "section": "Part 4: Visualization",
-    "text": "Part 4: Visualization\nLet’s do some more data exploration visually.\nImport your visualization library of choice and set any needed configuration options.\n\n# Import your visualization library\nimport seaborn as sns\n\n\nSugar Distribution\nMarketing tells us that their surveys have revealed that sugar content is the number one concern of consumers when choosing cereal.\nThey would like to see the following visualizations:\n\nA histogram plot of the sugar content in all cereals.\nA scatter plot showing the relationship between sugar and calories.\nA box plot showing the distribution of sugar content by manufacturer.\n\n\n# Create the three visualzations requested by the the marketing team\nsns.displot(theData['sugars'], kind='hist')\nsns.relplot(data=theData, x='sugars', y='calories', kind='scatter')\nsns.catplot(data=theMappedData, x='manufacturer', y='sugars', kind='box', aspect=2)"
-  },
-  {
-    "objectID": "notebooks/Exploration_02.html#above-and-beyond",
-    "href": "notebooks/Exploration_02.html#above-and-beyond",
-    "title": "Data Exploration 02",
-    "section": "🌟 Above and Beyond 🌟",
-    "text": "🌟 Above and Beyond 🌟\nThe marketing team is pleased with what you’ve accomplished so far. They have a meeting with top cereal executives in the morning, and they’d like you to do as many of the following additional tasks as you have time for:\n\nWeight Watchers used to have an older points system that used this formula: (calories / 50) + (fat / 12) - (fiber / 5), but only the first 4 grams of fiber were included in the calculation. For comparison’s sake, create an additional column with the calculation for the old points system.\nMarketing really likes the boxplot of the sugar content for each cereal, they’d like similar plots for calories and fat, but using different color schemes for each chart.\n\n\ndef calculatePointsOld(theFood):\n  theFiber = min(theFood.fiber, 4)\n  return round((theFood.calories / 50) + (theFood.fat / 12) - (theFiber / 5))\n\ntheMappedData['oldWeightWatchesPoints'] = theMappedData.apply(calculatePointsOld, axis=1)\ntheMappedData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\nweightWatchesPoints\noldWeightWatchesPoints\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n3\n1\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n6\n2\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n3\n1\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n1\n0\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina\n5\n2"
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html",
-    "href": "notebooks/Exploration_01.html",
-    "title": "Data Exploration 01",
-    "section": "",
-    "text": "A consumer watchdog group wants to see if Netflix has more movies for adults or children.\nUsing a dataset containing metadata for all of the movies Netflix had available on their platform in 2019, we’ll use the MPAA movie rating system to determine if they are correct."
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#mpaa-movie-ratings",
-    "href": "notebooks/Exploration_01.html#mpaa-movie-ratings",
-    "title": "Data Exploration 01",
-    "section": "MPAA Movie Ratings:",
-    "text": "MPAA Movie Ratings:\n\nG: All ages admitted.\nPG: Some material may not be suitable for children.\nPG-13: Some material may be inappropriate for children under 13.\nR: Under 17 requires accompanying parent or adult guardian\nNC-17: No One 17 and Under Admitted\n\nMost people would consider G and PG as ratings suitable for children. However, not everyone would agree that a PG-13 movie is necssarily a children’s movie. It is up to you to decide how to handle this."
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#part-1-import-pandas",
-    "href": "notebooks/Exploration_01.html#part-1-import-pandas",
-    "title": "Data Exploration 01",
-    "section": "Part 1: Import Pandas",
-    "text": "Part 1: Import Pandas\nThe pandas library is a python library used for data analysis and manipulation. It will provide the core functionality for most of what you do in the data exploration and preprocessing stages of most machine learning projects.\nPlease see this Getting Started Guide for information on the conventional way to import Pandas into your project, as well as other helpful tips for common Pandas tasks.\n\n# Part 1: Enter the code below to import Pandas according to the\n# conventional method.\nimport pandas as pd"
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#part-2-load-the-data",
-    "href": "notebooks/Exploration_01.html#part-2-load-the-data",
-    "title": "Data Exploration 01",
-    "section": "Part 2: Load the data",
-    "text": "Part 2: Load the data\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 2: Load the dataset into a Pandas dataframe.\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/netflix_titles.csv\"\ntheData = pd.read_csv(dataSource)\n\n\n# Then, explore the data by seeing what the first few rows look like.\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nshow_id\ntype\ntitle\ndirector\ncast\ncountry\ndate_added\nrelease_year\nrating\nduration\nlisted_in\ndescription\n\n\n\n\n0\n81145628\nMovie\nNorm of the North: King Sized Adventure\nRichard Finn, Tim Maltby\nAlan Marriott, Andrew Toth, Brian Dobson, Cole...\nUnited States, India, South Korea, China\nSeptember 9, 2019\n2019\nTV-PG\n90 min\nChildren & Family Movies, Comedies\nBefore planning an awesome wedding for his gra...\n\n\n1\n80117401\nMovie\nJandino: Whatever it Takes\nNaN\nJandino Asporaat\nUnited Kingdom\nSeptember 9, 2016\n2016\nTV-MA\n94 min\nStand-Up Comedy\nJandino Asporaat riffs on the challenges of ra...\n\n\n2\n70234439\nTV Show\nTransformers Prime\nNaN\nPeter Cullen, Sumalee Montano, Frank Welker, J...\nUnited States\nSeptember 8, 2018\n2013\nTV-Y7-FV\n1 Season\nKids' TV\nWith the help of three human allies, the Autob...\n\n\n3\n80058654\nTV Show\nTransformers: Robots in Disguise\nNaN\nWill Friedle, Darren Criss, Constance Zimmer, ...\nUnited States\nSeptember 8, 2018\n2016\nTV-Y7\n1 Season\nKids' TV\nWhen a prison ship crash unleashes hundreds of...\n\n\n4\n80125979\nMovie\n#realityhigh\nFernando Lebrija\nNesta Cooper, Kate Walsh, John Michael Higgins...\nUnited States\nSeptember 8, 2017\n2017\nTV-14\n99 min\nComedies\nWhen nerdy high schooler Dani finally attracts...\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n    \n      \n\n\n    \n        \n    \n\n      \n\n\n\n      \n    \n\n    \n  \n\n\n\n# Next, display a technical summary of the data to determine the data types of each column, and which columns have missing data.\ntheData.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 6234 entries, 0 to 6233\nData columns (total 12 columns):\n #   Column        Non-Null Count  Dtype \n---  ------        --------------  ----- \n 0   show_id       6234 non-null   int64 \n 1   type          6234 non-null   object\n 2   title         6234 non-null   object\n 3   director      4265 non-null   object\n 4   cast          5664 non-null   object\n 5   country       5758 non-null   object\n 6   date_added    6223 non-null   object\n 7   release_year  6234 non-null   int64 \n 8   rating        6224 non-null   object\n 9   duration      6234 non-null   object\n 10  listed_in     6234 non-null   object\n 11  description   6234 non-null   object\ndtypes: int64(2), object(10)\nmemory usage: 584.6+ KB"
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#part-3-filter-the-data",
-    "href": "notebooks/Exploration_01.html#part-3-filter-the-data",
-    "title": "Data Exploration 01",
-    "section": "Part 3: Filter the Data",
-    "text": "Part 3: Filter the Data\nSince we’re just interested in movies, we’ll need to filter out anything that isn’t a movie for our analysis. The type feature contains this information.\nOnce we have the subset, we should see how many rows it contains. There are a variety of ways to get the length of a data frame.\n\n# Use pandas's filtering abilitites to select the subset of data\n# that represents movies, then calculate how many rows are in the filtered data.\nminimalData = theData[['type', 'rating']]\ncleanedData = minimalData.dropna()\nonlyMovieData = cleanedData.loc[theData['type'] == \"Movie\"]\n\n\nMPAA Ratings\nNow that we have only movies, let’s get a quick count of the values being used in the rating feature.\n\n# Determine the number of records for each value of the \"rating\" feature.\n# Remember to count the values in your subset only, not in the original dataframe.\ndistinctRatings = onlyMovieData['rating'].unique()\nprint(distinctRatings)\n\n['R' 'PG-13' 'PG' 'G' 'NC-17']\n\n\n\n\nMore Filtering\nThere are apparently some “made for TV” movies in the list that don’t fit the MPAA rating scheme.\nLet’s filter some more to just see movies rated with the standard MPAA ratings of G, PG, PG-13, R, and NC-17.\n\n# Filter the list of movies to select a new subset containing only movies with\n# a standard MPAA rating. Calculate how many rows are in this new set, and\n# then see which ratings appear most often.\ndesiredRatings = [\"G\", \"PG\", \"PG-13\", \"R\", \"NC-17\"]\nonlyMovieData = onlyMovieData.loc[onlyMovieData['rating'].isin(desiredRatings)]\nonlyMovieData['rating'] = pd.Categorical(onlyMovieData['rating'], categories=desiredRatings, ordered=True)\nonlyMovieData = onlyMovieData.sort_values('rating')"
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#part-4-visualization",
-    "href": "notebooks/Exploration_01.html#part-4-visualization",
-    "title": "Data Exploration 01",
-    "section": "Part 4: Visualization",
-    "text": "Part 4: Visualization\nNow that we have explored and preprocessed our data, let’s create a visualization to summarize our findings.\n\nExploration vs Presentation\nBroadly speaking, there are two types of visualizations: * Barebones visualizations you might use to get a quick, visual understanding of the data while you’re trying to decide how it all fits together. * Presentation-quality visualizations that you would include in a report or presentation for management or other stakeholders.\n\n\nVisualization Tools\nThere are many different visualization tools availble. In the sections below, we’ll explore the three most common. Each of these libraries has strengths and weaknesses.\nIt is probably a good idea for you to become familiar with each one, and then become proficient at whichever one you like the best.\n\n\nAltair\nThe Altair visualization library provides a large variety of very easy to use statistical charting tools.\nAltair uses a declarative language to build up charts piece by piece.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nalt.Chart(employees).mark_boxplot().encode(\n    x='job',\n    y='salary'\n)\n\n# Make a box plot style categorical plot, and customize the results\nalt.Chart(employees).mark_boxplot().encode(\n    alt.X('job', title='Job title'),\n    alt.Y('salary', title='Annual salary in thousands of $USD')\n).properties(\n  title='Salaries by Job Title'\n)\nLike with Pandas, there is a conventional way to import Altair into your projects.\n\n# Import the Altair library the conventional way.\nimport altair as alt\n\nLet’s create a barchart showing the count of each movie rating by using Altair’s aggregation capabilities.\nIn this example, we see the x axis being set to a feature called a, and the y axis set to the average() of a feature called b.\nIn our case, we want the x axis to be set to rating and the y axis to be the count() of rating.\n\n# Use Altair to create a bar chart comparing the count of each movie rating\nalt.Chart(onlyMovieData).mark_point().encode(\n    x='rating',\n    y='count(rating)'\n)\n\n\n\n\n\n\n\n\n\nSeaborn\nWhile Altair uses a “declarative” syntax for building charts piece by piece, the Seaborn library provides a large variety of pre-made charts for common statistical needs.\nThese charts are divided into different categories. Each category has a high-level interface you can use for simplicity, and then a specific function for each chart that you can use if you need more control over how the chart looks.\nSeaborn uses matplotlib for its drawing, and the chart-specific functions each return a matplitlib axes object if you need additional customization.\nFor example, there are several different types of categorical plots in seaborn: bar plots, box plots, point plots, count plots, swarm plots, etc…\nEach of these plots can be accessed using the catplot function.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nsns.catplot(data=employees, x='job', y='salary', kind='box')\n\n# Make a swarm plot style categorical plot\nsns.catplot(data=employees, x='job', y='salary', kind='swarm')\nAlternatively, you can use the plot specific functions to give yourself more control over the output by using matplotlib functions:\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = sns.boxplot(data=employees, x='job', y='salary')\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\nLike with Pandas, there is a conventional way to import Seaborn into your projects.\nOptionally, you may wish to set some default chart aesthetics by setting the chart style.\n\n# Import the seaborn library the conventional way. Then optionally configure\n# the default chart style.\nimport seaborn as sns\n\nSince the rating column uses categorical data, we need to use Seaborn’s categorical visualizations.\nIn particular, we want a “count plot” that will display a count of movie ratings.\n\n# Use seaborn to create a count plot comparing the count of each movie rating\nsns.catplot(data=onlyMovieData, x='rating', kind='count')\n\n\n\n\n\n\n\n\n\n\nPandas built-in plotting\nIn addition to libraries like Altair and Seaborn, Pandas has some built in charting functionality.\nWhile not as sophisticated as some of the other options, it is often good enough for quick visualizations.\nJust like with seaborn’s plotting functions, the pandas plotting functions return matplotlib axes objects, which can be further customized.\nAssume we have a pandas dataframe called employees, with three columns: name, job, salary.\n# Make a box plot style categorical plot showing the distribution of salaries for each job:\nemployees[ ['job','salary'] ].plot.box()\n\n# Make a box plot style categorical plot, and customize the results\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\nax = employees[ ['job','salary'] ].plot().box()\nax.set_title(\"Salaries by Job Title\")\nax.set_ylabel(\"Annual salary in thousands of $USD\")\nax.set_xlabel(\"Job title\")\n\n# Use pandas' built in plotting functions to create a count plot comparing the count of each movie rating\n# This will be a little trickier than the other libraries, but one hint is that the pandas value_counts() function\n# actually returns a dataframe.\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(12, 9))\ncountsByRating = onlyMovieData['rating'].value_counts().sort_index()\nax = countsByRating.plot()\nax.set_title(\"Movie Count by Rating\")\nax.set_ylabel(\"# of Movies\")\nax.set_xlabel(\"Rating\")\n\nText(0.5, 0, 'Rating')"
-  },
-  {
-    "objectID": "notebooks/Exploration_01.html#above-and-beyond",
-    "href": "notebooks/Exploration_01.html#above-and-beyond",
-    "title": "Data Exploration 01",
-    "section": "🌟 Above and Beyond 🌟",
-    "text": "🌟 Above and Beyond 🌟\nAfter reviewing your findings, the watchdog group would like some additional questions answered:\n\nHow are things affected if you include the “made for TV movies” that have been assigned TV ratings in your analysis, but still exclude unrated movies?\nThey would also like to see a separate report that includes only TV shows.\nFor an upcoming community meeting, the group would like to present a simple chart showing “For Kids” and “For Adults” categories. The easiest way to accomplish this would be to create a new column in your data frame that maps each rating to the appropriate “For Kids” or “For Adults” label, then create a new visualization based on that column.\n\n\nonlyTVData = cleanedData.loc[theData['type'] != \"Movie\"]\ndistinctTVRatings = onlyTVData['rating'].unique()\ndesiredTVRatings = ['TV-Y7-FV', 'TV-Y7', 'TY-Y', 'TV-G', 'TV-PG', 'TV-14', 'TV-MA']\nonlyTVData = onlyTVData.loc[onlyTVData['rating'].isin(desiredTVRatings)]\nonlyTVData['rating'] = pd.Categorical(onlyTVData['rating'], categories=desiredTVRatings, ordered=True)\nonlyTVData = onlyTVData.sort_values('rating')\n\nimport seaborn as sns\nsns.catplot(data=onlyTVData, x='rating', kind='count')"
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html",
-    "title": "Client Report - The War with Star Wars",
-    "section": "",
-    "text": "Imports and initial setup.\nimport pandas as pd\nimport altair as alt\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder\n\n# Loading in data\ndata = \"data/StarWars.csv\"\ndf = pd.read_csv(data, header=[0, 1])\n\n# Combine the first two rows into a single header\ndf.columns = ['_'.join(col).strip() for col in df.columns.values]\n\n# Function to remove special characters\ndef remove_special_chars(value):\n    if isinstance(value, str):\n        return ''.join(e for e in value if e.isalnum())\n    return value\n\n# Applying the function to all values in the DataFrame\ndf = df.map(remove_special_chars)\n\n#Strip out special characters\ndf.columns = df.columns.str.replace('[^A-Za-z0-9_]+', '', regex=True)\n\n# Setting NaN values to 0 in the entire DataFrame\ndf = df.fillna(0)",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html#elevator-pitch",
-    "title": "Client Report - The War with Star Wars",
-    "section": "Elevator pitch",
-    "text": "Elevator pitch\nWho would have guessed that with machine learning one is able to get a good idea of a person’s income level based upon their knowledge of Star Wars. By taking factors such as their favorite character, physical location, and which episodes they have watched into account once can begin to zero in on their income level. While this was unlikly to be the original purpose for gathering the data, it shows that even more innocolus data can be used to help understand your audience.\nHighlight the Questions and Tasks",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-1",
-    "title": "Client Report - The War with Star Wars",
-    "section": "QUESTION|TASK 1",
-    "text": "QUESTION|TASK 1\nShorten the column names and clean them up for easier use with pandas. Provide a table or list that exemplifies how you fixed the names.\nRenaming the table column names was easy once I was able to get ahold of the data. I have to check for and remove special characters, but once I had done that it came together pretty quickly.\n\n\nExample of table with the names fixed\n# Set the option to display all columns\npd.set_option('display.max_columns', None)\ndf.rename(columns={\n  'RespondentID_Unnamed0_level_1': \"Id\",\n  'Haveyouseenanyofthe6filmsintheStarWarsfranchise_Response': 'SeenAny',\n  'DoyouconsideryourselftobeafanoftheStarWarsfilmfranchise_Response': 'IsFan',\n  'WhichofthefollowingStarWarsfilmshaveyouseenPleaseselectallthatapply_StarWarsEpisodeIThePhantomMenace': 'SeenEpisode1',\n  'Unnamed4_level_0_StarWarsEpisodeIIAttackoftheClones':'SeenEpisode2',\n  'Unnamed5_level_0_StarWarsEpisodeIIIRevengeoftheSith':'SeenEpisode3',\n  'Unnamed6_level_0_StarWarsEpisodeIVANewHope':'SeenEpisode4',\n  'Unnamed7_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'SeenEpisode5',\n  'Unnamed8_level_0_StarWarsEpisodeVIReturnoftheJedi':'SeenEpisode6',\n  'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.': '1stFavorite',\n  'PleaseranktheStarWarsfilmsinorderofpreferencewith1beingyourfavoritefilminthefranchiseand6beingyourleastfavoritefilm_StarWarsEpisodeIThePhantomMenace':'Episode1Rank',\n  'Unnamed10_level_0_StarWarsEpisodeIIAttackoftheClones':'Episode2Rank',\n  'Unnamed11_level_0_StarWarsEpisodeIIIRevengeoftheSith':'Episode3Rank',\n  'Unnamed12_level_0_StarWarsEpisodeIVANewHope':'Episode4Rank',\n  'Unnamed13_level_0_StarWarsEpisodeVTheEmpireStrikesBack':'Episode5Rank',\n  'Unnamed14_level_0_StarWarsEpisodeVIReturnoftheJedi':'Episode6Rank',\n  'Pleasestatewhetheryouviewthefollowingcharactersfavorablyunfavorablyorareunfamiliarwithhimher_HanSolo': 'LikeHanSolo',\n  'Unnamed16_level_0_LukeSkywalker': 'LikeLuke',\n  'Unnamed17_level_0_PrincessLeiaOrgana': 'LikeLeia',\n  'Unnamed18_level_0_AnakinSkywalker': 'LikeAnakin',\n  'Unnamed19_level_0_ObiWanKenobi': 'LikeObiWan',\n  'Unnamed20_level_0_EmperorPalpatine': 'LikeEmperorPalpatine',\n  'Unnamed21_level_0_DarthVader': 'LikeDarthVader',\n  'Unnamed22_level_0_LandoCalrissian': 'LikeLando',\n  'Unnamed23_level_0_BobaFett': 'LikeBobaFett',\n  'Unnamed24_level_0_C3P0': 'LikeC3P0',\n  'Unnamed25_level_0_R2D2': 'LikeR2D2',\n  'Unnamed26_level_0_JarJarBinks': 'LikeJarJar',\n  'Unnamed27_level_0_PadmeAmidala': 'LikePadme',\n  'Unnamed28_level_0_Yoda': 'LikeYoda',\n  'Whichcharactershotfirst_Response': 'WhoShotFirst',\n  'AreyoufamiliarwiththeExpandedUniverse_Response': 'ExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheExpandedUniverse_Response': 'FanOfExpandedUniverse',\n  'DoyouconsideryourselftobeafanoftheStarTrekfranchise_Response': 'FanOfFranchise',\n  'Gender_Response': 'Gender',\n  'Age_Response': 'AgeRange',\n  'HouseholdIncome_Response': 'HouseholdIncomeRange',\n  'Education_Response': 'Education',\n  'LocationCensusRegion_Response': 'Location'\n}, inplace=True)\n\ndf.head(0)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nWhoShotFirst\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nGender\nAgeRange\nHouseholdIncomeRange\nEducation\nLocation",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-2",
-    "title": "Client Report - The War with Star Wars",
-    "section": "QUESTION|TASK 2",
-    "text": "QUESTION|TASK 2\nClean and format the data so that it can be used in a machine learning model. As you format the data, you should complete each item listed below. In your final report provide example(s) of the reformatted data with a short description of the changes made. Filter the dataset to respondents that have seen at least one film Create a new column that converts the age ranges to a single number. Drop the age range categorical column Create a new column that converts the education groupings to a single number. Drop the school categorical column Create a new column that converts the income ranges to a single number. Drop the income range categorical column Create your target (also known as “y” or “label”) column based on the new income range column One-hot encode all remaining categorical columns_\nIn order to filter the dataset to respondents that have seen at least one film I dropped all columns where the respondent answered no to the question ‘Have you seen any of the 6 films in the Star Wars franchise?’ Next, I removed any records from the data set where the respondent answered “no” to each of the individual “Which of the following Star Wars films have you seen?”\nAs age was recorded as an age range and not simply an age, I created a new column named age and set it to the median value of that range. I selected the median value as I wanted to retain some sort of relationship between the distances between possible ages to help the machine learning segment of this exercize later on.\nNext I created a new column to represent education. I set that value to a numeric representation of the number of grades that a person would ahve completed (on average) to have achieved that level of education. Doing it this way will help the model later as the numeric value is indicitive of the time put in to achieve that level of education.\nI converted the incom ranges to a single numeric value using a process similar to what I did with the age range data. I set the new value tot he median value of the range so that the ml model will be better able to gage relationships between the various salary levels.\nI created a target column named “MakesMoreThan50k” and set it equal to either a 0 or a 1 based upon wether the value of the Income column that I had previously created was over 50,000 or not.\nI then used sklearn’s One Hot Encoding to convert the remaining three categorical data sets (Location, Gender, WhoShotFirst). Prior to doing this I set any NaN values to “Unspecified” so that that data could be represented in the dataset.\n\n\nExample of the tidied data table\n# Removing any where the respondent said they have not seen any of the episodes\ndf = df[df['SeenAny'] != 'No']\n\n# Replacing specific values in the 'Episode1' column\ndf['SeenEpisode1'] = df['SeenEpisode1'].replace('StarWarsEpisodeIThePhantomMenace', 1)\ndf['SeenEpisode2'] = df['SeenEpisode2'].replace('StarWarsEpisodeIIAttackoftheClones', 1)\ndf['SeenEpisode3'] = df['SeenEpisode3'].replace('StarWarsEpisodeIIIRevengeoftheSith', 1)\ndf['SeenEpisode4'] = df['SeenEpisode4'].replace('StarWarsEpisodeIVANewHope', 1)\ndf['SeenEpisode5'] = df['SeenEpisode5'].replace('StarWarsEpisodeVTheEmpireStrikesBack', 1)\ndf['SeenEpisode6'] = df['SeenEpisode6'].replace('StarWarsEpisodeVIReturnoftheJedi', 1)\n\n# Checking if the really have seen at least one episode and removing them if they haven't\ndf['sum'] = df[['SeenEpisode1', 'SeenEpisode2', 'SeenEpisode3', 'SeenEpisode4', 'SeenEpisode5', 'SeenEpisode6']].sum(axis=1)\ndf = df[df['sum'] != 0]\ndf.drop(columns=['sum'], inplace=True)\n\n# Convert age range to a single number\ndf['Age'] = df['AgeRange'].map({\n  0: 0,\n  '1829': 24,\n  '4560': 53,\n  '3044': 37,\n  '60': 60\n})\n\n# Assign numerical to education level based on related average years in school\ndf['YearsInSchool'] = df['Education'].map({\n  0: 0,\n  'Lessthanhighschooldegree': 10,\n  'Highschooldegree': 12,\n  'SomecollegeorAssociatedegree': 14,\n  'Bachelordegree': 16,\n  'Graduatedegree': 20\n})\n\n# Income range to the middle number\ndf['Income'] = df['HouseholdIncomeRange'].map({\n  0: 0,\n  '024999': 12500,\n  '2500049999': 37500,\n  '5000099999': 75000,\n  '100000149999': 125000,\n  '150000': 175000,\n})\n\n# Create my target column\ndf['MakesMoreThan50k'] = df['Income'].apply(lambda x: 1 if x &gt; 50000 else 0)\n\n# Cleaning up data prior to applying one hot encoding\ndf['WhoShotFirst'] = df['WhoShotFirst'].replace(0, 'Unspecified')\ndf['Gender'] = df['Gender'].replace(0, 'Unspecified')\ndf['Location'] = df['Location'].replace(0, 'Unspecified')\n\n#distinct_values = df['Location'].unique()\n#distinct_values\n\n#fit\nohe = OneHotEncoder(handle_unknown = 'ignore', sparse_output=False)\nohe.fit(df[['Location', 'Gender', 'WhoShotFirst']])\n#transform\ndf_encoded = pd.DataFrame(ohe.transform(df[['Location', 'Gender', 'WhoShotFirst']]), columns=ohe.get_feature_names_out(['Location', 'Gender', 'WhoShotFirst']))\ndf_combined = pd.concat([df.reset_index(drop=True), df_encoded.reset_index(drop=True)], axis=1)\n\n# Remove columns that are no longer needed\ndf_combined.drop(columns=['AgeRange', 'Education', 'HouseholdIncomeRange', 'Location', 'Gender', 'WhoShotFirst'], inplace=True)\n\n# Replace non numeric strings with numeric equivalents\ndf_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']] = df_combined[['SeenAny', 'IsFan', 'ExpandedUniverse', 'FanOfExpandedUniverse', 'FanOfFranchise']].replace({'Yes': 1, 'No': 0}).astype(float).astype(int)\ndf_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine', 'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']] = df_combined[['LikeHanSolo', 'LikeLuke', 'LikeLeia', 'LikeAnakin', 'LikeObiWan', 'LikeEmperorPalpatine',  'LikeDarthVader',   'LikeLando', 'LikeBobaFett', 'LikeC3P0',    'LikeR2D2', 'LikeJarJar',   'LikePadme',    'LikeYoda']].replace({\n  'Veryfavorably': 10,\n  'Somewhatfavorably': 5,\n  'Somewhatunfavorably': -5,\n  'Neitherfavorablynorunfavorablyneutral': 0,\n  'Veryunfavorably': -10,\n  'UnfamiliarNA': 0\n}).astype(float).astype(int)\n\ndf_combined.head(4)\n\n\n\n\n\n\n\n\n\nId\nSeenAny\nIsFan\nSeenEpisode1\nSeenEpisode2\nSeenEpisode3\nSeenEpisode4\nSeenEpisode5\nSeenEpisode6\nEpisode1Rank\nEpisode2Rank\nEpisode3Rank\nEpisode4Rank\nEpisode5Rank\nEpisode6Rank\nLikeHanSolo\nLikeLuke\nLikeLeia\nLikeAnakin\nLikeObiWan\nLikeEmperorPalpatine\nLikeDarthVader\nLikeLando\nLikeBobaFett\nLikeC3P0\nLikeR2D2\nLikeJarJar\nLikePadme\nLikeYoda\nExpandedUniverse\nFanOfExpandedUniverse\nFanOfFranchise\nAge\nYearsInSchool\nIncome\nMakesMoreThan50k\nLocation_EastNorthCentral\nLocation_EastSouthCentral\nLocation_MiddleAtlantic\nLocation_Mountain\nLocation_NewEngland\nLocation_Pacific\nLocation_SouthAtlantic\nLocation_Unspecified\nLocation_WestNorthCentral\nLocation_WestSouthCentral\nGender_Female\nGender_Male\nGender_Unspecified\nWhoShotFirst_Greedo\nWhoShotFirst_Han\nWhoShotFirst_Idontunderstandthisquestion\nWhoShotFirst_Unspecified\n\n\n\n\n0\n3292879998\n1\n1\n1\n1\n1\n1\n1\n1\n3.0\n2.0\n1.0\n4.0\n5.0\n6.0\n10\n10\n10\n10\n10\n10\n10\n0\n0\n10\n10\n10\n10\n10\n1\n0\n0\n24\n12\n0\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n1\n3292765271\n1\n0\n1\n1\n1\n0\n0\n0\n1.0\n2.0\n3.0\n4.0\n5.0\n6.0\n5\n5\n5\n5\n5\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n24\n12\n12500\n0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n2\n3292763116\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n6.0\n1.0\n2.0\n4.0\n3.0\n10\n10\n10\n10\n10\n5\n10\n5\n-5\n10\n10\n10\n10\n10\n0\n0\n1\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n0.0\n0.0\n1.0\n0.0\n\n\n3\n3292731220\n1\n1\n1\n1\n1\n1\n1\n1\n5.0\n4.0\n6.0\n2.0\n1.0\n3.0\n10\n5\n5\n-5\n10\n-10\n5\n0\n10\n5\n5\n-10\n5\n5\n1\n0\n0\n24\n14\n125000\n1\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n0.0\n1.0\n0.0\n0.0\n1.0\n0.0\n1.0\n0.0\n0.0\n0.0",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-3",
-    "title": "Client Report - The War with Star Wars",
-    "section": "QUESTION|TASK 3",
-    "text": "QUESTION|TASK 3\nValidate that the data provided on GitHub lines up with the article by recreating 2 of the visuals from the article.\nI was able to successfully recreate 2 of the tables provided in the GitHub article.\n\n\nRecreated visual\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'seenTheEpisode': [\n      df_combined['SeenEpisode1'].sum(),\n      df_combined['SeenEpisode2'].sum(),\n      df_combined['SeenEpisode3'].sum(),\n      df_combined['SeenEpisode4'].sum(),\n      df_combined['SeenEpisode5'].sum(),\n      df_combined['SeenEpisode6'].sum(),\n    ]\n})\n\ndata['value'] = (data['seenTheEpisode'] / len(df_combined)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"Which 'Star Wars' Movies Have You Seen?\",\n        \"subtitle\": f\"Of {len(df_combined)} respondents who have seen any film\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()\n\n\n\n\n\n\n\n\n\n\nRecreated visual\ndf_seenAll = df_combined[\n    (df_combined['SeenEpisode1'] + df_combined['SeenEpisode2'] + \n     df_combined['SeenEpisode3'] + df_combined['SeenEpisode4'] + \n     df_combined['SeenEpisode5'] + df_combined['SeenEpisode6']) == 6\n]\ndf_seenAll\n\ndata = pd.DataFrame({\n    'category': [\n      'The Phantom Menace',\n      'Attack of the Clones',\n      'Revenge of the Sith',\n      'A New Hope',\n      'The Empire Strikes Back',\n      'Return of the Jedi'\n    ],\n    'bestEpisode': [\n      len(df_seenAll[df_seenAll['Episode1Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode2Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode3Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode4Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode5Rank'] == 1]),\n      len(df_seenAll[df_seenAll['Episode6Rank'] == 1])\n    ]\n})\n\ndata['value'] = (data['bestEpisode'] / len(df_seenAll)) * 100\ndata['value'] = data['value'].round(0).astype(int)\ndata['value_label'] = data['value'].astype(str) + '%'\n\nchart = alt.Chart(data).mark_bar().encode(\n    x=alt.X('value:Q', title='Value', axis=None),\n    y=alt.Y('category:N', sort=None, title='Category', axis=None)\n)\n\n# Add value percentages to the right of the bars\ntext = chart.mark_text(\n    align='left',\n    baseline='middle',\n    dx=3  # Adjust this value to position the text further to the right\n).encode(\n    text='value_label:N'\n)\n\n# Add category labels to the left of the bars\ncategory_text = chart.mark_text(\n    align='right',\n    baseline='middle',\n    dx=-3  # Adjust this value to position the text further to the left\n).encode(\n    x=alt.value(-5),\n    text='category:N'\n)\n\nfinal_chart = (chart + text + category_text).properties(\n    view=alt.ViewConfig(stroke='white'), \n    title={\n        \"text\": \"What's the Best 'Star Wars' Movie?\",\n        \"subtitle\": f\"Of {len(df_seenAll)} respondents who have seen all films\",\n        \"anchor\": \"start\",\n        \"fontSize\": 20\n    }\n)\nfinal_chart.show()",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
-  },
-  {
-    "objectID": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
-    "href": "Full_Stack/DS250-theWarWithStarWars.html#questiontask-4",
-    "title": "Client Report - The War with Star Wars",
-    "section": "QUESTION|TASK 4",
-    "text": "QUESTION|TASK 4\nBuild a machine learning model that predicts whether a person makes more than $50k. Describe your model and report the accuracy.\nI used XGBoost and originally had an accuracy of about 53%. After doing a little tweaking to the model I was able to get the accuracy slightly higher to 59%. Several of the other ways to gage accuracy (F1, Precision, Recall, R2, and Root Mean2) all score at around 63% so while not the 65% called out in the stretch I was able to get close to it.\n\n\nCode to train the model\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom functions.model_evaluation import evaluateModel\n\nX = df_combined[[\n#        \"SeenAny\", \n        \"IsFan\", \n        \"SeenEpisode1\", \n        \"SeenEpisode2\", \n        \"SeenEpisode3\", \n        \"SeenEpisode4\", \n        \"SeenEpisode5\", \n#        \"SeenEpisode6\", \n#        \"Episode1Rank\", \n#        \"Episode2Rank\", \n#        \"Episode3Rank\", \n#        \"Episode4Rank\", \n#        \"Episode5Rank\", \n#        \"Episode6Rank\", \n        \"LikeHanSolo\", \n        \"LikeLuke\", \n        \"LikeLeia\", \n        \"LikeAnakin\", \n        \"LikeObiWan\", \n        \"LikeEmperorPalpatine\", \n        \"LikeDarthVader\", \n        \"LikeLando\", \n        \"LikeBobaFett\", \n        \"LikeC3P0\", \n        \"LikeR2D2\", \n        \"LikeJarJar\", \n        \"LikePadme\", \n        \"LikeYoda\", \n        \"ExpandedUniverse\", \n        \"FanOfExpandedUniverse\", \n        \"FanOfFranchise\", \n        \"Age\", \n        \"YearsInSchool\", \n        \"Location_EastNorthCentral\", \n        \"Location_EastSouthCentral\",\n        \"Location_MiddleAtlantic\", \n        \"Location_Mountain\", \n        \"Location_NewEngland\", \n        \"Location_Pacific\", \n        \"Location_SouthAtlantic\", \n#        \"Location_Unspecified\",\n        \"Location_WestNorthCentral\", \n        \"Location_WestSouthCentral\",\n        \"Gender_Female\", \n        \"Gender_Male\", \n#        \"Gender_Unspecified\",\n        \"WhoShotFirst_Greedo\", \n        \"WhoShotFirst_Han\",\n        \"WhoShotFirst_Idontunderstandthisquestion\",\n#        \"WhoShotFirst_Unspecified\"\n    ]]\ny = df_combined['MakesMoreThan50k']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.29, random_state=43)\nmodel = evaluateModel(X_train, y_train, X_test, y_test, \"XGBoost\")\n\n\n\nXGBoost Accuracy: 0.5925925925925926\nXGBoost F1 Score: 0.6346863468634686\nXGBoost Precision Score: 0.6346863468634686\nXGBoost Recall Score: 0.6346863468634686\nXGBoost R2 Score: 0.6346863468634686\nXGBoost Root Mean2 Error: 0.6346863468634686",
-    "crumbs": [
-      "Full Stack",
-      "The War with Star Wars"
-    ]
   },
   {
     "objectID": "Machine_Learning/DS250-canYouPredictThat.html",
@@ -477,5 +379,103 @@
       "Machine Learning",
       "Can you Predict That"
     ]
+  },
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Software Engineer\n\njam23001@byui.edu | My DS250 Coursework page\n\n\n\nLooking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI\n\n\n\n\n1996-1998 University of Idaho\n2021-now BYU-I\n\n\n\n1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "resume.html#currently",
+    "href": "resume.html#currently",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "Looking to expand my AI and Data Science knowledge\n\n\nWeb Development, Reach, Javascript, SEO\n\n\n\nOrigami, AI"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1996-1998 University of Idaho\n2021-now BYU-I"
+  },
+  {
+    "objectID": "resume.html#occupation",
+    "href": "resume.html#occupation",
+    "title": "Brett Jameson",
+    "section": "",
+    "text": "1992-2023 web Development Done Right, Boise, ID\n\nWarden\nMinted coins\n\n2023-Present The Church of Jesus Christ of Latter Day Saints, Salt Lake City, UT"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html",
+    "href": "notebooks/Exploration_02.html",
+    "title": "Data Exploration 02",
+    "section": "",
+    "text": "You’re working as a data analyst at a cereal marketing company in New York.\nIn a strategy meeting, the marketing director tells you that in 2018, the US weight loss industry was worth over $72 Billion dollars, growing 4% compared to the previous year.\nIn contrast, sales of cold cereal fell 6% to $8.5 billion during the same time period.\nCereal executives have approached the marketing company asking how they can somehow tap into the weight loss market growth to boost the sales of their cereal brands.\nYour assignment is to analyze a dataset of nutritional information for major US cereals, and calculate some metrics that can be used by the marketing team."
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
+    "href": "notebooks/Exploration_02.html#part-1-import-pandas-and-load-the-data",
+    "title": "Data Exploration 02",
+    "section": "Part 1: Import Pandas and load the data",
+    "text": "Part 1: Import Pandas and load the data\nRemember to import Pandas the conventional way. If you’ve forgotten how, you may want to review Data Exploration 01.\nThe dataset for this exploration is stored at the following url:\nhttps://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\nThere are lots of ways to load data into your workspace. The easiest way in this case is to ask Pandas to do it for you.\n\nInitial Data Analysis\nOnce you’ve loaded the data, it’s a good idea to poke around a little bit to find out what you’re dealing with.\nSome questions you might ask include:\n\nWhat does the data look like?\nWhat kind of data is in each column?\nDo any of the columns have missing values?\n\n\n# Part 1: Enter your code below to import Pandas according to the\n# conventional method. Then load the dataset into a Pandas dataframe.\n\n# Write any code needed to explore the data by seeing what the first few\n# rows look like. Then display a technical summary of the data to determine\n# the data types of each column, and which columns have missing data.\n\n\nimport pandas as pd\n\ndataSource = \"https://raw.githubusercontent.com/byui-cse/cse450-course/master/data/cereal.csv\"\ntheData = pd.read_csv(dataSource)\ntheData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
+    "href": "notebooks/Exploration_02.html#part-2-calculate-summary-statistics",
+    "title": "Data Exploration 02",
+    "section": "Part 2: Calculate Summary Statistics",
+    "text": "Part 2: Calculate Summary Statistics\nThe marketing team has determined that when choosing a cereal, consumers are most interested in calories, sugars, fiber, fat, and protein.\nFirst, let’s calcuate some summary statistics for these categories across the entire dataset. We’re particularly intrested in the mean, median, standard deviation, min, and max values.\nThere are multiple ways to accomplish this.\n\n# Part 2: Enter your code below to calculate summary statistics for the\n# calories, sugars, fiber, fat, and protein features.\ndef calculateSummaryStatistics(theData, fieldsOfInterest):\n  summaryStatisticsMean = theData[fieldsOfInterest].mean()\n  summaryStatisticsMedian = theData[fieldsOfInterest].median()\n  summaryStatisticsMin = theData[fieldsOfInterest].min()\n  summaryStatisticsMax = theData[fieldsOfInterest].max()\n  summaryStatisticsStd = theData[fieldsOfInterest].std()\n\n  # Concatenate\n  summaryStatisticsMerged = pd.concat([summaryStatisticsMean, summaryStatisticsMedian, summaryStatisticsMin, summaryStatisticsMax, summaryStatisticsStd], axis=1)\n\n  # Label the columns\n  summaryStatisticsMerged.columns = ['Mean', 'Median', 'Min', 'Max', 'Std']\n\n  return summaryStatisticsMerged\n\ntheFieldsOfInterest = ['calories', 'sugars', 'fiber', 'fat', 'protein']\ntheStatistics = calculateSummaryStatistics(theData, theFieldsOfInterest)\n\nprint(theStatistics)\n#print(summaryStatisticsMerged)\n\n                Mean  Median   Min    Max        Std\ncalories  106.883117   110.0  50.0  160.0  19.484119\nsugars      6.922078     7.0  -1.0   15.0   4.444885\nfiber       2.151948     2.0   0.0   14.0   2.383364\nfat         1.012987     1.0   0.0    5.0   1.006473\nprotein     2.545455     3.0   1.0    6.0   1.094790"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-3-transform-data",
+    "href": "notebooks/Exploration_02.html#part-3-transform-data",
+    "title": "Data Exploration 02",
+    "section": "Part 3: Transform Data",
+    "text": "Part 3: Transform Data\nTo make analysis easier, you want to convert the manufacturer codes used in the dataset to the manufacturer names.\nFirst, display the count of each manufacturer code value used in the dataset (found in the mfr column).\nThen, create a new column with the appropriate manufacturer name for each entry, using this mapping:\nA = American Home Food Products\nG = General Mills\nK = Kelloggs\nN = Nabisco\nP = Post\nQ = Quaker Oats\nR = Ralston Purina\n\nNote: While the tutorial linked above uses the replace function, using the map function instead can often be much faster and more memory efficient, especially for large datasets.\n\n\n# Display the count of values for the manufacturer code (\"mfr\" column), then\n# create a new column containing the appropriate manufacturer names.\ndef getManufacturer(theAbbreviation):\n  manufacturerData = {\n    'A': 'American Home Food Products',\n    'G': 'General Mills',\n    'K': 'Kelloggs',\n    'N': 'Nabisco',\n    'P': 'Post',\n    'Q': 'Quaker Oats',\n    'R': 'Ralston Purina'\n  }\n  return manufacturerData.get(theAbbreviation, '')\n\nmanufacturerCount = theData[['mfr']].value_counts()\nprint(manufacturerCount)\n\ntheMappedData = theData\ntheMappedData['manufacturer'] = theMappedData['mfr'].map(getManufacturer)\ntheMappedData.head(5)\n\nmfr\nK      23\nG      22\nP       9\nR       8\nQ       8\nN       6\nA       1\nName: count, dtype: int64\n\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#part-4-visualization",
+    "href": "notebooks/Exploration_02.html#part-4-visualization",
+    "title": "Data Exploration 02",
+    "section": "Part 4: Visualization",
+    "text": "Part 4: Visualization\nLet’s do some more data exploration visually.\nImport your visualization library of choice and set any needed configuration options.\n\n# Import your visualization library\nimport seaborn as sns\n\n\nSugar Distribution\nMarketing tells us that their surveys have revealed that sugar content is the number one concern of consumers when choosing cereal.\nThey would like to see the following visualizations:\n\nA histogram plot of the sugar content in all cereals.\nA scatter plot showing the relationship between sugar and calories.\nA box plot showing the distribution of sugar content by manufacturer.\n\n\n# Create the three visualzations requested by the the marketing team\nsns.displot(theData['sugars'], kind='hist')\nsns.relplot(data=theData, x='sugars', y='calories', kind='scatter')\nsns.catplot(data=theMappedData, x='manufacturer', y='sugars', kind='box', aspect=2)"
+  },
+  {
+    "objectID": "notebooks/Exploration_02.html#above-and-beyond",
+    "href": "notebooks/Exploration_02.html#above-and-beyond",
+    "title": "Data Exploration 02",
+    "section": "🌟 Above and Beyond 🌟",
+    "text": "🌟 Above and Beyond 🌟\nThe marketing team is pleased with what you’ve accomplished so far. They have a meeting with top cereal executives in the morning, and they’d like you to do as many of the following additional tasks as you have time for:\n\nWeight Watchers used to have an older points system that used this formula: (calories / 50) + (fat / 12) - (fiber / 5), but only the first 4 grams of fiber were included in the calculation. For comparison’s sake, create an additional column with the calculation for the old points system.\nMarketing really likes the boxplot of the sugar content for each cereal, they’d like similar plots for calories and fat, but using different color schemes for each chart.\n\n\ndef calculatePointsOld(theFood):\n  theFiber = min(theFood.fiber, 4)\n  return round((theFood.calories / 50) + (theFood.fat / 12) - (theFiber / 5))\n\ntheMappedData['oldWeightWatchesPoints'] = theMappedData.apply(calculatePointsOld, axis=1)\ntheMappedData.head(5)\n\n\n    \n\n\n\n\n\n\nname\nmfr\ntype\ncalories\nprotein\nfat\nsodium\nfiber\ncarbo\nsugars\npotass\nvitamins\nshelf\nweight\ncups\nrating\nmanufacturer\nweightWatchesPoints\noldWeightWatchesPoints\n\n\n\n\n0\n100% Bran\nN\nC\n70\n4\n1\n130\n10.0\n5.0\n6\n280\n25\n3\n1.0\n0.33\n68.402973\nNabisco\n3\n1\n\n\n1\n100% Natural Bran\nQ\nC\n120\n3\n5\n15\n2.0\n8.0\n8\n135\n0\n3\n1.0\n1.00\n33.983679\nQuaker Oats\n6\n2\n\n\n2\nAll-Bran\nK\nC\n70\n4\n1\n260\n9.0\n7.0\n5\n320\n25\n3\n1.0\n0.33\n59.425505\nKelloggs\n3\n1\n\n\n3\nAll-Bran with Extra Fiber\nK\nC\n50\n4\n0\n140\n14.0\n8.0\n0\n330\n25\n3\n1.0\n0.50\n93.704912\nKelloggs\n1\n0\n\n\n4\nAlmond Delight\nR\nC\n110\n2\n2\n200\n1.0\n14.0\n8\n-1\n25\n3\n1.0\n0.75\n34.384843\nRalston Purina\n5\n2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "index.html#title-2-header",
+    "href": "index.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "cleansing.html",
+    "href": "cleansing.html",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
+  },
+  {
+    "objectID": "cleansing.html#title-2-header",
+    "href": "cleansing.html#title-2-header",
+    "title": "about me",
+    "section": "",
+    "text": "MarkDown Basics"
   }
 ]
